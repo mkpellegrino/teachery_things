@@ -1,0 +1,80 @@
+<html>
+  <head><title>Create a Moodle Cloze Question - By: Mr. Pellegrino</title>
+    
+    <script>
+      var QN = 1; /* question number */
+      /* returns a random integer between x and y */
+      function rnd_between( x, y )
+      {
+	  r = Math.random()*(y-x);
+	  r+=x;
+	  r = Math.floor(r);
+	  return r;
+      }
+
+      function create_random_evaluate_problem()
+      {
+
+	  var leader = "";
+	  if( QN<10 )
+	  {
+	      leader="000";
+	  }
+	  else if( QN<100 )
+	  {
+	      leader="00";
+	  }
+	  else if( QN<1000)
+	  {
+	      leader="0";
+	  }
+	  name = "Q" + leader + QN;
+	  
+	  var base = rnd_between( 2, 30 );
+	  if( base==10) base=17; /* base 10 is too easy with a calculator */
+	  var argument = rnd_between( 1, 200);
+	  var answer = Math.round( (10000*Math.log(argument)/Math.log(base)))/10000;
+	  var question_text = "";
+	  var how_to = "";
+	  how_to += "<p>\\( " + base + "^x = " + argument + "\\)</p><p>\\( \\log \\left ( " + base + "^x \\right ) = \\log ( " + argument + ") \\)</p><p>\\( x \\log( " + base + ") = \\log( " + argument + ") \\)</p><p>\\( x = \\frac{ \\log( " + argument + ") }{ \\log( " + base + " )} \\)</p><p>\\( x \\approx " + answer + "\\)>/p>";
+	  
+	  question_text+="<question type=\"cloze\"><name><text>" + name + "</text></name><questiontext format=\"html\"><text><![CDATA[";
+	  question_text+="<p>Evaluate the \\( \\log \\) using a calculator.  Round your answer to the ten thousandths (4 places).</p>";
+	  question_text+="<p>\\( \\log_{" + base + "}(" + argument + ") = \\) {1:NM:=" + answer + ":0.0005~%0%999999999999}</p>";
+	  question_text+="]]></text></questiontext><generalfeedback format=\"html\"><text></text></generalfeedback><penalty>0.3333333</penalty><hidden>0</hidden><correctfeedback format=\"html\"><text><![CDATA[<p>Good Show!</p>]]></text></correctfeedback><partiallycorrectfeedback format=\"html\"><text><![CDATA[<p>Your answer is partially correct.</p>]]></text></partiallycorrectfeedback><incorrectfeedback format=\"html\"><text><![CDATA[<p>Your answer is incorrect.</p>" + how_to + "]]></text></incorrectfeedback><shownumcorrect/></question>";
+	  form1.clozetext.value+=question_text;
+	  form1.answerkey.value+=how_to;
+	  QN++;
+	  return question_text;
+
+      }
+      function generate()
+      {
+	  QN=1;
+	  form1.clozetext.value="";
+	  form1.clozetext.value+="<?xml version=\"1.0\"?><quiz><question type=\"category\"><category><text>$course$/1</text></category></question>"
+	  for( var i = 0; i< 1000; i++ )
+	  {
+	      	  create_random_evaluate_problem();
+	  }
+	  form1.clozetext.value+="</quiz>";
+	  
+      }
+      
+    </script>
+  </head>
+
+  <body>
+    <form name='form1' action='' method='GET'>
+      
+      <p><textarea cols=80 rows=2 name='clozetext'></textarea></p>
+
+      <p>This is the text you want to store in an xml file.</p>
+      <p><textarea cols=80 rows=2 name='answerkey'></textarea></p>
+      <input type='button' onClick="javascript:generate();" value='ADD'>
+    </form>
+    <hr>
+    <p><center><i><font size=-2>Coded By: Mr. Pellegrino - 2022 03 31</font></i></center></p>
+  </body>
+</html>
+

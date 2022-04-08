@@ -1,0 +1,172 @@
+<html>
+  <head><title>Create a SVG Graph - By: Mr. Pellegrino</title>
+    <!-- Scalable Vector Graphics Graph Maker -->
+
+    <!--<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle"
+	 style="display:inline-block;width:728px;height:90px"
+	 data-ad-client="ca-pub-8915095441452757"
+	 data-ad-slot="1326378674"></ins>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>-->
+    
+    <script>
+      function addPoint()
+      {
+	  var x=form1.px.value;
+	  var y=form1.py.value;
+	  var c=form1.pc.value;
+	  if( (x>12)||(x<-12)||(y>12)||(y<-12) )
+	  {
+	      alert( "Coordinate is off the grid." );
+	      return;
+	  }
+
+	  if( c=='' )
+	  {
+	      c='red';
+	  }
+	      
+	  form1.svgoutput.value+='\n\n<!-- POINT: (';
+	  form1.svgoutput.value+=x;
+	  form1.svgoutput.value+=',';
+	  form1.svgoutput.value+=y;
+	  form1.svgoutput.value+=') -->\n';
+	  x=15*x+180;
+	  y=-15*y+180;
+	  form1.svgoutput.value+='<circle cx="';
+	  form1.svgoutput.value+=x;
+	  form1.svgoutput.value+='" cy="';
+	  form1.svgoutput.value+=y;
+	  form1.svgoutput.value+='" r="1" stroke="';
+	  form1.svgoutput.value+=c;
+	  form1.svgoutput.value+='" fill="';
+	  form1.svgoutput.value+=c;
+	  form1.svgoutput.value+='" stroke-width="3"/>\n\n';
+      }
+
+      function preview()
+      {
+	  s=window.open();
+	  s.document.write("<html><head><title>My Graph</title></head><body>");
+	  s.document.write(form1.svgoutput.value);
+	  s.document.write("</body></html>");
+	  s.stop();
+	  
+      }
+      function clr()
+      {
+	  form1.svgoutput.value='';
+	  form1.px.value='';
+	  form1.py.value='';
+	  form1.pc.value='';
+      }
+      
+      function init()
+      {
+	  form1.svgoutput.value+='<!-- SVG IMAGE -->\n<svg width="361px" height="361px" version="1.1"><defs></defs>\n\n<!-- COORDINATE PLANE -->\n<line x1="0" y1="0" x2="360" y2="0" stroke="#000000" stroke-width="2px"/><line x1="0" y1="15" x2="360" y2="15" stroke="#BBBBBB"/><line x1="0" y1="30" x2="360" y2="30" stroke="#BBBBBB"/><line x1="0" y1="45" x2="360" y2="45" stroke="#BBBBBB"/><line x1="0" y1="60" x2="360" y2="60" stroke="#BBBBBB"/><line x1="0" y1="75" x2="360" y2="75" stroke="#BBBBBB"/><line x1="0" y1="90" x2="360" y2="90" stroke="#BBBBBB"/><line x1="0" y1="105" x2="360" y2="105" stroke="#BBBBBB"/><line x1="0" y1="120" x2="360" y2="120" stroke="#BBBBBB"/><line x1="0" y1="135" x2="360" y2="135" stroke="#BBBBBB"/><line x1="0" y1="150" x2="360" y2="150" stroke="#BBBBBB"/><line x1="0" y1="165" x2="360" y2="165" stroke="#BBBBBB"/><line x1="0" y1="195" x2="360" y2="195" stroke="#BBBBBB"/><line x1="0" y1="210" x2="360" y2="210" stroke="#BBBBBB"/><line x1="0" y1="225" x2="360" y2="225" stroke="#BBBBBB"/><line x1="0" y1="240" x2="360" y2="240" stroke="#BBBBBB"/><line x1="0" y1="255" x2="360" y2="255" stroke="#BBBBBB"/><line x1="0" y1="270" x2="360" y2="270" stroke="#BBBBBB"/><line x1="0" y1="285" x2="360" y2="285" stroke="#BBBBBB"/><line x1="0" y1="300" x2="360" y2="300" stroke="#BBBBBB"/><line x1="0" y1="315" x2="360" y2="315" stroke="#BBBBBB"/><line x1="0" y1="330" x2="360" y2="330" stroke="#BBBBBB"/><line x1="0" y1="345" x2="360" y2="345" stroke="#BBBBBB"/><line x1="0" y1="360" x2="360" y2="360" stroke="#000000"/><line x1="0.75" y1="0" x2="0.75" y2="360" stroke="#000000"/><line x1="15" y1="0" x2="15" y2="360" stroke="#BBBBBB"/><line x1="30" y1="0" x2="30" y2="360" stroke="#BBBBBB"/><line x1="45" y1="0" x2="45" y2="360" stroke="#BBBBBB"/><line x1="60" y1="0" x2="60" y2="360" stroke="#BBBBBB"/><line x1="75" y1="0" x2="75" y2="360" stroke="#BBBBBB"/><line x1="90" y1="0" x2="90" y2="360" stroke="#BBBBBB"/><line x1="105" y1="0" x2="105" y2="360" stroke="#BBBBBB"/><line x1="120" y1="0" x2="120" y2="360" stroke="#BBBBBB"/><line x1="135" y1="0" x2="135" y2="360" stroke="#BBBBBB"/><line x1="150" y1="0" x2="150" y2="360" stroke="#BBBBBB"/><line x1="165" y1="0" x2="165" y2="360" stroke="#BBBBBB"/><line x1="195" y1="0" x2="195" y2="360" stroke="#BBBBBB"/><line x1="210" y1="0" x2="210" y2="360" stroke="#BBBBBB"/><line x1="225" y1="0" x2="225" y2="360" stroke="#BBBBBB"/><line x1="240" y1="0" x2="240" y2="360" stroke="#BBBBBB"/><line x1="255" y1="0" x2="255" y2="360" stroke="#BBBBBB"/><line x1="270" y1="0" x2="270" y2="360" stroke="#BBBBBB"/><line x1="285" y1="0" x2="285" y2="360" stroke="#BBBBBB"/><line x1="300" y1="0" x2="300" y2="360" stroke="#BBBBBB"/><line x1="315" y1="0" x2="315" y2="360" stroke="#BBBBBB"/><line x1="330" y1="0" x2="330" y2="360" stroke="#BBBBBB"/><line x1="345" y1="0" x2="345" y2="360" stroke="#BBBBBB"/><line x1="360" y1="0" x2="360" y2="360" stroke="#000000"/><line x1="180" y1="0" x2="180" y2="360" stroke-width="3" stroke="#000000"/><line x1="0" y1="180" x2="360" y2="180" stroke-width="3" stroke="#000000"/><text x="168" y="10" fill="black">y</text><text x="349" y="176" fill="black">x</text>\n\n';
+      }
+      
+      function add()
+      {
+	  var s=0;
+
+	  if( form1.fd.value=='' )
+	  {
+	      s=0.08;
+	  }
+	  else
+	  {
+	      s=form1.fd.value;
+	  }
+	  s=1*s;
+	  var f_str='';
+	  
+	  if( form1.f.value =='' )
+	  {
+	      alert( "You haven't defined a function!");
+	      return;
+	  }
+	  var c=form1.fc.value;
+	  if( c=='' )
+	  {
+	      c='red';
+	  }
+
+	  f_str+='return ';
+	  f_str+=form1.f.value;
+	  
+	  var myFunc = new Function( 'x', f_str );
+	  
+	  if( form1.svgoutput.value=='' )
+	  {
+	      init();
+	  }
+	  
+	  form1.svgoutput.value+='\n\n<!-- GRAPH OF '; 
+	  //form1.svgoutput.value+=form1.f.value;
+	  form1.svgoutput.value+='A FUNCTION';
+	  form1.svgoutput.value+=' -->\n';
+	  for( L=-12; L<=12+s; L=L+s )
+	  {
+	      x1=Math.round((15*L+180)*100)/100;
+	      x2=Math.round((15*(L+s)+180)*100)/100;
+	      y=myFunc(L);
+	      y1=Math.round((-15*y+180)*100)/100;
+	      y=myFunc(L+s);		 
+	      y2=Math.round((-15*y+180)*100)/100;
+	      if( ((y1>360)&&(y2>360)) || ((y1<0)&&(y2<0)))
+	      {
+		  // Do Nothing if both y's are out of range
+	      }
+	      else if( y1<=720 && y1>=-720 && y2<=720 && y2>=-720)
+	      {			     
+		  form1.svgoutput.value+='<line x1="';
+		  form1.svgoutput.value+=x1;
+		  form1.svgoutput.value+='" y1="';
+		  form1.svgoutput.value+=y1;
+		  form1.svgoutput.value+='" x2="';
+		  form1.svgoutput.value+=x2;
+		  form1.svgoutput.value+='" y2="';
+		  form1.svgoutput.value+=y2;
+		  form1.svgoutput.value+='" stroke="';
+		  form1.svgoutput.value+=c;
+		  form1.svgoutput.value+='" stroke-width="2px"/>';
+	      }
+	  }
+      }
+      
+      function EOF()
+      {
+	  form1.svgoutput.value+='</svg>';
+      }
+    
+    </script>
+    
+
+</head>
+<body>    
+  <form name='form1' action='' method='GET'>
+    <p><input type='button' onClick="javascript:add()" value='Add Graph'>&nbsp;&nbsp;&nbsp;
+      <input type='button' onClick="javascript:EOF()" value='EOF'>&nbsp;&nbsp;&nbsp;
+      <input type='button' onClick="javascript:clr();" value='CLR'>&nbsp;&nbsp;&nbsp;
+      <input type='button' onClick="javascript:preview();" value='Preview'>
+      <!--&nbsp;&nbsp;&nbsp;<input type='button' onClick="javascript:init();" value='Add a Graph'>-->
+    <p>Function: <input type='text' id='f' name='f' size=20>&nbsp;&nbsp;&nbsp;
+      Function Colour: <input type='text' id='fc' name='fc' size=5>&nbsp;&nbsp;&nbsp;
+      Detail: <input type='text' id='fd' name='fd' size=5>&nbsp;(0.08 = Detailed, 5 = Not Detailed)</p>
+    
+    <p>Point: (<input type='text' id='px' name='px' size=5>,<input type='text' id='py' name='py' size=5>)&nbsp;&nbsp;&nbsp;
+      Point Colour: <input type='text' id='pc' name='pc' size=5>
+      &nbsp;&nbsp;&nbsp;<input type='button' onClick="javascript:addPoint()" value='Add Point'></p>
+    <p><textarea id='svgoutput' name='svgoutput' rows=50 cols=100></textarea></p>
+    
+  </form>
+  
+  <hr>
+  <p><center><font size=-2><i>Coded By: Mr. Pellegrino - Last Updated on: 2017 10 12</i></font></center></p>
+    
+</body>
+</html>
+

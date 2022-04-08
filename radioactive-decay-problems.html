@@ -1,0 +1,210 @@
+<html>
+  <head><title>Create a Radioactive Decay Problem Bank - By: Mr. Pellegrino</title>
+    
+    <script>
+      var QN = 1; /* starting question number */
+
+
+      
+      // Create our number formatter.
+      var formatter = new Intl.NumberFormat('en-US', {style: 'currency',currency: 'USD'} );
+
+
+      /* taken from: https://en.wikipedia.org/wiki/List_of_radioactive_nuclides_by_half-life */
+      const name=[];
+      const half_life=[];
+
+
+      function init()
+      {
+	  add( "bismuth-207", 32.9 );
+	  add( "titanium-44", 63 );
+	  add( "uranium-232", 68.9 );
+	  add( "plutonium-238", 87.7 );
+	  add( "geddium-76", 2112 );
+	  add( "vanhalium-86", 5150 );
+	  add( "precalcium-22", 411 );
+	  add( "samarium-151", 96.6 );
+	  add( "nickel-63", 100.1 );
+	  add( "polonium-209", 125.2 );
+	  add( "americium-242m1", 141 );
+	  add( "silicon-32", 170 );
+	  add( "argon-39", 269 );
+	  add( "californium-249", 351 );
+	  add( "silver-108m", 418 );
+	  add( "americium-241", 432.2 );
+	  add( "mercury-194", 444 );
+	  add( "niobium-91", 680 );
+	  add( "californium-251", 900 );
+	  add( "holmium-166m1", 1200 );
+	  add( "berkelium-247", 1380 );
+	  add( "radium-226", 1600 );
+	  add( "molybdenum-93", 4000 );
+	  add( "holmium-163", 4570 );
+	  add( "curium-246", 4760 );
+	  add( "carbon-14", 5730 );
+	  add( "plutonium-240", 6561 );
+	  add( "thorium-229", 7340 );
+	  add( "americium-243", 7370 );
+	  add( "curium-250", 8300 );
+	  add( "curium-245", 8500 );
+	  add( "niobium-94", 20300 );
+	  add( "plutonium-239", 24100 );
+      }
+      
+      function add( elem, hl )
+      {
+	  name.push(elem);
+	  half_life.push(hl);
+      }
+
+      /* get a random number within the length of the arrays */
+      function rnd()
+      {
+	  return Math.floor(Math.random()*name.length);
+      }
+      
+      /* returns a random integer between x and y */
+      function rnd_between( x, y )
+      {
+	  return Math.floor(Math.random()*(y-x)+x);
+      }
+
+      /* round a number (x) to the (10^y)th place */
+      function rn( x, y )
+      {
+	  return Math.round(x*(10**y))/(10**y);	  
+      }
+      
+      function create_problem()
+      {
+
+	  /* pick a random isotope from name and halflife arrays */
+	  var qname="";
+	  var n = rnd();
+	  var my_name = name[n];
+	  var my_hl   = half_life[n];
+
+	  var P = rnd_between( 500, 2000 );
+	  var A = rnd_between( 50, P-50 );
+	  
+	  var leader = "";
+	  if( QN<10 )
+	  {
+	      leader="000";
+	  }
+	  else if( QN<100 )
+	  {
+	      leader="00";
+	  }
+	  else if( QN<1000)
+	  {
+	      leader="0";
+	  }
+	  qname = "Q" + leader + QN;
+
+	  
+	  var question_text = "";
+	  var how_to = "";
+	  var xml_text1 = "";
+	  var xml_text2 = "";
+
+	  how_to+="<![CDATA[";
+	  /* =========================================================================== */
+	  /* this is shown upon review of the test */
+	  /* it should explain how to do the problem */
+	  how_to+="<ul>";
+
+
+	  /* Solve for t */
+	  /* A=P(.5)^(t/hl) */
+	  /* A/P = .5^(t/hl) */
+	  /* log(A/P) = (t/hl)log(.5) */
+	  /* log(A/P)/log(.5) = t/hl */
+	  /* (hl*log(A/P))/log(.5) = t */
+	  how_to+="<li>Use the formula: \\( A = P \\left ( \\frac{1}{2} \\right )^{ \\frac{t}{hl} } \\)</li>";
+	  how_to+="<p>Substitute what has been given: \\( " + A + " = " + P + " \\left ( \\frac{1}{2} \\right )^{ \\frac{t}{ " + my_hl + "} } \\)</p>";
+	  how_to+="<li>Simplify it a bit before taking the log of both sides of the equation:</li>";
+	  how_to+="<p>\\( \\frac{" + A + "}{" + P + "} = \\left ( \\frac{1}{2} \\right )^{ \\frac{t}{ " + my_hl + "} } \\)</p>";
+	  how_to+="<li>Take the logarithm of both sides of the equation:</li>";
+	  how_to+="<p>\\( \\log \\left (   \\frac{" + A + "}{" + P + "} \\right ) = \\log \\left (  \\left ( \\frac{1}{2} \\right )^{ \\frac{t}{ " + my_hl + "} }  \\right ) \\)</p>";
+	  how_to+="<li>Apply the <b>exponent</b> property of logs:</li>";
+	  how_to+="<p>\\( \\log \\left (   \\frac{" + A + "}{" + P + "} \\right ) = \\frac{t}{ " + my_hl + " } \\log \\left ( \\frac{1}{2} \\right ) \\)</p>";
+	  how_to+="<li>Using Algebra, isolate \\( t \\)</li>";
+	  how_to+="<p>\\( \\frac{ \\log \\left (   \\frac{" + A + "}{" + P + "} \\right ) }{ \\log \\left ( \\frac{1}{2} \\right ) }  = \\frac{t}{ " + my_hl + " } \\)</p>";
+	  how_to+="<p>\\( \\frac{ " + my_hl + " \\log \\left (   \\frac{" + A + "}{" + P + "} \\right ) }{ \\log \\left ( \\frac{1}{2} \\right ) }  = t \\)</p>";
+	  how_to+="<li>Put it into your calculator to get \\( t = " + (my_hl * Math.log(A/P) )/Math.log(.5) + " \\)</li>";
+	  how_to+="<li>Round your answer to the hundredths: \\( t \\approx " + rn( (my_hl * Math.log(A/P) )/Math.log(.5),2) + " \\)</li>";
+	  how_to+="</ul>";
+
+	  /* =========================================================================== */
+	  /* DO NOT EDIT */
+	  how_to+="]]>";
+	  xml_text1+="<question type=\"cloze\"><name><text>" + qname + "</text></name><questiontext format=\"html\"><text><![CDATA[";
+	  /* =========================================================================== */
+	  /* this is the text of the problem */
+	  question_text+="<p>Using the <i>half-life formula</i>: \\( A = P \\left ( \\frac{1}{2} \\right )^{ \\frac{t}{hl} } \\), answer the question below.</p>";
+	  question_text+="<p>A " + P + " gram sample of " + my_name + " has decayed so that only " + A + " grams are remaining; " + my_name + " has a half-life of " + my_hl + " years.</p>";
+	  /* Solve for t */
+	  /* A=P(.5)^(t/hl) */
+	  /* A/P = .5^(t/hl) */
+	  /* log(A/P) = (t/hl)log(.5) */
+	  /* log(A/P)/log(.5) = t/hl */
+	  /* (hl*log(A/P))/log(.5) = t */
+	  t = (my_hl * Math.log(A/P) )/Math.log(.5);
+	  t = rn( t, 2 );
+	  question_text+="<p>How old is the sample? <i>(round to the hundredths place)</i>{1:NM:=" + t + ":0.01~%0%999999999} years</p>";
+	  /* =========================================================================== */
+	  /* DO NOT EDIT */
+	  xml_text2+="]]></text></questiontext><generalfeedback format=\"html\"><text>" + how_to + "</text></generalfeedback><penalty>0.3333333</penalty><hidden>0</hidden><correctfeedback format=\"html\"><text><![CDATA[<p>Good Show!</p>]]></text></correctfeedback><partiallycorrectfeedback format=\"html\"><text><![CDATA[<p>Your answer is partially correct.</p>]]></text></partiallycorrectfeedback><incorrectfeedback format=\"html\"><text><![CDATA[<p>Your answer is incorrect.</p>]]></text></incorrectfeedback><shownumcorrect/></question>";
+
+
+	  form1.clozetext.value+=xml_text1;
+	  form1.clozetext.value+=question_text;
+	  form1.clozetext.value+=xml_text2;
+	  QN++;
+	  return question_text;
+
+      }
+      
+      function generate()
+      {
+	  var number_to_create = form1.number_to_create.value;
+
+	  /* Start at Question #1 */
+	  QN=1;
+
+	  /* reset the output */
+	  form1.clozetext.value="";
+
+	  /* add the xml header */
+	  form1.clozetext.value+="<?xml version=\"1.0\"?><quiz><question type=\"category\"><category><text>$course$/Compound Interest Problems</text></category></question>"
+
+	  /* create the desired number of questions */
+	  for( var i = 0; i< number_to_create; i++ )
+	  {
+	      /* generates 1 problem */
+	      create_problem();
+	  }
+
+	  /* add the xml footer */
+	  form1.clozetext.value+="</quiz>";
+	  
+      }
+      
+      </script>
+  </head>
+
+  <body onload="init();">
+    <center>
+      <form name='form1' action='' method='GET'>
+	
+	<p><textarea cols=80 rows=30 name='clozetext'></textarea></p>
+	<p><input type='button' onClick="javascript:generate();" value='Generate'>
+	  <input type='text' id='number_to_create' name='number_to_create' size=10 value='1'></p>
+      </form>
+      <hr>
+      <p><center><i><font size=-2>By: Mr. Pellegrino - 2022 04 05</font></i></center></p>
+  </body>
+</html>
+

@@ -1,0 +1,164 @@
+<html>
+  <head><title>Create a Moodle Compound Interest Question - By: Mr. Pellegrino</title>
+    
+    <script>
+      var QN = 1; /* starting question number */
+
+      // Create our number formatter.
+      var formatter = new Intl.NumberFormat('en-US', {style: 'currency',currency: 'USD'} );
+
+      /* returns a random integer between x and y */
+      function rnd_between( x, y )
+      {
+	  return Math.floor(Math.random()*(y-x)+x);
+      }
+
+      function rn( x, y )
+      {
+	  return Math.round(x*(10**y))/(10**y);	  
+      }
+      
+      function create_problem()
+      {
+
+	  var leader = "";
+	  if( QN<10 )
+	  {
+	      leader="000";
+	  }
+	  else if( QN<100 )
+	  {
+	      leader="00";
+	  }
+	  else if( QN<1000)
+	  {
+	      leader="0";
+	  }
+	  name = "Q" + leader + QN;
+
+	  
+	  
+	  var P=rnd_between(200000,1000000)/100;
+	  var r=rnd_between(100,500)/100;
+	  var t=rnd_between(3,15);
+	  var n=12;
+	  var A1=P*(1+(r/100)/n)**( n*t );
+	  
+	  var A1r=P*(1+rn((r/100)/n,5))**(n*t);
+	  var A1_over_under = Math.ceil( 2*Math.abs(A1-A1r));
+	  
+	  var A2=Math.round( Number(A1) + Number(rnd_between(1000,3000)) );
+
+	  var t2= Math.log( A2/P ) / ( n*Math.log( 1+(r/100)/n ));
+	  var t2r = Math.log( rn( A2/P, 4 ))/( n*Math.log(  rn( 1+(r/100)/n,5)    ));
+	  var t2_over_under = Math.ceil( 2*Math.abs(t2-t2r));
+
+	  if( A1_over_under == 0 ) A1_over_under=1;
+	  if( t2_over_under == 0 ) t2_over_under=1;
+	  
+	  var question_text = "";
+	  var how_to = "";
+	  var xml_text1 = "";
+	  var xml_text2 = "";
+
+	  how_to+="<![CDATA[";
+
+	  
+	  how_to+="<ul>";
+	  how_to+="<li>For the first question, substitute \\(" + t + " \\) in for \\( t \\), " + formatter.format(P) + " in for \\( P \\), \\( " + r/100 + " \\) in for \\( r \\), and \\( 12 \\) in for \\( n \\) in the formula, then evaluate the right side.</li>";
+	  how_to+="<ol>";
+	  how_to+="<li>\\( A = " + P + " \\left ( 1 + \\frac{ " + rn(r/100,8) + "}{ 12 } \\right )^{ 12 \\cdot " + t + "} \\) &larr; (plug in what you're given)</li>";
+	  how_to+="<li>\\( A = " + P + " ( 1 + " + rn((r/100)/12,8) + " )^{ " + 12*t + "} \\) &larr; (evaluate the expressions)</li>";
+	  how_to+="<li>\\( A = " + P + " ( " + rn(Number(1)+(r/100)/12,8) + " )^{ " + 12*t + "} \\)</li>";
+	  how_to+="<li>\\( A = " + P + " \\cdot " + rn( rn((Number(1)+(r/100)/12),8)**(12*t),8) + " \\)</li>";
+	  how_to+="<li>\\( A = " + rn(P*(1+(r/100)/12)**(12*t),8) + " \\)</li>";
+	  how_to+="<li>\\( A = " + Math.round( 100*P*(1+(r/100)/12)**(12*t))/100 + " \\) &larr; (answer is a dollar amount)</li>";
+	  how_to+="</ol>";
+	  how_to+="<li>For the second question, use the properties of <i>logarithms</i> to solve for \\( t \\)</li>";
+	  how_to+="<ol>";
+	  how_to+="<li>\\( " + A2 + " = " + P + " \\left ( 1 + \\frac{ " + rn(r/100,8) + " }{12} \\right )^{12 t} \\) &larr; (plug in what you're given)</li>"; 
+	  how_to+="<li>\\( \\frac{" + A2 + "}{ " + P + " } = \\left ( 1 + \\frac{ " + rn(r/100,8) + " }{12} \\right )^{12 t} \\) &larr; (make problem simpler)</li>"; 
+	  how_to+="<li>\\( \\frac{" + A2 + "}{ " + P + " } = ( 1 + " + rn((r/100)/12,8) + " )^{12 t} \\) &larr; (evaluate expressions)</li>"; 
+	  how_to+="<li>\\( \\frac{" + A2 + "}{ " + P + " } = ( " + rn( Number(1)+(r/100)/12,8) + "  )^{12 t} \\) &larr; (add 1 to \\( \\frac{r}{12t} \\))</li>"; 
+	  how_to+="<li>\\( \\log \\left ( \\frac{" + A2 + "}{ " + P + " } \\right )  = \\log \\left ( ( " + rn(Number(1)+(r/100)/12,8) + "  )^{12 t} \\right ) \\) &larr; (take the log of both sides)</li>"; 
+	  how_to+="<li>\\( \\log \\left ( \\frac{" + A2 + "}{ " + P + " } \\right )  = 12 t \\log ( " + rn(Number(1)+(r/100)/12,8) + "  ) \\) &larr; (apply the properties of logs)</li>"; 
+	  how_to+="<li>\\( \\frac { \\log \\left ( \\frac{" + A2 + "}{ " + P + " } \\right ) }{ ( 12 \\log( " + rn(Number(1)+(r/100)/12,8) + " ) ) }  = t \\) &larr; (isolate \\( t \\) using Algebra and evaluate using a calculator)</li>"; 
+	  how_to+="<li>\\( " + rn(t2,5) + "  = t \\) &larr; (answer)</li>"; 
+	  how_to+="</ol>";
+	  how_to+="</ul>";
+
+
+	  
+	  how_to+="]]>";
+	  
+	  xml_text1+="<question type=\"cloze\"><name><text>" + name + "</text></name><questiontext format=\"html\"><text><![CDATA[";
+	  /* =========================================================================== */
+
+
+	  
+
+	  question_text+="<p>Using the <i>compound interest formula</i>: \\( A = P \\left ( 1 + \\frac{r}{n} \\right )^{ n t } \\), answer the questions below.</p>";
+	  question_text+="<p>If you invest " + formatter.format(P) + " at a rate of " + r + "% compounded monthly, how much will it be worth in " + t + " years?</p>";
+	  question_text+="<p>${1:NM:=" + A1 + ":" + A1_over_under + "}</p>";
+
+	  question_text+="<p>How long will it take for your " + formatter.format(P) + " to be worth " + formatter.format(A2) + "?</p>";
+	  question_text+="<p>{1:NM:=" + t2 + ":" + t2_over_under + "} years.</p>";
+
+
+	  
+	  /* =========================================================================== */
+	  xml_text2+="]]></text></questiontext><generalfeedback format=\"html\"><text>" + how_to + "</text></generalfeedback><penalty>0.3333333</penalty><hidden>0</hidden><correctfeedback format=\"html\"><text><![CDATA[<p>Good Show!</p>]]></text></correctfeedback><partiallycorrectfeedback format=\"html\"><text><![CDATA[<p>Your answer is partially correct.</p>]]></text></partiallycorrectfeedback><incorrectfeedback format=\"html\"><text><![CDATA[<p>Your answer is incorrect.</p>]]></text></incorrectfeedback><shownumcorrect/></question>";
+
+
+	  form1.clozetext.value+=xml_text1;
+	  form1.clozetext.value+=question_text;
+	  form1.clozetext.value+=xml_text2;
+	  QN++;
+	  return question_text;
+
+      }
+      function generate()
+      {
+	  var number_to_create = form1.number_to_create.value;
+
+	  /* Start at Question #1 */
+	  QN=1;
+
+	  /* reset the output */
+	  form1.clozetext.value="";
+
+	  /* add the xml header */
+	  form1.clozetext.value+="<?xml version=\"1.0\"?><quiz><question type=\"category\"><category><text>$course$/Compound Interest Problems</text></category></question>"
+
+	  /* create the desired number of questions */
+	  for( var i = 0; i< number_to_create; i++ )
+	  {
+	      /* generates 1 problem */
+	      create_problem();
+	  }
+
+	  /* add the xml footer */
+	  form1.clozetext.value+="</quiz>";
+	  
+      }
+      
+      </script>
+  </head>
+
+  <body>
+    <center>
+      <p>Using the <i>compound interest formula</i>: A=P(1+r/n)^(nt), answer the questions below.</p>
+      <p>If you invest $<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u> at a rate of <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>% compounded monthly, how much will it be worth in <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u> years?</p>
+      <p>How long will it take for your <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>% to be worth <u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>%?</p></center>
+    <form name='form1' action='' method='GET'>
+      
+      <p><textarea cols=80 rows=30 name='clozetext'></textarea></p>
+
+      <input type='button' onClick="javascript:generate();" value='Generate'>
+      <input type='text' id='number_to_create' name='number_to_create' size=10 value='1'></p>
+</form>
+<hr>
+<p><center><i><font size=-2>By: Mr. Pellegrino - 2022 04 01</font></i></center></p>
+</body>
+</html>
+

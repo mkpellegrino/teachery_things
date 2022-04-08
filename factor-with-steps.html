@@ -1,0 +1,498 @@
+<html>
+<head><title>Solve a Quadratic Equation - By: Mr. Pellegrino</title>
+  <script>
+
+    var global_dbg=1;
+
+
+    function LaTeX_footer()
+    {
+	var x='';
+	x+='\\end{document}\n';
+	return x;
+    }
+    
+    function LaTeX_header()
+    {
+	var x='';
+	x+='\\documentclass[12pt]{article}\n';
+	
+	x+='\\usepackage{geometry}\n';
+	x+='\\geometry{letterpaper, portrait, margin=0.75in}\n';
+	x+='\\usepackage{multicol}\n';
+	x+='\\begin{document}\n';
+	return x;
+    }
+
+    function dbg(i)
+    {
+	if( global_dbg == 1 )
+	{
+	    alert( "DEBUG MESSAGE: " + i );
+	}
+    }
+
+    function gcd(x, y) {
+	if ((typeof x !== 'number') || (typeof y !== 'number')) 
+	    return false;
+	x = Math.abs(x);
+	y = Math.abs(y);
+	while(y) {
+	    var t = y;
+	    y = x % y;
+	    x = t;
+	}
+	return x;
+    }
+
+
+    function format_trinomial(A,B,C)
+    {
+	var x='';
+
+	x+='\\( ';
+	if( A!=0 ) x+=pretty_no_plus(A) + 'x^{2} ';
+	if( B!=0 ) x+=pretty(B) + 'x ';
+	if( C!=0 ) x+=pretty_constant(C);
+	x+=' \\)';
+	
+	
+	return x;
+    }
+
+    function solve_using_quadratic_formula()
+    {
+	var x='';
+	var A=form1.A.value;
+	var B=form1.B.value;
+	var C=form1.C.value;
+
+	if( A == '' ) A = 0;
+	if( B == '' ) B = 0;
+	if( C == '' ) C = 0;
+	
+	var DISC=B*B-4*A*C;
+	var comp='';
+	if( DISC < 0 ) comp='i';
+
+	var SQRTDISC=Math.sqrt(Math.abs(DISC));
+	
+	x+='\\section*{Solve ';
+	x+=format_trinomial(A,B,C);
+	x+=' \\( = 0 \\) Using the Quadratic Formula}\n';
+	x+='\\begin{itemize}\n';
+	x+='\\item[] \\( x = \\frac{-(B)\\pm \\sqrt{(B)^{2} - 4(A)(C)}}{2(A)} \\ \\ \\ \\leftarrow \\) The Quadratic Formula\n';
+	x+='\\item \\( x = \\frac{-(' + B + ')\\pm \\sqrt{(' + B + ')^{2} - 4(' + A + ')(' + C + ')}}{2(' + A + ')}  \\ \\ \\ \\leftarrow \\) Plug in A, B, and C\n';
+	x+='\\item \\( x = \\frac{-(' + B + ')\\pm \\sqrt{' + B*B + ' - 4(' + A + ')(' + C + ')}}{2(' + A + ')}  \\ \\ \\ \\leftarrow \\) \\( (B)^2 \\)\n';
+	x+='\\item \\( x = \\frac{-(' + B + ')\\pm \\sqrt{' + B*B + ' - 4(' + A*C + ')}}{2(' + A + ')}  \\ \\ \\ \\leftarrow \\) \\(A \\times C \\)\n';
+	x+='\\item \\( x = \\frac{-(' + B + ')\\pm \\sqrt{' + B*B + ' - (' + 4*A*C + ')}}{2(' + A + ')}  \\ \\ \\ \\leftarrow \\) \\(\\times 4\\)\n';
+	x+='\\item \\( x = \\frac{-(' + B + ')\\pm \\sqrt{' + DISC + '}}{2(' + A + ')}  \\ \\ \\ \\leftarrow  \\) \\( B^2 - 4AC \\)\n';
+	x+='\\item \\( x = \\frac{-(' + B + ')\\pm \\sqrt{' + DISC + '}}{' + 2*A + '} \\ \\ \\ \\leftarrow  \\) \\( 2 \\times A \\) (in the denominator)\n';
+	x+='\\item \\( x = \\frac{' + B*(-1) + '\\pm \\sqrt{' + DISC + '}}{' + 2*A + '}  \\ \\ \\ \\leftarrow \\) \\( -(B) \\) (in the numerator on the left)\n';
+	x+='\\item \\( x = \\frac{' + B*(-1) + '\\pm ' + comp + SQRTDISC + '}{' + 2*A + '}  \\ \\ \\ \\leftarrow \\) Evaluate the Radical\n';
+	x+='\\item \\( x = ' + B*(-1)/(2*A) + '\\pm ' + comp + (SQRTDISC/(2*A)) + '  \\ \\ \\ \\leftarrow \\) Divide by \\( 2 A \\)  (the denominator)\n';
+	if( comp=='' )
+	{
+	    x+='\\item \\( x = ' + (B*(-1)/(2*A) + (SQRTDISC/(2*A))) + '  \\ \\ \\ \\leftarrow \\) Take care of the \\( \\pm \\) (+)\n';
+	    x+='\\item \\( x = ' + (B*(-1)/(2*A) - (SQRTDISC/(2*A))) + ' \\ \\ \\ \\leftarrow  \\) Take care of the \\( \\pm \\) (-)\n';
+	    x+='\\item[] \\( x \\in \\{ ' + (B*(-1)/(2*A) + (SQRTDISC/(2*A))) + ', ' + (B*(-1)/(2*A) - (SQRTDISC/(2*A))) + ' \\} \\ \\ \\ \\leftarrow \\) Solutions\n';
+	}
+	x+='\\end{itemize}\n';
+	form1.text_area.value=x;
+	
+	copyToClipboard(x);
+	//alert( "LaTeX has been copied to clipboard." );
+	
+    }
+
+    function factor_using_quadratic_formula()
+    {
+	var x='';
+
+	var A=form1.A.value;
+	var B=form1.B.value;
+	var C=form1.C.value;
+	x+='\\section*{Factor ';
+	x+=format_trinomial(A,B,C);;
+	x+=' Using the Quadratic Formula}\n';
+
+	if( B*B-4*A*C < 0 )
+	{
+	    x+='\\par{} \\noindent Discriminant: \\(' + pretty_constant(B*B-4*A*C) + '\\)\n';
+	    x+='\\par{} \\noindent ' + format_trinomial(A,B,C) +  ': Not factorable using the Quadratic Formula\n';
+	}
+	else if( Math.sqrt(B*B-4*A*C) == Math.floor( Math.sqrt(B*B-4*A*C) ) )
+	{
+
+	    x+='\\par{} \\noindent \\textbf{' + format_trinomial(A,B,C) +  '}\n';
+	    x+='\\begin{enumerate}\n';
+	    var S1=gcd(1*A,1*B);
+	    var S=gcd(1*S1,1*C);
+	    if( A<0 ) S=-1*S;
+	    if( S !=1 )
+	    {
+		x+='\\item Factor out GCF: \\(' + S + '\\) and save it for later!\n';
+	    }
+	    A=A/S;
+	    B=B/S;
+	    C=C/S;
+
+	    if( S!=1 ) x+='\\item[] ' + format_trinomial(A,B,C) + '\n';
+
+	    x+='\\item \\( x = \\frac{-(B)\\pm\\sqrt{(B)^{2}-4(A)(C)}}{2(A)}\\)\n';
+	    x+='\\par{} \\( A = ' + A + ' \\ \\ \\ B = ' + B + ' \\ \\ \\ C = ' + C + '\\)\n';
+	    x+='\\item \\( x = \\frac{-(' + B + ') \\pm\\sqrt{(' + B + ' )^{2}-4(' + A + ')(' + C + ')}}{2(' + A + ')}\\)\n';
+	    x+='\\item \\( x = \\frac{-(' + B + ') \\pm\\sqrt{(' + B + ' )^{2}-4(' + A*C + ')}}{2(' + A + ')}\\)\n';
+	    x+='\\item \\( x = \\frac{-(' + B + ') \\pm\\sqrt{(' + B + ' )^{2}-(' + 4*A*C + ')}}{2(' + A + ')}\\)\n';
+	    x+='\\item \\( x = \\frac{-(' + B + ') \\pm\\sqrt{' + B*B + ' - (' + 4*A*C + ')}}{2(' + A + ')}\\)\n';
+	    x+='\\item \\( x = \\frac{-(' + B + ') \\pm\\sqrt{' + ((B*B)+(-4*A*C)) + '}}{2(' + A + ')}\\)\n';
+	    x+='\\item \\( x = \\frac{-(' + B + ') \\pm ' + Math.sqrt(B*B-4*A*C) + '}{2(' + A + ')}\\)\n';
+	    x+='\\item \\( x = \\frac{-(' + B + ') \\pm ' + Math.sqrt(B*B-4*A*C) + '}{' + 2*A + '}\\)\n';
+	    x+='\\item \\( x = \\frac{' + (-1*B) + ' \\pm ' + Math.sqrt(B*B-4*A*C) + '}{' + 2*A + '}\\)\n';
+	    x+='\\item \\( x = \\frac{' + (-1*B) + ' + ' + Math.sqrt(B*B-4*A*C) + '}{' + 2*A + '}\\ \\ \\ \\ \\ \\ x = \\frac{' + (-1*B) + ' - ' + Math.sqrt(B*B-4*A*C) + '}{' + 2*A + '}\\)\n';
+	    x+='\\item \\( x = \\frac{' + ((-1*B) + Math.sqrt(B*B-4*A*C)) + '}{' + 2*A + '}\\ \\ \\ \\ \\ \\ x = \\frac{' + ((-1*B)- Math.sqrt(B*B-4*A*C)) + '}{' + 2*A + '}\\)\n';
+
+	    var N1=((-1*B) + Math.sqrt(B*B-4*A*C));
+	    var N2=((-1*B) - Math.sqrt(B*B-4*A*C));
+	    var D=2*A;
+
+	    N1t=N1;
+	    N2t=N2;
+	    N1=N1/gcd(N1,D);
+	    N2=N2/gcd(N2,D);
+	    
+	    D1=D/gcd(D,N1t);
+	    D2=D/gcd(D,N2t);
+
+	    x+='\\item \\( x = \\frac{' + N1 + '}{' + D1 + '}\\ \\ \\ \\ \\ \\ x = \\frac{' + N2 + '}{' + D2 + '}\\)\n';
+
+	    if( D1<0 )
+	    {
+		N1=-1*N1;
+		D1=-1*D1;
+	    }
+	    if( D2<0 )
+	    {
+		N2=-1*N2;
+		D2=-1*D2;
+	    }
+
+	    x+='\\item \\( ' + pretty_no_plus(D1) + 'x = ' + N1 + ' \\ \\ \\ \\ \\ \\ ' + pretty_no_plus(D2) + 'x = ' + N2 + '\\)\n';
+
+	    /* ---------------- */
+
+	    var F1='';
+	    var F2='';
+
+	    N1=N1*(-1);
+	    N2=N2*(-1);
+	    F1='( ' + pretty_no_plus(D1) + 'x ' + pretty_constant(N1) + ' )';
+	    F2='( ' + pretty_no_plus(D2) + 'x ' + pretty_constant(N2) + ' )';
+	    x+='\\item \\( ' + F1 + ' =0  \\ \\ \\ \\ \\ \\ ' + F2 + ' = 0 \\)\n';
+
+	    x+='\\item \\(' + pretty_no_plus(S) + F1 + F2 + ' \\)';
+	    if( S!=1 )x+='\\( \\ \\ \\ \\ \\ \\leftarrow \\) Contains the GCF from Step 1';
+		
+	    x+='\n\\end{enumerate}\n';
+	}
+	else
+	{
+	    x+='\\par{} \\noindent ' + format_trinomial(A,B,C) +  ': Factors contain irrational numbers.\n';
+	}
+	return x;
+	
+    }
+
+    function getSign( N )
+    {
+	var retVal = '+';
+	if( N < 0 ) retVal='-';
+	return retVal;
+    }
+    
+    function pretty( N )
+    {
+	// if N == 1, this returns nothing
+	// if N == -1, this returns -
+	// returns the sign with N: -5, +3, +92
+	var retVal = '';
+	retVal+=getSign(N);
+	if( Math.abs(N) != 1 ) retVal+=Math.abs(N);
+	return retVal;
+    }
+
+    function pretty_no_plus( N )
+    {
+	var retVal = '';
+	if( N == -1 )
+	{
+	    retVal+='-';
+	}
+	else if( N != 1 )
+	{
+	    retVal+=N;
+	}
+	return retVal;
+    }
+
+    function pretty_constant( N )
+    {
+	var retVal = '';
+	if( N > 0 )
+	{
+	    retVal+='+' + N;
+	}
+	if( N < 0 )
+	{
+	    retVal+=N;
+	}
+	return retVal;
+    }
+    
+    function factor_using_grouping()
+    {
+	var x='';
+
+	var A=form1.A.value;
+	var B=form1.B.value;
+	var C=form1.C.value;
+	x+='\\section*{Factor ';
+	x+=format_trinomial(A,B,C);
+	x+=' By Grouping}\n';
+	
+	if( B*B-4*A*C < 0 )
+	{
+	    x+='\\par{} \\noindent ' + format_trinomial(A,B,C) +  ': Not factorable by Grouping\n';
+	    return x;
+	}
+	else if( Math.sqrt(B*B-4*A*C) == Math.floor( Math.sqrt(B*B-4*A*C) ) )
+	{
+	    x+='\\par \\noindent \\textbf{' + format_trinomial(A,B,C) +  '}\n';
+	    x+='\\begin{enumerate}\n';
+	    var S1=gcd(1*A,1*B);
+	    var S=gcd(1*S1,1*C);
+	    if( A < 0 ) S=-1*S;
+	    if( S !=1 )
+	    {
+		x+='\\item Factor out GCF: \\(' + S + '\\) and save it for later!\n';
+
+	    }
+	    A=A/S;
+	    B=B/S;
+	    C=C/S;
+	    var B_sign='+';
+	    var C_sign='+';
+
+	    if( S!=1 ) x+='\\item[] ' + format_trinomial(A,B,C) + '\n';
+
+	    var AC=A*C;
+	    x+='\\item Multiply 1st and 3rd terms: \\(' + pretty_no_plus(A) + 'x^2 \\times ' + C + ' = ' + pretty_no_plus(AC) + 'x^2 \\)\n';
+	    x+='\\item Find 2 numbers that multiply to \\( ' + pretty_no_plus(AC) + ' x^2 \\) and add up to \\( ' + pretty_no_plus(B) + 'x \\) (the 2nd term in the expression)\n';
+	    
+	    var N1=(B+Math.sqrt(B*B-4*AC))/2;
+	    var N2=(B-Math.sqrt(B*B-4*AC))/2;
+
+	    var N1S = '+';
+	    var N2S = '+';
+
+	    var CS = '+';
+	    if( C < 0 ) CS = '-';
+
+	    if( N1 < 0 ) N1S = '-';
+	    if( N2 < 0 ) N2S = '-';
+
+	    x+='\\item[] The numbers are \\( ' + pretty_no_plus(N1) + 'x \\) and \\( ' + pretty_no_plus(N2) + 'x \\)\n';
+	    x+='\\item Split the 2nd term into those 2 numbers\n';
+	    x+='\\item[] Rewrite the expression as: \\( ' + pretty_no_plus(A) + ' x^{2} ' + pretty(N1) + 'x ' +pretty(N2) + 'x ' + pretty_constant(C) + ' \\)\n';
+	    x+='\\item Group the expression as: \\( (' + pretty_no_plus( A ) + 'x^{2} ' + pretty(N1) + 'x) \\ \\ \\  (' + pretty_no_plus(N2) + 'x ' + pretty_constant(C) + ') \\)\n';
+	    var G1 = gcd(A, N1);
+	    var A1 = A/G1;
+	    var B1 = N1/G1;
+	    var B1s = '+';
+	    if( B1<0 ) B1s='-';
+
+	    var G2 = gcd(N2, C);
+	    var A2 = N2/G2;
+	    if( A2 < 0 )
+	    {
+		A2=-1*A2;
+		G2=-1*G2;
+	    }
+	    var B2 = C/G2;
+	    var B2s = '+';
+	    if( B2<0 ) B2s='-';
+
+	    var G2s = '+';
+	    if( G2 < 0 ) G2s = '-';
+
+	    x+='\\item Factor out the GCF from each group (even if it is \\( 1 \\)):\n';
+	    x+='\\item[] \\( ' + pretty_no_plus(G1) + ' x ( ' + pretty_no_plus(A1) + ' x' + pretty_constant(B1) + ')' + pretty_constant(G2) + '( ' + pretty_no_plus(A2) + 'x ' + pretty_constant(B2) + ') \\)\n';
+
+	    x+='\\item Factor out the group: \\( ( ' + pretty_no_plus(A2) + 'x ' + pretty_constant(B2) + ') \\)\n';
+
+	    var tmp = '( ' + pretty_no_plus(G1) +'x ' + pretty_constant(G2) + ')(' + pretty_no_plus(A1) + 'x ' + pretty_constant(B1) + ') \\)\n';
+	    x+='\\item[] \\( ' + tmp;
+	    
+	    if( S != 1)
+	    {
+		x+='\\item Dont forget the GCF from step 1\n\\item[] \\( ' + pretty_no_plus(S) + tmp;
+	    }
+	    
+	    x+='\\end{enumerate}\n';
+	}
+	else
+	{
+	    x+='\\par{} \\noindent ' + format_trinomial(A,B,C) +  ': Factors contain irrational numbers.\n';
+	}
+	return x;
+
+    }
+
+    function factor_using_slide_and_divide()
+    {
+	var x='';
+
+	var A=form1.A.value;
+	var B=form1.B.value;
+	var C=form1.C.value;
+	x+='\\section*{Factor ';
+	x+=format_trinomial(A,B,C);
+	x+=' Using Slide and Divide}\n';
+
+	if( B*B-4*A*C < 0 )
+	{
+	    x+='\\par{} \\noindent ' + format_trinomial(A,B,C) +  ': Not factorable using Slide and Divide\n';
+	    return x;
+	}
+	else if( Math.sqrt(B*B-4*A*C) == Math.floor( Math.sqrt(B*B-4*A*C) ) )
+	{
+	    x+='\\par \\noindent \\textbf{' + format_trinomial(A,B,C) +  '}\n';
+	    x+='\\begin{enumerate}\n';
+	    var S1=gcd(1*A,1*B);
+	    var S=gcd(1*S1,1*C);
+	    if( A < 0 ) S=-1*S;
+	    if( S !=1 )
+	    {
+		x+='\\item Factor out GCF: \\(' + S + '\\) and save it for later!\n';
+
+	    }
+	    A=A/S;
+	    B=B/S;
+	    C=C/S;
+	    //var B_sign='+';
+	    //var C_sign='+';
+
+	    if( S!= 1 ) x+='\\item[] ' + format_trinomial(A,B,C) + '\n';
+
+	    var AC=A*C;
+	    x+='\\item ' + format_trinomial( 1, B, AC ) + ' (\\textit{Slide} 1st coefficient to the 3rd - multiply them)\n';
+
+	    x+='\\item \\( ( x \\ \\ \\ \\ \\ \\ \\ )( x \\ \\ \\ \\ \\ \\ \\ )\\) (Set up your factors)\n';
+
+	    var N1=(B+Math.sqrt(B*B-4*AC))/2;
+	    var N2=(B-Math.sqrt(B*B-4*AC))/2;
+
+	    var N1S = '+';
+	    var N2S = '+';
+
+	    if( N1 < 0 ) N1S = '-';
+	    if( N2 < 0 ) N2S = '-';
+
+	    x+='\\item \\( \\left ( x ' + N1S + '\\frac{' + Math.abs(N1) + '}{ \\ } \\right ) \\left ( x ' + N2S + '\\frac{' + Math.abs(N2) + '}{ \\ }  \\right ) \\) (Numbers that add up to ' + B + ' and multiply to ' + AC + ')\n';
+
+	    x+='\\item \\( \\left ( x ' + N1S + '\\frac{' + Math.abs(N1) + '}{ ' + A + ' } \\right ) \\left ( x ' + N2S + '\\frac{' + Math.abs(N2) + '}{ ' + A + ' }  \\right ) \\) (Replace the number you \\textit{Slid})\n';
+
+	    var G1=gcd(N1,A);
+	    var G2=gcd(N2,A);
+
+	    var N1a = N1/G1;
+	    var A1 = A/G1;
+	    var N2a = N2/G2;
+	    var A2 = A/G2;
+	    
+	    x+='\\item \\( \\left ( x ' + N1S + '\\frac{' + Math.abs(N1a) + '}{ ' + A1 + ' } \\right ) \\left ( x ' + N2S + '\\frac{' + Math.abs(N2a) + '}{ ' + A2 + ' }  \\right ) \\) (Reduce fractions \\textit{if possible})\n';
+
+	    var F1='';
+	    var F2='';
+	    F1='( ' + pretty_no_plus(A1) + 'x ' + pretty_constant(N1a) + ')';
+	    F2='( ' + pretty_no_plus(A2) + 'x ' + pretty_constant(N2a) + ')';
+	    x+='\\item \\( ' + pretty_no_plus(S) + F1 + F2 + '\\) (\\textit{Slide} the denominators to the 1st term in each group';
+	    if( S!=1) x+='and add in the GCF from Step 1';
+	    x+=')\n\\end{enumerate}\n';
+	}
+	else
+	{
+	    x+='\\par{} \\noindent ' + format_trinomial(A,B,C) +  ': Factors contain irrational numbers.\n';
+	}
+
+	
+	return x;
+    }
+
+    function factor()
+    {
+	var x='';
+
+	if( !form1.sd.checked && !form1.gp.checked && !form1.qf.checked )
+	{
+	    alert( "No Factoring Method Selected! Please Choose one!" );
+	}
+	else
+	{
+	    
+	    x+=LaTeX_header();
+	    if( form1.gp.checked )
+	    {
+		x+=factor_using_grouping();
+		x+='\\newpage\n';
+	    }
+	    if( form1.sd.checked )
+	    {
+		x+=factor_using_slide_and_divide();
+		x+='\\newpage\n';
+	    }
+	    if( form1.qf.checked )
+	    {
+		x+=factor_using_quadratic_formula();
+	    }
+	    x+=LaTeX_footer();
+	    form1.text_area.value=x;
+
+	    copyToClipboard(x);
+	    alert( "LaTeX has been copied to clipboard." );
+	}
+    }
+
+    function copyToClipboard(text)
+    {
+	var dummy = document.createElement("textarea");
+	document.body.appendChild(dummy);
+	dummy.value = text;
+	dummy.select();
+	document.execCommand("copy");
+	document.body.removeChild(dummy);
+    }
+    
+
+</script>
+</head>
+
+<body>
+  <form name='form1' action='' method='GET'>
+
+    <p>A:<input type='text' id='A' name='A' size=1>&nbsp;&nbsp;&nbsp;B:<input type='text' id='B' name='B' size=1>&nbsp;&nbsp;&nbsp;C:<input type='text' id='C' name='C' size=1></p>
+    <ul>
+      <li><input type="checkbox" id="sd" checked> &nbsp;Slide and Divide</li>
+      <li><input type="checkbox" id="gp" checked> &nbsp;Grouping</li>
+      <li><input type="checkbox" id="qf" checked> &nbsp;Quadratic Formula</li>
+    </ul>
+    <p><input type='button' onClick="javascript:factor();" value='Factor'><input type='button' onClick="javascript:solve_using_quadratic_formula();" value='Solve'></p>
+    <p>This is the LaTeX:</p>
+    <p><textarea cols=80 rows=20 name='text_area'></textarea></p>
+  </form>
+  <hr>
+  <p><center><font size=-2><i>Coded By: Mr. Pellegrino - Last Updated on: 2020 10 22</i></font></center></p>
+  
+</body>
+</html>
+

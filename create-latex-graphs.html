@@ -1,0 +1,2162 @@
+<html>
+<head><title>Create a LaTeX Graphs - By: Mr. Pellegrino - September 28, 2021</title>
+  <script>
+
+    var global_dbg=0;
+
+    function getd()
+    {
+	var d = new Date();
+	var x='';
+	x=d.toLocaleDateString();
+	alert(x);
+    }
+    
+    function dbg(i)
+    {
+	if( global_dbg == 1 )
+	{
+	    alert( "DEBUG MESSAGE: " + i );
+	}
+    }
+    
+    function clr()
+    {
+    if (confirm('Are you sure you want to CLEAR EVERYTHING?'))
+	{
+	    form1.A.value='0';
+	    form1.B.value='0';
+	    form1.C.value='0';
+	}
+    }
+
+    function random_numbers()
+    {
+
+	var VA=Math.floor(Math.random() * 14)-7;
+	if( VA<=0 ) VA=VA-1;
+	var VB=Math.floor(Math.random() * 19)-9;
+	if( VB<=0 ) VB=VB-1;
+	var VC=Math.floor(Math.random() * 19)-9;
+	if( VC<=0 ) VC=VC-1;
+
+	form1.A.value=VA;
+	form1.B.value=VB;
+	form1.C.value=VC;
+    }
+
+    function make_random_test()
+    {
+	var x='';
+	var k='';
+
+	x=form1.text_area.value; // (1)
+	k=form1.answer_key.value;
+
+	// Header
+	x+='\\documentclass[11pt]{article}\n';
+	x+='\\usepackage{amsmath}\n';
+	
+	x+='\\usepackage{geometry}\n';
+	x+='\\geometry{letterpaper, portrait, margin=0.5in}\n';
+	x+='\\usepackage{multicol}\n';
+	x+='\\usepackage{tikz}\n';
+	x+='\\usepackage{graphicx}\n';
+	x+='\\usepackage{amssymb}\n';
+	x+='\\newcommand*{\\xMin}{-12}\n';
+	x+='\\newcommand*{\\xStep}{-10}\n';
+	x+='\\newcommand*{\\xMax}{12}\n';
+	x+='\\newcommand*{\\yMin}{-12}\n';
+	x+='\\newcommand*{\\yStep}{-10}\n';
+	x+='\\newcommand*{\\yMax}{12}\n';
+	x+='\\newcommand*{\\myScale}{0.25}\n';
+	x+='\\title{Honors Precalculus Test\\\\Writing \\& Graphing Functions}\n';
+	x+='\\author{Name: \\underline{ \\ \ \\ \ \\ \ \\ \ \\ \ \\ \ \\ \ \\ \ \\ \ \\ \ \\ \ \\ \ \\ \ \\ \ \\ \ \\ \ \\ \ \\ \ \\ \ \\ \ \\ \ \\ \ \\ \ \\ \ \\ \  } \\\\ \\\\ Block: D \\ F \\ G \\\\ \\\\Teacher: Mr. Pellegrino }\n';
+
+	var d = new Date();
+	x+='\\date{' + d.toLocaleDateString() + '}\n';
+	x+='\\begin{document}\n';
+	x+='\\maketitle\n';
+	x+='\\newpage\n';
+	x+='\\begin{enumerate}\n';
+	x+='\\begin{multicols}{2}\n';
+
+	form1.text_area.value=x; // (2)
+
+	x='';
+	dbg(1);
+	
+	for( var W=1; W<=14; W++ )
+	{
+	    
+	    random_numbers();
+	    if( W == 1 ) form1.graph_type.value='Constant';
+	    else if( W == 2 ) form1.graph_type.value='Linear';
+	    else if( W == 3 )
+	    {
+		// Makes all 3 points on the Quadratic Function
+		// on the coordinate plane
+		while( C+A > 11 )
+		{
+		    C--;
+		}
+		while( C+A < -11 )
+		{
+		    C++;
+		}
+		while( C+A > 11 )
+		{
+		    A--;
+		}
+		while( C+A < -11 )
+		{
+		    A--;
+		}
+
+		form1.graph_type.value='Quadratic';
+	    }
+	    else if( W == 4 ) form1.graph_type.value='Cubic';
+	    else if( W == 5 )
+	    {
+		// Makes sure all 3 points on the Absolute Value Function
+		// are on the coordinate plane
+		while( C+A > 11 )
+		{
+		    C--;
+		}
+		while( C+A < -11 )
+		{
+		    C++;
+		}
+		while( C+A > 11 )
+		{
+		    A--;
+		}
+		while( C+A < -11 )
+		{
+		    A--;
+		}
+
+
+		form1.graph_type.value='Absolute_Value';
+	    }
+	    else if( W == 6 )
+	    {
+		// Makes sure all points 
+		// are on the coordinate plane
+		while( C+A > 11 )
+		{
+		    C--;
+		}
+		while( C+A < -11 )
+		{
+		    C++;
+		}
+		while( C+A > 11 )
+		{
+		    A--;
+		}
+		while( C+A < -11 )
+		{
+		    A--;
+		}
+
+
+		form1.graph_type.value='Square_Root';
+	    }
+	    else if( W == 7 ) form1.graph_type.value='Logarithmic';
+	    else if( W == 8 )
+	    {
+				// Makes sure all points 
+		// are on the coordinate plane
+		while( C+A > 11 )
+		{
+		    C--;
+		}
+		while( C+A < -11 )
+		{
+		    C++;
+		}
+		while( C+A > 11 )
+		{
+		    A--;
+		}
+		while( C+A < -11 )
+		{
+		    A--;
+		}
+
+		form1.graph_type.value='Exponential';
+	    }
+	    else if( W == 9 ) form1.graph_type.value='Floor';
+	    else if( W == 10 ) form1.graph_type.value='Ceiling';
+	    else if( W == 11 )
+	    {
+				// Makes sure all points 
+		// are on the coordinate plane
+		while( C+A > 11 )
+		{
+		    C--;
+		}
+		while( C+A < -11 )
+		{
+		    C++;
+		}
+		while( C+A > 11 )
+		{
+		    A--;
+		}
+		while( C+A < -11 )
+		{
+		    A--;
+		}
+
+		form1.graph_type.value='Reciprocal';
+	    }
+	    else if( W == 12 )
+	    {
+				// Makes sure all points 
+		// are on the coordinate plane
+		while( C+A > 11 )
+		{
+		    C--;
+		}
+		while( C+A < -11 )
+		{
+		    C++;
+		}
+		while( C+A > 11 )
+		{
+		    A--;
+		}
+		while( C+A < -11 )
+		{
+		    A--;
+		}
+
+		form1.graph_type.value='Sine';
+	    }
+	    else if( W == 13 )
+	    {
+				// Makes sure all points 
+		// are on the coordinate plane
+		while( C+A > 11 )
+		{
+		    C--;
+		}
+		while( C+A < -11 )
+		{
+		    C++;
+		}
+		while( C+A > 11 )
+		{
+		    A--;
+		}
+		while( C+A < -11 )
+		{
+		    A--;
+		}
+
+		form1.graph_type.value='Cosine';
+	    }
+	    else if( W == 14 ) form1.graph_type.value='Tangent';
+	    add();
+	    
+	    x=form1.text_area.value;
+
+	    k=form1.answer_key.value;
+
+	    // mkpellegrino - 2021 09 27
+	    //x+='\\columnbreak\n';
+	    //k+='\\columnbreak\n';
+
+	    if((W == 2) || (W == 4) || (W == 6) || (W == 8) || (W == 10) || (W == 12) || (W == 14))
+	    {
+		x+='\\end{multicols}\n';
+		//x+='\\end{enumerate}\n';
+		//k+='\\end{multicols}\n';
+		//k+='\\end{enumerate}\n';
+		
+		//mkpellegrino - 2021 09 27
+		//if( (W==4) || (W==8) || (W==12)  )
+		if( (W==6) || (W==12)  )
+		{
+		    x+='\\newpage\n';
+		    //k+='\\newpage\n';
+		}
+		if( W<14 )
+		{
+		    x+='\\begin{multicols}{2}\n';
+		    //k+='\\begin{multicols}{2}\n';
+		}
+		//if( W == 14 ) k+='\\begin{multicols}{2}\n';
+	    }
+	    form1.text_area.value=x; // (4)
+
+	    form1.answer_key.value=k;
+	    x='';
+	    k=''
+	}
+
+	x=form1.text_area.value;
+	k=form1.answer_key.value;
+
+	x+='\\newpage\n\\begin{multicols}{2}\n';
+	k+='\\newpage\n\\begin{multicols}{2}\n';
+
+	form1.text_area.value=x;
+	form1.answer_key.value=k;
+
+	k='';
+	x='';
+	// You Graph!
+	for( var W=1; W<=14; W++ )
+	{
+	    
+	    random_numbers();
+	    if( W == 1 ) form1.graph_type.value='Constant';
+	    else if( W == 2 ) form1.graph_type.value='Linear';
+	    else if( W == 3 )
+	    {
+		// Makes sure all points 
+		// are on the coordinate plane
+		while( C+A > 11 )
+		{
+		    C--;
+		}
+		while( C+A < -11 )
+		{
+		    C++;
+		}
+		while( C+A > 11 )
+		{
+		    A--;
+		}
+		while( C+A < -11 )
+		{
+		    A--;
+		}
+		form1.graph_type.value='Quadratic';
+	    }
+	    else if( W == 4 )
+	    {
+				// Makes sure all points 
+		// are on the coordinate plane
+		while( C+A > 11 )
+		{
+		    C--;
+		}
+		while( C+A < -11 )
+		{
+		    C++;
+		}
+		while( C+A > 11 )
+		{
+		    A--;
+		}
+		while( C+A < -11 )
+		{
+		    A--;
+		}
+
+		form1.graph_type.value='Cubic';
+	    }
+	    else if( W == 5 )
+	    {
+				// Makes sure all points 
+		// are on the coordinate plane
+		while( C+A > 11 )
+		{
+		    C--;
+		}
+		while( C+A < -11 )
+		{
+		    C++;
+		}
+		while( C+A > 11 )
+		{
+		    A--;
+		}
+		while( C+A < -11 )
+		{
+		    A--;
+		}
+
+		form1.graph_type.value='Absolute_Value';
+	    }
+	    else if( W == 6 )
+	    {
+				// Makes sure all points 
+		// are on the coordinate plane
+		while( C+A > 11 )
+		{
+		    C--;
+		}
+		while( C+A < -11 )
+		{
+		    C++;
+		}
+		while( C+A > 11 )
+		{
+		    A--;
+		}
+		while( C+A < -11 )
+		{
+		    A--;
+		}
+
+		form1.graph_type.value='Square_Root';
+	    }
+	    else if( W == 7 ) form1.graph_type.value='Logarithmic';
+	    else if( W == 8 )
+	    {
+				// Makes sure all points 
+		// are on the coordinate plane
+		while( C+A > 11 )
+		{
+		    C--;
+		}
+		while( C+A < -11 )
+		{
+		    C++;
+		}
+		while( C+A > 11 )
+		{
+		    A--;
+		}
+		while( C+A < -11 )
+		{
+		    A--;
+		}
+
+		form1.graph_type.value='Exponential';
+	    }
+	    else if( W == 9 ) form1.graph_type.value='Floor';
+	    else if( W == 10 ) form1.graph_type.value='Ceiling';
+	    else if( W == 11 )
+	    {
+				// Makes sure all points 
+		// are on the coordinate plane
+		while( C+A > 11 )
+		{
+		    C--;
+		}
+		while( C+A < -11 )
+		{
+		    C++;
+		}
+		while( C+A > 11 )
+		{
+		    A--;
+		}
+		while( C+A < -11 )
+		{
+		    A--;
+		}
+
+		form1.graph_type.value='Reciprocal';
+	    }
+	    else if( W == 12 )
+	    {
+				// Makes sure all points 
+		// are on the coordinate plane
+		while( C+A > 11 )
+		{
+		    C--;
+		}
+		while( C+A < -11 )
+		{
+		    C++;
+		}
+		while( C+A > 11 )
+		{
+		    A--;
+		}
+		while( C+A < -11 )
+		{
+		    A--;
+		}
+
+		form1.graph_type.value='Sine';
+	    }
+	    else if( W == 13 )
+	    {
+				// Makes sure all points 
+		// are on the coordinate plane
+		while( C+A > 11 )
+		{
+		    C--;
+		}
+		while( C+A < -11 )
+		{
+		    C++;
+		}
+		while( C+A > 11 )
+		{
+		    A--;
+		}
+		while( C+A < -11 )
+		{
+		    A--;
+		}
+
+		form1.graph_type.value='Cosine';
+	    }
+	    else if( W == 14 ) form1.graph_type.value='Tangent';
+	    addStudentGraph();
+	    
+	    x=form1.text_area.value;
+	    k=form1.answer_key.value;
+
+	    // mkpellegrino - 2021 09 27
+	    //x+='\\columnbreak\n';
+	    //+='\\columnbreak\n';
+
+	    if((W == 2) || (W == 4) || (W == 6) || (W == 8) || (W == 10) || (W == 12) || (W == 14))
+	    {
+		x+='\\end{multicols}\n';
+		//x+='\\end{enumerate}\n';
+		k+='\\end{multicols}\n';
+		//k+='\\end{enumerate}\n';
+		// mkpellegrino - 2021 09 27
+		//if( (W==4) || (W==8) || (W==12)  )
+		if( (W==6) || (W==12)  )		    
+		{
+		    x+='\\newpage\n';
+		    k+='\\newpage\n';
+		}
+		if( W<14 )
+		{
+		    x+='\\begin{multicols}{2}\n';
+		    k+='\\begin{multicols}{2}\n';
+		}
+	    }
+	    form1.text_area.value=x;
+	    form1.answer_key.value=k;
+	    x='';
+	    k=''
+	}
+
+	x=form1.text_area.value;
+	k=form1.answer_key.value;
+
+	x+='\\end{enumerate}\n';
+	k+='\\end{enumerate}\n';
+
+	form1.text_area.value=x;
+	form1.answer_key.value=k;
+
+	form1.full_test.value=x+'\\newpage\n\\section{Answer Key}\n\\begin{enumerate}\n' + k + '\\end{document}\n';
+    }
+    
+    
+    function rndeqNOTRIG()
+    {
+
+	var VA=Math.floor(Math.random() * 14)-7;
+	if( VA<=0 ) VA=VA-1;
+	var VB=Math.floor(Math.random() * 21)-10;
+	if( VB<=0 ) VB=VB-1;
+	var VC=Math.floor(Math.random() * 21)-10;
+	if( VC<=0 ) VC=VC-1;
+
+	
+
+	form1.A.value=VA;
+	form1.B.value=VB;
+	form1.C.value=VC;
+
+	var W = Math.floor(Math.random() * 11)+1;
+
+	if( W == 1 ) form1.graph_type.value='Constant';
+	else if( W == 2 ) form1.graph_type.value='Linear';
+	else if( W == 3 ) form1.graph_type.value='Quadratic';
+	else if( W == 4 ) form1.graph_type.value='Cubic';
+	else if( W == 5 ) form1.graph_type.value='Absolute_Value';
+	else if( W == 6 ) form1.graph_type.value='Square_Root';
+	else if( W == 7 ) form1.graph_type.value='Logarithmic';
+	else if( W == 8 ) form1.graph_type.value='Exponential';
+	else if( W == 9 ) form1.graph_type.value='Floor';
+	else if( W == 10 ) form1.graph_type.value='Ceiling';
+	else if( W == 11 ) form1.graph_type.value='Reciprocal';
+	else alert( ' *** Error ***\nRandom Number: ' + W );
+
+	add();
+    }
+
+    
+    function rndeq()
+    {
+
+	var VA=Math.floor(Math.random() * 14)-7;
+	if( VA<=0 ) VA=VA-1;
+	var VB=Math.floor(Math.random() * 10);
+	var VC=Math.floor(Math.random() * 10);
+
+	form1.A.value=VA;
+	form1.B.value=VB;
+	form1.C.value=VC;
+
+	var W = Math.floor(Math.random() * 14)+1;
+
+	if( W == 1 ) form1.graph_type.value='Constant';
+	else if( W == 2 ) form1.graph_type.value='Linear';
+	else if( W == 3 ) form1.graph_type.value='Quadratic';
+	else if( W == 4 ) form1.graph_type.value='Cubic';
+	else if( W == 5 ) form1.graph_type.value='Absolute_Value';
+	else if( W == 6 ) form1.graph_type.value='Square_Root';
+	else if( W == 7 ) form1.graph_type.value='Logarithmic';
+	else if( W == 8 ) form1.graph_type.value='Exponential';
+	else if( W == 9 ) form1.graph_type.value='Sine';
+	else if( W == 10 ) form1.graph_type.value='Cosine';
+	else if( W == 11 ) form1.graph_type.value='Tangent';
+	else if( W == 12 ) form1.graph_type.value='Floor';
+	else if( W == 13 ) form1.graph_type.value='Ceiling';
+	else if( W == 14 ) form1.graph_type.value='Reciprocal';
+	else alert( ' *** Error ***\nRandom Number: ' + W );
+
+	add();
+    }
+
+    function rndgr()
+    {
+
+	var VA=Math.floor(Math.random() * 14)-7;
+	if( VA<=0 ) VA=VA-1;
+	var VB=Math.floor(Math.random() * 10);
+	var VC=Math.floor(Math.random() * 10);
+
+	form1.A.value=VA;
+	form1.B.value=VB;
+	form1.C.value=VC;
+
+	var W = Math.floor(Math.random() * 14)+1;
+
+	if( W == 1 ) form1.graph_type.value='Constant';
+	else if( W == 2 ) form1.graph_type.value='Linear';
+	else if( W == 3 ) form1.graph_type.value='Quadratic';
+	else if( W == 4 ) form1.graph_type.value='Cubic';
+	else if( W == 5 ) form1.graph_type.value='Absolute_Value';
+	else if( W == 6 ) form1.graph_type.value='Square_Root';
+	else if( W == 7 ) form1.graph_type.value='Logarithmic';
+	else if( W == 8 ) form1.graph_type.value='Exponential';
+	else if( W == 9 ) form1.graph_type.value='Sine';
+	else if( W == 10 ) form1.graph_type.value='Cosine';
+	else if( W == 11 ) form1.graph_type.value='Tangent';
+	else if( W == 12 ) form1.graph_type.value='Floor';
+	else if( W == 13 ) form1.graph_type.value='Ceiling';
+	else if( W == 14 ) form1.graph_type.value='Reciprocal';
+	else alert( ' *** Error ***\nRandom Number: ' + W );
+
+	addStudentGraph();
+    }
+    
+    function addStudentGraph()
+    {
+	var A='';
+	var B='';
+	var C='';
+
+	var x='';
+	var k='';
+	x=form1.text_area.value;
+	k=form1.answer_key.value;
+	
+	if( form1.A.value=='' ) form1.A.value=1;
+	if( form1.B.value=='' ) form1.B.value=0;
+	if( form1.C.value=='' ) form1.C.value=0;
+	A=form1.A.value;
+	B=form1.B.value;
+	C=form1.C.value;
+
+	var y=form1.graph_type.value;
+	x+='%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n';
+	k+='%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n';
+	x+='%%% A=' + A + ' B=' + B + ' C=' + C + ' ( ' + y + ' )\n%%%\n';
+	k+='%%% A=' + A + ' B=' + B + ' C=' + C + ' ( ' + y + ' )\n%%%\n';
+	if( y=='Constant')
+	{
+	    x+='\\item Graph \\( f(x)= ' + C + ' \\)\\\\\n';
+	    // Blank Coordinate Plane
+	    x+='\\begin{tikzpicture}[xscale=\\myScale,yscale=\\myScale]\n\\draw[thin,color=gray,step=1cm] (\\xMin,\\yMin) grid (\\xMax,\\yMax);\n\\draw[thick,<->] (\\xMin-0.25,0) -- (\\xMax+0.25,0);\n\\draw[thick,<->] (0,\\yMin-0.25) -- (0,\\yMax+0.25);\n\\node at (\\xMax+0.75, 0) {\\scriptsize $x$};\n\\node at (0, \\yMax+0.75) {\\scriptsize $y$};\\foreach \\x in {\\xMin,\\xStep,...,\\xMax}\\draw[shift={(\\x,\\yMin)},color=black] node[below] {\\tiny \\x};\n\\foreach \\y in {\\yMin,\\yStep,...,\\yMax}  \\draw[shift={(\\xMin-0.8,\\y+0.9)},color=black] node[below]{\\tiny \\y};\n';
+	    x+='\\clip (\\xMin,\\yMin) rectangle (\\xMax,\\yMax);\n';
+	    x+='\\end{tikzpicture}\n';
+
+
+	    // ADD ANSWER TO ANSWER KEY HERE
+	    // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+	    k+='\\item \\( \\ \\) \\\\ \n';
+	    var LB=-12;
+	    var RB=12;
+	    
+	    k+='\\begin{tikzpicture}[xscale=\\myScale,yscale=\\myScale]\n\\draw[thin,color=gray,step=1cm] (\\xMin,\\yMin) grid (\\xMax,\\yMax);\n\\draw[thick,<->] (\\xMin-0.25,0) -- (\\xMax+0.25,0);\n\\draw[thick,<->] (0,\\yMin-0.25) -- (0,\\yMax+0.25);\n\\node at (\\xMax+0.75, 0) {\\scriptsize $x$};\n\\node at (0, \\yMax+0.75) {\\scriptsize $y$};\\foreach \\x in {\\xMin,\\xStep,...,\\xMax}\\draw[shift={(\\x,\\yMin)},color=black] node[below] {\\tiny \\x};\n\\foreach \\y in {\\yMin,\\yStep,...,\\yMax}  \\draw[shift={(\\xMin-0.8,\\y+0.9)},color=black] node[below]{\\tiny \\y};\n';
+	   
+	    k+='\\clip (\\xMin,\\yMin) rectangle (\\xMax,\\yMax);\n';
+
+	    
+	    k+='\\draw[line width=0.5mm,-,domain=' + LB + ':' + RB + ',smooth,variable=\\x,blue,samples=300] plot (\\x, { ' + C + ' } );\n';
+	    k+='\\fill[blue] (0,' + C + ') circle (2.75mm);\n'
+	    k+='\\fill[blue] (1,' + C + ') circle (2.75mm);\n'
+	    k+='\\fill[blue] (-1,' + C + ') circle (2.75mm);\n'
+	    k+='\\end{tikzpicture}\n';
+
+	    // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+	    
+	}
+	else if( y=='Linear')
+	{
+	    x+='\\item Graph \\( f(x)= ';
+	    if( A == 1 )
+	    { /* */ }
+	    else if( A == -1 )
+	    { x+='-'; }
+	    else x+=''+ A;
+	    x+='( x ';
+	    if( B<0 ) x+= '- ';
+	    if( B>0 ) x+= '+ ';
+	    if( B!=0 ){x+=Math.abs(B);}
+	    x+=' )';
+	    if( C<0 ) x+= ' - ';
+	    if( C>0 ) x+= ' + ';
+	    if( C!=0 ) x+=Math.abs(C);
+	    x+=' \\)\\\\\n';
+	    // Blank Coordinate Plane
+	    x+='\\begin{tikzpicture}[xscale=\\myScale,yscale=\\myScale]\n\\draw[thin,color=gray,step=1cm] (\\xMin,\\yMin) grid (\\xMax,\\yMax);\n\\draw[thick,<->] (\\xMin-0.25,0) -- (\\xMax+0.25,0);\n\\draw[thick,<->] (0,\\yMin-0.25) -- (0,\\yMax+0.25);\n\\node at (\\xMax+0.75, 0) {\\scriptsize $x$};\n\\node at (0, \\yMax+0.75) {\\scriptsize $y$};\\foreach \\x in {\\xMin,\\xStep,...,\\xMax}\\draw[shift={(\\x,\\yMin)},color=black] node[below] {\\tiny \\x};\n\\foreach \\y in {\\yMin,\\yStep,...,\\yMax}  \\draw[shift={(\\xMin-0.8,\\y+0.9)},color=black] node[below]{\\tiny \\y};\n';
+	    x+='\\clip (\\xMin,\\yMin) rectangle (\\xMax,\\yMax);\n';
+	    x+='\\end{tikzpicture}\n';
+
+
+	    // ADD ANSWER TO ANSWER KEY HERE
+	    k+='\\item \\( \\ \\) \\\\ \n';
+
+	    k+='\\begin{tikzpicture}[xscale=\\myScale,yscale=\\myScale]\n\\draw[thin,color=gray,step=1cm] (\\xMin,\\yMin) grid (\\xMax,\\yMax);\n\\draw[thick,<->] (\\xMin-0.25,0) -- (\\xMax+0.25,0);\n\\draw[thick,<->] (0,\\yMin-0.25) -- (0,\\yMax+0.25);\n\\node at (\\xMax+0.75, 0) {\\scriptsize $x$};\n\\node at (0, \\yMax+0.75) {\\scriptsize $y$};\\foreach \\x in {\\xMin,\\xStep,...,\\xMax}\\draw[shift={(\\x,\\yMin)},color=black] node[below] {\\tiny \\x};\n\\foreach \\y in {\\yMin,\\yStep,...,\\yMax}  \\draw[shift={(\\xMin-0.8,\\y+0.9)},color=black] node[below]{\\tiny \\y};\n';
+	    k+='\\clip (\\xMin,\\yMin) rectangle (\\xMax,\\yMax);\n';
+
+	    k+='\\draw[line width=0.5mm,-,domain=-12:12,smooth,variable=\\x,blue,samples=300] plot (\\x, { ' + A + '*(\\x + ' + B + ' ) + ' + C + ' } );\n';
+	    k+='\\fill[blue] (' + -B + ',' + C + ') circle (2.75mm);\n';
+	    k+='\\fill[blue] (' + ((-B)+(+1)) + ',' + ((+C)+(+A)) + ') circle (2.75mm);\n';
+	    k+='\\fill[blue] (' + ((-B)+(-1)) + ',' + ((+C)+(-A)) + ') circle (2.75mm);\n';
+	    k+='\\end{tikzpicture}\n';
+	    // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+	    
+	}
+	else if( y=='Quadratic')
+	{
+	    x+='\\item Graph \\( f(x)= ';
+	    if( A == 1 )
+	    { /* */ }
+	    else if( A == -1 )
+	    { x+='-'; }
+	    else x+=''+ A;
+	    x+='( x ';
+	    if( B<0 ) x+= '- ';
+	    if( B>0 ) x+= '+ ';
+	    if( B!=0 ){x+=Math.abs(B);}
+	    x+=' )^2';
+	    if( C<0 ) x+= ' - ';
+	    if( C>0 ) x+= ' + ';
+	    if( C!=0 ) x+=Math.abs(C);
+	    x+=' \\)\\\\\n';
+	    // Blank Coordinate Plane
+	    x+='\\begin{tikzpicture}[xscale=\\myScale,yscale=\\myScale]\n\\draw[thin,color=gray,step=1cm] (\\xMin,\\yMin) grid (\\xMax,\\yMax);\n\\draw[thick,<->] (\\xMin-0.25,0) -- (\\xMax+0.25,0);\n\\draw[thick,<->] (0,\\yMin-0.25) -- (0,\\yMax+0.25);\n\\node at (\\xMax+0.75, 0) {\\scriptsize $x$};\n\\node at (0, \\yMax+0.75) {\\scriptsize $y$};\\foreach \\x in {\\xMin,\\xStep,...,\\xMax}\\draw[shift={(\\x,\\yMin)},color=black] node[below] {\\tiny \\x};\n\\foreach \\y in {\\yMin,\\yStep,...,\\yMax}  \\draw[shift={(\\xMin-0.8,\\y+0.9)},color=black] node[below]{\\tiny \\y};\n';
+	    x+='\\clip (\\xMin,\\yMin) rectangle (\\xMax,\\yMax);\n';
+	    x+='\\end{tikzpicture}\n';
+
+
+	    // ADD ANSWER TO ANSWER KEY HERE
+	    k+='\\item \\( \\ \\) \\\\ \n';
+	    var LB=-B-5;
+	    if (-B-5 < -12) LB=-12;
+	    var RB=-B+5;
+	    if (-B+5 > 12 ) RB=12;
+
+
+	    k+='\\begin{tikzpicture}[xscale=\\myScale,yscale=\\myScale]\n\\draw[thin,color=gray,step=1cm] (\\xMin,\\yMin) grid (\\xMax,\\yMax);\n\\draw[thick,<->] (\\xMin-0.25,0) -- (\\xMax+0.25,0);\n\\draw[thick,<->] (0,\\yMin-0.25) -- (0,\\yMax+0.25);\n\\node at (\\xMax+0.75, 0) {\\scriptsize $x$};\n\\node at (0, \\yMax+0.75) {\\scriptsize $y$};\\foreach \\x in {\\xMin,\\xStep,...,\\xMax}\\draw[shift={(\\x,\\yMin)},color=black] node[below] {\\tiny \\x};\n\\foreach \\y in {\\yMin,\\yStep,...,\\yMax}  \\draw[shift={(\\xMin-0.8,\\y+0.9)},color=black] node[below]{\\tiny \\y};\n';
+	    k+='\\clip (\\xMin,\\yMin) rectangle (\\xMax,\\yMax);\n';
+	    var point_1 = ((-B)+(+1));
+	    var point_2 = ((-B)+(-1));
+	    k+='\\draw[line width=0.5mm,-,domain=' + LB + ':' + RB + ',smooth,variable=\\x,blue,samples=300] plot (\\x, { ' + A + '*(\\x + ' + B + ' )^2 + ' + C + ' } );\n';
+	    k+='\\fill[blue] (' + -B + ',' + C + ') circle (2.75mm);\n'
+	    k+='\\fill[blue] (' + point_1 + ',' + ((+C)+(+A)) + ') circle (2.75mm);\n'
+	    k+='\\fill[blue] (' + point_2 + ',' + ((+C)+(+A)) + ') circle (2.75mm);\n'
+	    k+='\\end{tikzpicture}\n';
+
+	    // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+	    
+	}
+	else if( y=='Cubic')
+	{
+	    x+='\\item Graph \\( f(x)= ';
+	    if( A == 1 )
+	    { /* */ }
+	    else if( A == -1 )
+	    { x+='-'; }
+	    else x+=''+ A;
+	    x+='( x ';
+	    if( B<0 ) x+= '- ';
+	    if( B>0 ) x+= '+ ';
+	    if( B!=0 ){x+=Math.abs(B);}
+	    x+=' )^3';
+	    if( C<0 ) x+= ' - ';
+	    if( C>0 ) x+= ' + ';
+	    if( C!=0 ) x+=Math.abs(C);
+	    x+=' \\)\\\\\n';
+	    // Blank Coordinate Plane
+	    x+='\\begin{tikzpicture}[xscale=\\myScale,yscale=\\myScale]\n\\draw[thin,color=gray,step=1cm] (\\xMin,\\yMin) grid (\\xMax,\\yMax);\n\\draw[thick,<->] (\\xMin-0.25,0) -- (\\xMax+0.25,0);\n\\draw[thick,<->] (0,\\yMin-0.25) -- (0,\\yMax+0.25);\n\\node at (\\xMax+0.75, 0) {\\scriptsize $x$};\n\\node at (0, \\yMax+0.75) {\\scriptsize $y$};\\foreach \\x in {\\xMin,\\xStep,...,\\xMax}\\draw[shift={(\\x,\\yMin)},color=black] node[below] {\\tiny \\x};\n\\foreach \\y in {\\yMin,\\yStep,...,\\yMax}  \\draw[shift={(\\xMin-0.8,\\y+0.9)},color=black] node[below]{\\tiny \\y};\n';
+	    x+='\\clip (\\xMin,\\yMin) rectangle (\\xMax,\\yMax);\n';
+	    x+='\\end{tikzpicture}\n';
+
+
+	    // ADD ANSWER TO ANSWER KEY HERE 
+	    k+='\\item \\( \\ \\) \\\\ \n';
+
+	    var LB=-B-3;
+	    if (-B-3 < -12) LB=-12;
+	    var RB=-B+3;
+	    if (-B+3 > 12 ) RB=12;
+
+	    k+='\\begin{tikzpicture}[xscale=\\myScale,yscale=\\myScale]\n\\draw[thin,color=gray,step=1cm] (\\xMin,\\yMin) grid (\\xMax,\\yMax);\n\\draw[thick,<->] (\\xMin-0.25,0) -- (\\xMax+0.25,0);\n\\draw[thick,<->] (0,\\yMin-0.25) -- (0,\\yMax+0.25);\n\\node at (\\xMax+0.75, 0) {\\scriptsize $x$};\n\\node at (0, \\yMax+0.75) {\\scriptsize $y$};\\foreach \\x in {\\xMin,\\xStep,...,\\xMax}\\draw[shift={(\\x,\\yMin)},color=black] node[below] {\\tiny \\x};\n\\foreach \\y in {\\yMin,\\yStep,...,\\yMax}  \\draw[shift={(\\xMin-0.8,\\y+0.9)},color=black] node[below]{\\tiny \\y};\n';
+	   
+
+	    k+='\\clip (\\xMin,\\yMin) rectangle (\\xMax,\\yMax);\n';
+
+	    
+	    k+='\\draw[line width=0.5mm,-,domain=' + LB + ':' + RB + ',smooth,variable=\\x,blue,samples=300] plot (\\x, { ' + A + '*(\\x + ' + B + ' )^3 + ' + C + ' } );\n';
+	    k+='\\fill[blue] (' + -B + ',' + C + ') circle (2.75mm);\n';
+	    k+='\\fill[blue] (' + ((-B)+(+1)) + ',' + ((+C)+(+A)) + ') circle (2.75mm);\n';
+	    k+='\\fill[blue] (' + ((-B)+(-1)) + ',' + ((+C)+(-A)) + ') circle (2.75mm);\n';
+	    k+='\\end{tikzpicture}\n';
+
+	    // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+	    
+	}
+	else if( y=='Reciprocal')
+	{
+	    x+='\\item Graph \\( f(x)= ';
+	    if( A == 1 )
+	    { /* */ }
+	    else if( A == -1 )
+	    { x+='-'; }
+	    else x+=''+ A;
+	    x+='( x ';
+	    if( B<0 ) x+= '- ';
+	    if( B>0 ) x+= '+ ';
+	    if( B!=0 ){x+=Math.abs(B);}
+	    x+=' )^{-1}';
+	    if( C<0 ) x+= ' - ';
+	    if( C>0 ) x+= ' + ';
+	    if( C!=0 ) x+=Math.abs(C);
+	    x+=' \\)\\\\\n';
+	    // Blank Coordinate Plane
+
+	    x+='\\begin{tikzpicture}[xscale=\\myScale,yscale=\\myScale]\n\\draw[thin,color=gray,step=1cm] (\\xMin,\\yMin) grid (\\xMax,\\yMax);\n\\draw[thick,<->] (\\xMin-0.25,0) -- (\\xMax+0.25,0);\n\\draw[thick,<->] (0,\\yMin-0.25) -- (0,\\yMax+0.25);\n\\node at (\\xMax+0.75, 0) {\\scriptsize $x$};\n\\node at (0, \\yMax+0.75) {\\scriptsize $y$};\\foreach \\x in {\\xMin,\\xStep,...,\\xMax}\\draw[shift={(\\x,\\yMin)},color=black] node[below] {\\tiny \\x};\n\\foreach \\y in {\\yMin,\\yStep,...,\\yMax}  \\draw[shift={(\\xMin-0.8,\\y+0.9)},color=black] node[below]{\\tiny \\y};\n';
+	    x+='\\clip (\\xMin,\\yMin) rectangle (\\xMax,\\yMax);\n';
+	    x+='\\end{tikzpicture}\n';
+
+	    // ADD ANSWER TO ANSWER KEY HERE
+	    k+='\\item \\( \\ \\) \\\\ \n';
+
+	    k+='\\begin{tikzpicture}[xscale=\\myScale,yscale=\\myScale]\n\\draw[thin,color=gray,step=1cm] (\\xMin,\\yMin) grid (\\xMax,\\yMax);\n\\draw[thick,<->] (\\xMin-0.25,0) -- (\\xMax+0.25,0);\n\\draw[thick,<->] (0,\\yMin-0.25) -- (0,\\yMax+0.25);\n\\node at (\\xMax+0.75, 0) {\\scriptsize $x$};\n\\node at (0, \\yMax+0.75) {\\scriptsize $y$};\\foreach \\x in {\\xMin,\\xStep,...,\\xMax}\\draw[shift={(\\x,\\yMin)},color=black] node[below] {\\tiny \\x};\n\\foreach \\y in {\\yMin,\\yStep,...,\\yMax}  \\draw[shift={(\\xMin-0.8,\\y+0.9)},color=black] node[below]{\\tiny \\y};\n';
+	    k+='\\clip (\\xMin,\\yMin) rectangle (\\xMax,\\yMax);\n';
+
+	    var B1=((-B)+(-0.1));
+	    var B2=((-B)+(+0.1));
+	    k+='\\draw[line width=0.5mm,-,domain=-12:'+B1+',smooth,variable=\\x,blue,samples=300] plot (\\x, { ' + A + '/(\\x + ' + B + ' ) + ' + C + ' } );\n';
+	    k+='\\draw[line width=0.5mm,-,domain='+B2+':12,smooth,variable=\\x,blue,samples=300] plot (\\x, { ' + A + '/(\\x + ' + B + ' ) + ' + C + ' } );\n';
+
+	    k+='\\draw[blue] (' + -B + ',' + C + ') circle [radius=2.75mm];\n';
+
+	    k+='\\fill[blue] (' + ((-B)+(-1)) + ',' + ((+C)+(-A)) + ') circle (2.75mm);\n';
+	    k+='\\fill[blue] (' + ((-B)+(+1)) + ',' + ((+C)+(+A)) + ') circle (2.75mm);\n';
+
+	    k+='\\draw [dashed,line width=0.5mm,red] (-12,' + C + ') -- (12,' + C + ');\n';
+	    k+='\\draw [dashed,line width=0.5mm,red] ('+ -B + ',-12) -- (' + -B + ',12);\n';
+	    k+='\\end{tikzpicture}\n';
+
+	    // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+	    
+	}
+	else if( y=='Square_Root')
+	{
+	    x+='\\item Graph \\( f(x)= ';
+	    if( A == 1 )
+	    { /* */ }
+	    else if( A == -1 )
+	    { x+='-'; }
+	    else x+=''+ A;
+	    x+='\\sqrt{ x ';
+	    if( B<0 ) x+= '- ';
+	    if( B>0 ) x+= '+ ';
+	    if( B!=0 ){x+=Math.abs(B);}
+	    x+=' }';
+	    if( C<0 ) x+= ' - ';
+	    if( C>0 ) x+= ' + ';
+	    if( C!=0 ) x+=Math.abs(C);
+	    x+=' \\)\\\\\n';
+	    // Blank Coordinate Plane
+
+	    x+='\\begin{tikzpicture}[xscale=\\myScale,yscale=\\myScale]\n\\draw[thin,color=gray,step=1cm] (\\xMin,\\yMin) grid (\\xMax,\\yMax);\n\\draw[thick,<->] (\\xMin-0.25,0) -- (\\xMax+0.25,0);\n\\draw[thick,<->] (0,\\yMin-0.25) -- (0,\\yMax+0.25);\n\\node at (\\xMax+0.75, 0) {\\scriptsize $x$};\n\\node at (0, \\yMax+0.75) {\\scriptsize $y$};\\foreach \\x in {\\xMin,\\xStep,...,\\xMax}\\draw[shift={(\\x,\\yMin)},color=black] node[below] {\\tiny \\x};\n\\foreach \\y in {\\yMin,\\yStep,...,\\yMax}  \\draw[shift={(\\xMin-0.8,\\y+0.9)},color=black] node[below]{\\tiny \\y};\n';
+	    x+='\\clip (\\xMin,\\yMin) rectangle (\\xMax,\\yMax);\n';
+	    x+='\\end{tikzpicture}\n';
+
+
+	    // ADD ANSWER TO ANSWER KEY HERE
+	    k+='\\item \\( \\ \\) \\\\ \n';
+
+	    k+='\\begin{tikzpicture}[xscale=\\myScale,yscale=\\myScale]\n\\draw[thin,color=gray,step=1cm] (\\xMin,\\yMin) grid (\\xMax,\\yMax);\n\\draw[thick,<->] (\\xMin-0.25,0) -- (\\xMax+0.25,0);\n\\draw[thick,<->] (0,\\yMin-0.25) -- (0,\\yMax+0.25);\n\\node at (\\xMax+0.75, 0) {\\scriptsize $x$};\n\\node at (0, \\yMax+0.75) {\\scriptsize $y$};\\foreach \\x in {\\xMin,\\xStep,...,\\xMax}\\draw[shift={(\\x,\\yMin)},color=black] node[below] {\\tiny \\x};\n\\foreach \\y in {\\yMin,\\yStep,...,\\yMax}  \\draw[shift={(\\xMin-0.8,\\y+0.9)},color=black] node[below]{\\tiny \\y};\n';
+	    k+='\\clip (\\xMin,\\yMin) rectangle (\\xMax,\\yMax);\n';
+	    k+='\\draw[line width=0.5mm,-,domain=' + -B + ':12,smooth,variable=\\x,blue,samples=300] plot (\\x, { ' + A + '*sqrt(\\x + ' + B + ' ) + ' + C + ' } );\n';
+	    k+='\\fill[blue] (' + -B + ',' + C + ') circle (2.75mm);\n'
+	    k+='\\fill[blue] (' + (-B+1) + ',' + ((+C)+(+A)) + ') circle (2.75mm);\n'
+	    k+='\\end{tikzpicture}\n';
+
+	    // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+	    
+	}
+	else if( y=='Logarithmic')
+	{
+	    A=Math.abs(A);
+	    if( A == 1 ) A=2.71828;
+
+	    x+='\\item Graph \\( f(x)= ';
+	    if( A > 0  )
+	    { /* */ }
+	    else if( A < 0 )
+	    { x+='-'; }
+	    if( A == 2.71828 )
+	    {
+		x+='\\ln';
+	    }
+	    else if( A == 10 )
+	    {
+		x+='\\log';
+	    }
+	    else
+	    {
+		x+='\\log\_'+A;
+	    }
+	    x+='( x ';
+	    if( B<0 ) x+= '- ';
+	    if( B>0 ) x+= '+ ';
+	    if( B!=0 ){x+=Math.abs(B);}
+	    x+=' )';
+	    if( C<0 ) x+= ' - ';
+	    if( C>0 ) x+= ' + ';
+	    if( C!=0 ) x+=Math.abs(C);
+	    x+=' \\)\\\\\n';
+	    // Blank Coordinate Plane
+	    x+='\\begin{tikzpicture}[xscale=\\myScale,yscale=\\myScale]\n\\draw[thin,color=gray,step=1cm] (\\xMin,\\yMin) grid (\\xMax,\\yMax);\n\\draw[thick,<->] (\\xMin-0.25,0) -- (\\xMax+0.25,0);\n\\draw[thick,<->] (0,\\yMin-0.25) -- (0,\\yMax+0.25);\n\\node at (\\xMax+0.75, 0) {\\scriptsize $x$};\n\\node at (0, \\yMax+0.75) {\\scriptsize $y$};\\foreach \\x in {\\xMin,\\xStep,...,\\xMax}\\draw[shift={(\\x,\\yMin)},color=black] node[below] {\\tiny \\x};\n\\foreach \\y in {\\yMin,\\yStep,...,\\yMax}  \\draw[shift={(\\xMin-0.8,\\y+0.9)},color=black] node[below]{\\tiny \\y};\n';
+	    x+='\\clip (\\xMin,\\yMin) rectangle (\\xMax,\\yMax);\n';
+	    x+='\\end{tikzpicture}\n';
+
+
+	    // ADD ANSWER TO ANSWER KEY HERE
+	    k+='\\item \\( \\ \\) \\\\ \n';
+	    A=1;
+
+	    k+='\\begin{tikzpicture}[xscale=\\myScale,yscale=\\myScale]\n\\draw[thin,color=gray,step=1cm] (\\xMin,\\yMin) grid (\\xMax,\\yMax);\n\\draw[thick,<->] (\\xMin-0.25,0) -- (\\xMax+0.25,0);\n\\draw[thick,<->] (0,\\yMin-0.25) -- (0,\\yMax+0.25);\n\\node at (\\xMax+0.75, 0) {\\scriptsize $x$};\n\\node at (0, \\yMax+0.75) {\\scriptsize $y$};\\foreach \\x in {\\xMin,\\xStep,...,\\xMax}\\draw[shift={(\\x,\\yMin)},color=black] node[below] {\\tiny \\x};\n\\foreach \\y in {\\yMin,\\yStep,...,\\yMax}  \\draw[shift={(\\xMin-0.8,\\y+0.9)},color=black] node[below]{\\tiny \\y};\n';
+	    k+='\\clip (\\xMin,\\yMin) rectangle (\\xMax,\\yMax);\n';
+	    k+='\\draw[line width=0.5mm,-,domain=' + ((-B)+(+0.001)) + ':12,smooth,variable=\\x,blue,samples=300] plot (\\x, { ' + A + '*ln(\\x + ' + B + ' ) + ' + C + ' } );\n';
+	    k+='\\fill[blue] (' + ((-B)+(+1)) + ',' + C + ') circle (2.75mm);\n'
+	    k+='%%% LOG HERE\n\\fill[blue] (' + ((-B)+(+2.71828)) + ',' + (+1+C) + ') circle (2.75mm);\n'
+
+	    k+='\\draw [dashed,line width=0.5mm,red] (' + -B + ',-12) -- (' + -B + ',12);\n'
+	    k+='\\end{tikzpicture}\n';
+
+	    // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+	    
+	}
+	else if( y=='Exponential')
+	{
+	    A=Math.abs(A);
+	    if( A == 1 ) A=2.71828;
+	    x+='\\item Graph \\( f(x)= ';
+	    if( A == 1 )
+	    { /* */ }
+	    else if( A == -1 )
+	    { x+='-'; }
+	    else if( A == 2.71828 )
+	    { x+='e'; }
+	    else x+=''+ A;
+	    x+='^{( x ';
+	    if( B<0 ) x+= '- ';
+	    if( B>0 ) x+= '+ ';
+	    if( B!=0 ){x+=Math.abs(B);}
+	    x+=' ) }';
+	    if( C<0 ) x+= ' - ';
+	    if( C>0 ) x+= ' + ';
+	    if( C!=0 ) x+=Math.abs(C);
+	    x+=' \\)\\\\\n';
+	    // Blank Coordinate Plane
+
+	    x+='\\begin{tikzpicture}[xscale=\\myScale,yscale=\\myScale]\n\\draw[thin,color=gray,step=1cm] (\\xMin,\\yMin) grid (\\xMax,\\yMax);\n\\draw[thick,<->] (\\xMin-0.25,0) -- (\\xMax+0.25,0);\n\\draw[thick,<->] (0,\\yMin-0.25) -- (0,\\yMax+0.25);\n\\node at (\\xMax+0.75, 0) {\\scriptsize $x$};\n\\node at (0, \\yMax+0.75) {\\scriptsize $y$};\\foreach \\x in {\\xMin,\\xStep,...,\\xMax}\\draw[shift={(\\x,\\yMin)},color=black] node[below] {\\tiny \\x};\n\\foreach \\y in {\\yMin,\\yStep,...,\\yMax}  \\draw[shift={(\\xMin-0.8,\\y+0.9)},color=black] node[below]{\\tiny \\y};\n';
+	    x+='\\clip (\\xMin,\\yMin) rectangle (\\xMax,\\yMax);\n';
+	    x+='\\end{tikzpicture}\n';
+
+
+	    // ADD ANSWER TO ANSWER KEY HERE
+	    k+='\\item \\( \\ \\) \\\\ \n';
+	    
+
+	    k+='\\begin{tikzpicture}[xscale=\\myScale,yscale=\\myScale]\n\\draw[thin,color=gray,step=1cm] (\\xMin,\\yMin) grid (\\xMax,\\yMax);\n\\draw[thick,<->] (\\xMin-0.25,0) -- (\\xMax+0.25,0);\n\\draw[thick,<->] (0,\\yMin-0.25) -- (0,\\yMax+0.25);\n\\node at (\\xMax+0.75, 0) {\\scriptsize $x$};\n\\node at (0, \\yMax+0.75) {\\scriptsize $y$};\\foreach \\x in {\\xMin,\\xStep,...,\\xMax}\\draw[shift={(\\x,\\yMin)},color=black] node[below] {\\tiny \\x};\n\\foreach \\y in {\\yMin,\\yStep,...,\\yMax}  \\draw[shift={(\\xMin-0.8,\\y+0.9)},color=black] node[below]{\\tiny \\y};\n';
+	    k+='\\clip (\\xMin,\\yMin) rectangle (\\xMax,\\yMax);\n';
+	    var B1=(-B+5);
+	    k+='\\draw[line width=0.5mm,-,domain=-12:'+B1+',smooth,variable=\\x,blue,samples=300] plot (\\x, { ' + A + '^(\\x + ' + B + ' ) + ' + C + ' } );\n';
+	    var D = ((+C)+(+A));
+	    //k+='\\fill[red] (' + -B + ',' + D + ') circle (2.75mm);\n'
+	    //k+='\\fill[red] (' + Number(1*A-B) + ',' + Number(1*D+1) + ') circle (2.75mm);\n'
+	    k+='\\fill[red] (' + D + ',' + -B + ') circle (2.75mm);\n'
+	    k+='\\fill[red] (' + Number(1*D+1) + ',' + Number(1*A-B) + ') circle (2.75mm);\n'
+
+	    k+='\\draw [dashed,line width=0.5mm,red] (-12,' + C + ') -- (12,' + C + ');\n'
+	    k+='\\end{tikzpicture}\n';
+
+	    // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+	    
+	}
+	else if( y=='Absolute_Value')
+	{
+	    x+='\\item Graph \\( f(x)= ';
+	    if( A == 1 )
+	    { /* */ }
+	    else if( A == -1 )
+	    { x+='-'; }
+	    else x+=''+ A;
+	    x+='| x ';
+	    if( B<0 ) x+= '- ';
+	    if( B>0 ) x+= '+ ';
+	    if( B!=0 ){x+=Math.abs(B);}
+	    x+=' |';
+	    if( C<0 ) x+= ' - ';
+	    if( C>0 ) x+= ' + ';
+	    if( C!=0 ) x+=Math.abs(C);
+	    x+=' \\)\\\\\n';
+	    // Blank Coordinate Plane
+
+	    x+='\\begin{tikzpicture}[xscale=\\myScale,yscale=\\myScale]\n\\draw[thin,color=gray,step=1cm] (\\xMin,\\yMin) grid (\\xMax,\\yMax);\n\\draw[thick,<->] (\\xMin-0.25,0) -- (\\xMax+0.25,0);\n\\draw[thick,<->] (0,\\yMin-0.25) -- (0,\\yMax+0.25);\n\\node at (\\xMax+0.75, 0) {\\scriptsize $x$};\n\\node at (0, \\yMax+0.75) {\\scriptsize $y$};\\foreach \\x in {\\xMin,\\xStep,...,\\xMax}\\draw[shift={(\\x,\\yMin)},color=black] node[below] {\\tiny \\x};\n\\foreach \\y in {\\yMin,\\yStep,...,\\yMax}  \\draw[shift={(\\xMin-0.8,\\y+0.9)},color=black] node[below]{\\tiny \\y};\n';
+	    x+='\\clip (\\xMin,\\yMin) rectangle (\\xMax,\\yMax);\n';
+	    x+='\\end{tikzpicture}\n';
+
+
+	    // ADD ANSWER TO ANSWER KEY HERE
+	    k+='\\item \\( \\ \\) \\\\ \n';
+
+	    k+='\\begin{tikzpicture}[xscale=\\myScale,yscale=\\myScale]\n\\draw[thin,color=gray,step=1cm] (\\xMin,\\yMin) grid (\\xMax,\\yMax);\n\\draw[thick,<->] (\\xMin-0.25,0) -- (\\xMax+0.25,0);\n\\draw[thick,<->] (0,\\yMin-0.25) -- (0,\\yMax+0.25);\n\\node at (\\xMax+0.75, 0) {\\scriptsize $x$};\n\\node at (0, \\yMax+0.75) {\\scriptsize $y$};\\foreach \\x in {\\xMin,\\xStep,...,\\xMax}\\draw[shift={(\\x,\\yMin)},color=black] node[below] {\\tiny \\x};\n\\foreach \\y in {\\yMin,\\yStep,...,\\yMax}  \\draw[shift={(\\xMin-0.8,\\y+0.9)},color=black] node[below]{\\tiny \\y};\n';
+	    k+='\\clip (\\xMin,\\yMin) rectangle (\\xMax,\\yMax);\n';
+	    k+='\\draw[line width=0.5mm,-,domain=-12:12,smooth,variable=\\x,blue,samples=300] plot (\\x, { ' + A + '*abs(\\x + ' + B + ' ) + ' + C + ' } );\n';
+	    k+='\\fill[blue] (' + -B + ',' + C + ') circle (2.75mm);\n'
+	    k+='\\fill[blue] (' + ((-B)+(+1)) + ',' + ((+C)+(+A)) + ') circle (2.75mm);\n'
+	    k+='\\fill[blue] (' + ((-B)+(-1)) + ',' + ((+C)+(+A)) + ') circle (2.75mm);\n'
+	    k+='\\end{tikzpicture}\n';
+	    
+	    // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+	    
+	}
+	else if( y=='Floor')
+	{
+	    x+='\\item Graph \\( f(x)= ';
+	    if( A == 1 )
+	    { /* */ }
+	    else if( A == -1 )
+	    { x+='-'; }
+	    else x+=''+ A;
+	    x+='\\lfloor{ x ';
+	    if( B<0 ) x+= '- ';
+	    if( B>0 ) x+= '+ ';
+	    if( B!=0 ){x+=Math.abs(B);}
+	    x+=' } \\rfloor ';
+	    if( C<0 ) x+= ' - ';
+	    if( C>0 ) x+= ' + ';
+	    if( C!=0 ) x+=Math.abs(C);
+	    x+=' \\)\\\\\n';
+	    // Blank Coordinate Plane
+
+	    x+='\\begin{tikzpicture}[xscale=\\myScale,yscale=\\myScale]\n\\draw[thin,color=gray,step=1cm] (\\xMin,\\yMin) grid (\\xMax,\\yMax);\n\\draw[thick,<->] (\\xMin-0.25,0) -- (\\xMax+0.25,0);\n\\draw[thick,<->] (0,\\yMin-0.25) -- (0,\\yMax+0.25);\n\\node at (\\xMax+0.75, 0) {\\scriptsize $x$};\n\\node at (0, \\yMax+0.75) {\\scriptsize $y$};\\foreach \\x in {\\xMin,\\xStep,...,\\xMax}\\draw[shift={(\\x,\\yMin)},color=black] node[below] {\\tiny \\x};\n\\foreach \\y in {\\yMin,\\yStep,...,\\yMax}  \\draw[shift={(\\xMin-0.8,\\y+0.9)},color=black] node[below]{\\tiny \\y};\n';
+	    x+='\\clip (\\xMin,\\yMin) rectangle (\\xMax,\\yMax);\n';
+	    x+='\\end{tikzpicture}\n';
+
+
+	    // ADD ANSWER TO ANSWER KEY HERE *****
+	    k+='\\item \\( \\ \\) \\\\ \n';
+
+
+	    k+='\\begin{tikzpicture}[xscale=\\myScale,yscale=\\myScale]\n\\draw[thin,color=gray,step=1cm] (\\xMin,\\yMin) grid (\\xMax,\\yMax);\n\\draw[thick,<->] (\\xMin-0.25,0) -- (\\xMax+0.25,0);\n\\draw[thick,<->] (0,\\yMin-0.25) -- (0,\\yMax+0.25);\n\\node at (\\xMax+0.75, 0) {\\scriptsize $x$};\n\\node at (0, \\yMax+0.75) {\\scriptsize $y$};\\foreach \\x in {\\xMin,\\xStep,...,\\xMax}\\draw[shift={(\\x,\\yMin)},color=black] node[below] {\\tiny \\x};\n\\foreach \\y in {\\yMin,\\yStep,...,\\yMax}  \\draw[shift={(\\xMin-0.8,\\y+0.9)},color=black] node[below]{\\tiny \\y};\n';
+	    k+='\\clip (\\xMin,\\yMin) rectangle (\\xMax,\\yMax);\n';
+
+	    for( var i=-11.99; i<=11.99; i++ )
+	    {
+		k+='\\draw[line width=0.5mm,-,domain=' + i + ':' + ((+i)+(+0.98)) + ',smooth,variable=\\x,blue,samples=300] plot (\\x, { ' + A + '*floor(\\x + ' + B + ' ) + ' + C + ' } );\n';
+	    }
+	    for( var i=-12; i<=12; i++ )
+	    {
+		k+='\\fill[blue] (' + i + ',' + (A*Math.floor( ((+i)+(+B)) ) + (+C)) + ') circle (2.75mm);\n';
+		k+='\\draw[blue] (' + ((+i)+(1)) + ',' + (A*Math.floor( ((+i)+(+B)) ) + (+C)) + ') circle [radius=2.75mm];\n';
+	    }
+
+	    for( var i=-12; i<=12; i++ )
+	    {
+		//k+='\\draw[blue] (' + i + ',' + ((-i)*(-A)+(+C)) + ') circle [radius=2.75mm];\n';
+		
+	    }
+	    
+	    k+='\\end{tikzpicture}\n';
+
+	    // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+	    
+	}
+	else if( y=='Ceiling')
+	{
+	    x+='\\item Graph \\( f(x)= ';
+	    if( A == 1 )
+	    { /* */ }
+	    else if( A == -1 )
+	    { x+='-'; }
+	    else x+=''+ A;
+	    x+='\\lceil{ x ';
+	    if( B<0 ) x+= '- ';
+	    if( B>0 ) x+= '+ ';
+	    if( B!=0 ){x+=Math.abs(B);}
+	    x+=' } \\rceil ';
+	    if( C<0 ) x+= ' - ';
+	    if( C>0 ) x+= ' + ';
+	    if( C!=0 ) x+=Math.abs(C);
+	    x+=' \\)\\\\\n';
+	    // Blank Coordinate Plane
+
+	    x+='\\begin{tikzpicture}[xscale=\\myScale,yscale=\\myScale]\n\\draw[thin,color=gray,step=1cm] (\\xMin,\\yMin) grid (\\xMax,\\yMax);\n\\draw[thick,<->] (\\xMin-0.25,0) -- (\\xMax+0.25,0);\n\\draw[thick,<->] (0,\\yMin-0.25) -- (0,\\yMax+0.25);\n\\node at (\\xMax+0.75, 0) {\\scriptsize $x$};\n\\node at (0, \\yMax+0.75) {\\scriptsize $y$};\\foreach \\x in {\\xMin,\\xStep,...,\\xMax}\\draw[shift={(\\x,\\yMin)},color=black] node[below] {\\tiny \\x};\n\\foreach \\y in {\\yMin,\\yStep,...,\\yMax}  \\draw[shift={(\\xMin-0.8,\\y+0.9)},color=black] node[below]{\\tiny \\y};\n';
+	    x+='\\clip (\\xMin,\\yMin) rectangle (\\xMax,\\yMax);\n';
+	    x+='\\end{tikzpicture}\n';
+
+
+	    // ADD ANSWER TO ANSWER KEY HERE
+	    k+='\\item \\( \\ \\) \\\\ \n';
+
+
+	    k+='\\begin{tikzpicture}[xscale=\\myScale,yscale=\\myScale]\n\\draw[thin,color=gray,step=1cm] (\\xMin,\\yMin) grid (\\xMax,\\yMax);\n\\draw[thick,<->] (\\xMin-0.25,0) -- (\\xMax+0.25,0);\n\\draw[thick,<->] (0,\\yMin-0.25) -- (0,\\yMax+0.25);\n\\node at (\\xMax+0.75, 0) {\\scriptsize $x$};\n\\node at (0, \\yMax+0.75) {\\scriptsize $y$};\\foreach \\x in {\\xMin,\\xStep,...,\\xMax}\\draw[shift={(\\x,\\yMin)},color=black] node[below] {\\tiny \\x};\n\\foreach \\y in {\\yMin,\\yStep,...,\\yMax}  \\draw[shift={(\\xMin-0.8,\\y+0.9)},color=black] node[below]{\\tiny \\y};\n';
+	    k+='\\clip (\\xMin,\\yMin) rectangle (\\xMax,\\yMax);\n';
+	    for( var i=-11.99; i<=11.99; i++ )
+	    {
+		k+='\\draw[line width=0.5mm,-,domain=' + i + ':' + ((+i)+(+0.98)) + ',smooth,variable=\\x,blue,samples=300] plot (\\x, { ' + A + '*ceil(\\x + ' + B + ' ) + ' + C + ' } );\n';
+	    }
+	    for( var i=-12; i<=12; i++ )
+	    {
+		k+='\\fill[blue] (' + i + ',' + (A*Math.ceil( ((+i)+(+B)) ) + (+C)) + ') circle (2.75mm);\n';
+		k+='\\draw[blue] (' + ((+i)-(1)) + ',' + (A*Math.ceil( ((+i)+(+B)) ) + (+C)) + ') circle [radius=2.75mm];\n';
+	    }
+	    
+	    k+='\\end{tikzpicture}\n';
+
+
+	    
+	    // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+	    
+	}
+	else if( y=='Tangent')
+	{
+	    A=1;
+	    B=0;
+	    x+='\\item Graph \\( f(x)= ';
+	    if( A == 1 )
+	    { /* */ }
+	    else if( A == -1 )
+	    { x+='-'; }
+	    else x+=''+ A;
+	    x+='\\tan( x )';
+	    if( C<0 ) x+= ' - ';
+	    if( C>0 ) x+= ' + ';
+	    if( C!=0 ) x+=Math.abs(C);
+	    x+=' \\)\\\\\n';
+
+	    	    // THE TRIG COORDINATE PLANE
+	    x+='\\begin{tikzpicture}[xscale=\\myScale,yscale=\\myScale]\n';
+	    x+='\\foreach \\i in {\\yMin,...,\\yMax} {\\draw [-,very thin,gray] ({\\xMin},\\i) -- ({\\xMax},\\i);}\n';
+	    x+='\\foreach \\y in {\\yMin, \\yStep,...,\\yMax}  \\draw[shift={(-4*pi-0.5,\\y+0.875)},color=black] (0pt,0pt) -- (0pt,1pt) node[below]  {\\tiny \\y};\n';
+	    x+='\\draw[thick,<->] (\\xMin,0) -- (\\xMax,0);\n';
+	    x+='\\draw[thick,<->] (0,\\yMin) -- (0,\\yMax);\n';
+	    x+='\\node at (\\xMax + 0.25, 0) {\\small $x$};\n';
+	    x+='\\node at (0, \\yMax + 1) {\\small $y$};\n';
+	    x+='\\draw[-,very thin,gray] (-2*pi,\\yMin) -- (-2*pi,\\yMax);\n';
+	    x+='\\draw[-,very thin,gray] (\\xMin,\\yMin) -- (\\xMin,\\yMax);\n';
+	    x+='\\draw[-,very thin,gray] (2*pi,\\yMin) -- (2*pi,\\yMax);\n';
+	    x+='\\draw[-,very thin,gray] (\\xMax,\\yMin) -- (\\xMax,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (-pi,\\yMin) -- ( -pi,\\yMax);\\draw[-,thin,gray] (pi,\\yMin) -- ( pi,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (-3*pi/2,\\yMin) -- ( -3*pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (3*pi/2,\\yMin) -- ( 3*pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (-pi/2,\\yMin) -- ( -pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (pi/2,\\yMin) -- ( pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (-5*pi/2,\\yMin) -- ( -5*pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (5*pi/2,\\yMin) -- ( 5*pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (-6*pi/2,\\yMin) -- ( -6*pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (6*pi/2,\\yMin) -- ( 6*pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (-7*pi/2,\\yMin) -- ( -7*pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (7*pi/2,\\yMin) -- ( 7*pi/2,\\yMax);\n';
+	    x+='\\draw[shift={(0,-12)}] node at (0,0) [below] {\\scriptsize 0};\n';
+	    x+='\\draw node at ({pi},-12) [below] {\\scriptsize ${\\pi}$};\n';
+	    x+='\\draw node at ({2*pi},-12) [below] [xshift=1pt] {\\scriptsize ${2\\pi}$};\n';
+	    x+='\\draw node at ({-pi},-12) [below] [xshift=-2pt]  {\\scriptsize ${-\\pi}$};\n';
+	    x+='\\draw node at ({-2*pi},-12) [below] [xshift=-2pt] {\\scriptsize ${-2\\pi}$};\n';
+	    x+='\\draw node at ({-3*pi},-12) [below] [xshift=-2pt] {\\scriptsize ${-3\\pi}$};\n';
+	    x+='\\draw node at ({3*pi},-12) [below] [xshift=1pt] {\\scriptsize ${3\\pi}$};\n';
+	    x+='\\clip (\\xMin,\\yMin) rectangle (\\xMax,\\yMax);\n';
+	    x+='\\end{tikzpicture}\n';
+
+
+	    // ADD ANSWER TO ANSWER KEY HERE
+	    k+='\\item \\( \\ \\) \\\\ \n';
+	    // THE TRIG COORDINATE PLANE
+	    k+='\\begin{tikzpicture}[xscale=\\myScale,yscale=\\myScale]\n';
+	    k+='\\foreach \\i in {\\yMin,...,\\yMax} {\\draw [-,very thin,gray] ({\\xMin},\\i) -- ({\\xMax},\\i);}\n';
+	    k+='\\foreach \\y in {\\yMin, \\yStep,...,\\yMax}  \\draw[shift={(-4*pi-0.5,\\y+0.875)},color=black] (0pt,0pt) -- (0pt,1pt) node[below]  {\\tiny \\y};\n';
+	    k+='\\draw[thick,<->] (\\xMin,0) -- (\\xMax,0);\n';
+	    k+='\\draw[thick,<->] (0,\\yMin) -- (0,\\yMax);\n';
+	    k+='\\node at (\\xMax + 0.25, 0) {\\small $x$};\n';
+	    k+='\\node at (0, \\yMax + 1) {\\small $y$};\n';
+	    k+='\\draw[-,very thin,gray] (-2*pi,\\yMin) -- (-2*pi,\\yMax);\n';
+	    k+='\\draw[-,very thin,gray] (\\xMin,\\yMin) -- (\\xMin,\\yMax);\n';
+	    k+='\\draw[-,very thin,gray] (2*pi,\\yMin) -- (2*pi,\\yMax);\n';
+	    k+='\\draw[-,very thin,gray] (\\xMax,\\yMin) -- (\\xMax,\\yMax);\n';
+	    k+='\\draw[-,thin,gray] (-pi,\\yMin) -- ( -pi,\\yMax);\\draw[-,thin,gray] (pi,\\yMin) -- ( pi,\\yMax);\n';
+	    k+='\\draw[-,thin,gray] (-3*pi/2,\\yMin) -- ( -3*pi/2,\\yMax);\n';
+	    k+='\\draw[-,thin,gray] (3*pi/2,\\yMin) -- ( 3*pi/2,\\yMax);\n';
+	    k+='\\draw[-,thin,gray] (-pi/2,\\yMin) -- ( -pi/2,\\yMax);\n';
+	    k+='\\draw[-,thin,gray] (pi/2,\\yMin) -- ( pi/2,\\yMax);\n';
+	    k+='\\draw[-,thin,gray] (-5*pi/2,\\yMin) -- ( -5*pi/2,\\yMax);\n';
+	    k+='\\draw[-,thin,gray] (5*pi/2,\\yMin) -- ( 5*pi/2,\\yMax);\n';
+	    k+='\\draw[-,thin,gray] (-6*pi/2,\\yMin) -- ( -6*pi/2,\\yMax);\n';
+	    k+='\\draw[-,thin,gray] (6*pi/2,\\yMin) -- ( 6*pi/2,\\yMax);\n';
+	    k+='\\draw[-,thin,gray] (-7*pi/2,\\yMin) -- ( -7*pi/2,\\yMax);\n';
+	    k+='\\draw[-,thin,gray] (7*pi/2,\\yMin) -- ( 7*pi/2,\\yMax);\n';
+	    k+='\\draw[shift={(0,-12)}] node at (0,0) [below] {\\scriptsize 0};\n';
+	    k+='\\draw node at ({pi},-12) [below] {\\scriptsize ${\\pi}$};\n';
+	    k+='\\draw node at ({2*pi},-12) [below] [xshift=1pt] {\\scriptsize ${2\\pi}$};\n';
+	    k+='\\draw node at ({-pi},-12) [below] [xshift=-2pt]  {\\scriptsize ${-\\pi}$};\n';
+	    k+='\\draw node at ({-2*pi},-12) [below] [xshift=-2pt] {\\scriptsize ${-2\\pi}$};\n';
+	    k+='\\draw node at ({-3*pi},-12) [below] [xshift=-2pt] {\\scriptsize ${-3\\pi}$};\n';
+	    k+='\\draw node at ({3*pi},-12) [below] [xshift=1pt] {\\scriptsize ${3\\pi}$};\n';
+	    k+='\\clip (\\xMin,\\yMin) rectangle (\\xMax,\\yMax);\n';
+	    k+='\\draw[line width=0.5mm,-,domain=\\xMin+0.01:-7*pi/2-0.01,smooth,variable=\\x,blue,samples=300] plot (\\x, {tan(\\x r)+ ' + C + ' }  );\n';
+	    k+='\\draw[line width=0.5mm,-,domain=-7*pi/2+0.01:-5*pi/2,smooth,variable=\\x,blue,samples=300] plot (\\x, {tan(\\x r)+ ' + C + ' }  );\n';
+	    k+='\\draw[line width=0.5mm,-,domain=-5*pi/2+0.01:-3*pi/2,smooth,variable=\\x,blue,samples=300] plot (\\x, {tan(\\x r)+ ' + C + ' }  );\n';
+	    k+='\\draw[line width=0.5mm,-,domain=-3*pi/2+0.01:-pi/2,smooth,variable=\\x,blue,samples=300] plot (\\x, {tan(\\x r)+ ' + C + ' }  );\n';
+	    k+='\\draw[line width=0.5mm,-,domain=-pi/2+0.01:pi/2,smooth,variable=\\x,blue,samples=300] plot (\\x, {tan(\\x r)+ ' + C + ' }  );\n';
+	    k+='\\draw[line width=0.5mm,-,domain=pi/2+0.01:3*pi/2,smooth,variable=\\x,blue,samples=300] plot (\\x, {tan(\\x r)+ ' + C + ' }  );\n';
+	    k+='\\draw[line width=0.5mm,-,domain=3*pi/2+0.01:5*pi/2,smooth,variable=\\x,blue,samples=300] plot (\\x, {tan(\\x r)+ ' + C + ' }  );\n';
+	    k+='\\draw[line width=0.5mm,-,domain=5*pi/2+0.01:7*pi/2,smooth,variable=\\x,blue,samples=300] plot (\\x, {tan(\\x r)+ ' + C + ' }  );\n';
+	    k+='\\draw[line width=0.5mm,-,domain=7*pi/2+0.01:\\xMax-0.01,smooth,variable=\\x,blue,samples=300] plot (\\x, {tan(\\x r)+ ' + C + ' }  );\n';
+	    k+='\\draw [dashed,line width=0.5mm,red] (-7*pi/2,-12) -- (-7*pi/2,12);\n';
+	    k+='\\draw [dashed,line width=0.5mm,red] (-5*pi/2,-12) -- (-5*pi/2,12);\n';
+	    k+='\\draw [dashed,line width=0.5mm,red] (-3*pi/2,-12) -- (-3*pi/2,12);\n';
+	    k+='\\draw [dashed,line width=0.5mm,red] (-pi/2,-12) -- (-pi/2,12);\n';
+	    k+='\\draw [dashed,line width=0.5mm,red] (pi/2,-12) -- (pi/2,12);\n';
+	    k+='\\draw [dashed,line width=0.5mm,red] (3*pi/2,-12) -- (3*pi/2,12);\n';
+	    k+='\\draw [dashed,line width=0.5mm,red] (5*pi/2,-12) -- (5*pi/2,12);\n';
+	    k+='\\draw [dashed,line width=0.5mm,red] (7*pi/2,-12) -- (7*pi/2,12);\n';
+
+	    k+='\\end{tikzpicture}\n';
+
+	    
+	    // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+	    
+	}
+	else if( y=='Sine')
+	{
+	    B=0;
+	    x+='\\item Graph \\( f(x)= ';
+	    if( A == 1 )
+	    { /* */ }
+	    else if( A == -1 )
+	    { x+='-'; }
+	    else x+=''+ A;
+	    x+='\\sin(x) ';
+	    if( C<0 ) x+= ' - ';
+	    if( C>0 ) x+= ' + ';
+	    if( C!=0 ) x+=Math.abs(C);
+	    x+=' \\)\\\\\n%% \\newline\n';
+	    // THE TRIG COORDINATE PLANE
+	    x+='\\begin{tikzpicture}[xscale=\\myScale,yscale=\\myScale]\n';
+	    x+='\\foreach \\i in {\\yMin,...,\\yMax} {\\draw [-,very thin,gray] ({\\xMin},\\i) -- ({\\xMax},\\i);}\n';
+	    x+='\\foreach \\y in {\\yMin, \\yStep,...,\\yMax}  \\draw[shift={(-4*pi-0.5,\\y+0.875)},color=black] (0pt,0pt) -- (0pt,1pt) node[below]  {\\tiny \\y};\n';
+	    x+='\\draw[thick,<->] (\\xMin,0) -- (\\xMax,0);\n';
+	    x+='\\draw[thick,<->] (0,\\yMin) -- (0,\\yMax);\n';
+	    x+='\\node at (\\xMax + 0.25, 0) {\\small $x$};\n';
+	    x+='\\node at (0, \\yMax + 1) {\\small $y$};\n';
+	    x+='\\draw[-,very thin,gray] (-2*pi,\\yMin) -- (-2*pi,\\yMax);\n';
+	    x+='\\draw[-,very thin,gray] (\\xMin,\\yMin) -- (\\xMin,\\yMax);\n';
+	    x+='\\draw[-,very thin,gray] (2*pi,\\yMin) -- (2*pi,\\yMax);\n';
+	    x+='\\draw[-,very thin,gray] (\\xMax,\\yMin) -- (\\xMax,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (-pi,\\yMin) -- ( -pi,\\yMax);\\draw[-,thin,gray] (pi,\\yMin) -- ( pi,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (-3*pi/2,\\yMin) -- ( -3*pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (3*pi/2,\\yMin) -- ( 3*pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (-pi/2,\\yMin) -- ( -pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (pi/2,\\yMin) -- ( pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (-5*pi/2,\\yMin) -- ( -5*pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (5*pi/2,\\yMin) -- ( 5*pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (-6*pi/2,\\yMin) -- ( -6*pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (6*pi/2,\\yMin) -- ( 6*pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (-7*pi/2,\\yMin) -- ( -7*pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (7*pi/2,\\yMin) -- ( 7*pi/2,\\yMax);\n';
+	    x+='\\draw[shift={(0,-12)}] node at (0,0) [below] {\\scriptsize 0};\n';
+	    x+='\\draw node at ({pi},-12) [below] {\\scriptsize ${\\pi}$};\n';
+	    x+='\\draw node at ({2*pi},-12) [below] [xshift=1pt] {\\scriptsize ${2\\pi}$};\n';
+	    x+='\\draw node at ({-pi},-12) [below] [xshift=-2pt]  {\\scriptsize ${-\\pi}$};\n';
+	    x+='\\draw node at ({-2*pi},-12) [below] [xshift=-2pt] {\\scriptsize ${-2\\pi}$};\n';
+	    x+='\\draw node at ({-3*pi},-12) [below] [xshift=-2pt] {\\scriptsize ${-3\\pi}$};\n';
+	    x+='\\draw node at ({3*pi},-12) [below] [xshift=1pt] {\\scriptsize ${3\\pi}$};\n';
+	    x+='\\clip (\\xMin,\\yMin) rectangle (\\xMax,\\yMax);\n';
+	    x+='\\end{tikzpicture}\n';
+
+
+	    // ADD ANSWER TO ANSWER KEY HERE
+	    k+='\\item \\( \\ \\) \\\\ \n';
+
+	    // *****
+	    // THE TRIG COORDINATE PLANE
+	    k+='\\begin{tikzpicture}[xscale=\\myScale,yscale=\\myScale]\n';
+	    k+='\\foreach \\i in {\\yMin,...,\\yMax} {\\draw [-,very thin,gray] ({\\xMin},\\i) -- ({\\xMax},\\i);}\n';
+	    k+='\\foreach \\y in {\\yMin, \\yStep,...,\\yMax}  \\draw[shift={(-4*pi-0.5,\\y+0.875)},color=black] (0pt,0pt) -- (0pt,1pt) node[below]  {\\tiny \\y};\n';
+	    k+='\\draw[thick,<->] (\\xMin,0) -- (\\xMax,0);\n';
+	    k+='\\draw[thick,<->] (0,\\yMin) -- (0,\\yMax);\n';
+	    k+='\\node at (\\xMax + 0.25, 0) {\\small $x$};\n';
+	    k+='\\node at (0, \\yMax + 1) {\\small $y$};\n';
+	    k+='\\draw[-,very thin,gray] (-2*pi,\\yMin) -- (-2*pi,\\yMax);\n';
+	    k+='\\draw[-,very thin,gray] (\\xMin,\\yMin) -- (\\xMin,\\yMax);\n';
+	    k+='\\draw[-,very thin,gray] (2*pi,\\yMin) -- (2*pi,\\yMax);\n';
+	    k+='\\draw[-,very thin,gray] (\\xMax,\\yMin) -- (\\xMax,\\yMax);\n';
+	    k+='\\draw[-,thin,gray] (-pi,\\yMin) -- ( -pi,\\yMax);\\draw[-,thin,gray] (pi,\\yMin) -- ( pi,\\yMax);\n';
+	    k+='\\draw[-,thin,gray] (-3*pi/2,\\yMin) -- ( -3*pi/2,\\yMax);\n';
+	    k+='\\draw[-,thin,gray] (3*pi/2,\\yMin) -- ( 3*pi/2,\\yMax);\n';
+	    k+='\\draw[-,thin,gray] (-pi/2,\\yMin) -- ( -pi/2,\\yMax);\n';
+	    k+='\\draw[-,thin,gray] (pi/2,\\yMin) -- ( pi/2,\\yMax);\n';
+	    k+='\\draw[-,thin,gray] (-5*pi/2,\\yMin) -- ( -5*pi/2,\\yMax);\n';
+	    k+='\\draw[-,thin,gray] (5*pi/2,\\yMin) -- ( 5*pi/2,\\yMax);\n';
+	    k+='\\draw[-,thin,gray] (-6*pi/2,\\yMin) -- ( -6*pi/2,\\yMax);\n';
+	    k+='\\draw[-,thin,gray] (6*pi/2,\\yMin) -- ( 6*pi/2,\\yMax);\n';
+	    k+='\\draw[-,thin,gray] (-7*pi/2,\\yMin) -- ( -7*pi/2,\\yMax);\n';
+	    k+='\\draw[-,thin,gray] (7*pi/2,\\yMin) -- ( 7*pi/2,\\yMax);\n';
+	    k+='\\draw[shift={(0,-12)}] node at (0,0) [below] {\\scriptsize 0};\n';
+	    k+='\\draw node at ({pi},-12) [below] {\\scriptsize ${\\pi}$};\n';
+	    k+='\\draw node at ({2*pi},-12) [below] [xshift=1pt] {\\scriptsize ${2\\pi}$};\n';
+	    k+='\\draw node at ({-pi},-12) [below] [xshift=-2pt]  {\\scriptsize ${-\\pi}$};\n';
+	    k+='\\draw node at ({-2*pi},-12) [below] [xshift=-2pt] {\\scriptsize ${-2\\pi}$};\n';
+	    k+='\\draw node at ({-3*pi},-12) [below] [xshift=-2pt] {\\scriptsize ${-3\\pi}$};\n';
+	    k+='\\draw node at ({3*pi},-12) [below] [xshift=1pt] {\\scriptsize ${3\\pi}$};\n';
+	    k+='\\clip (\\xMin,\\yMin) rectangle (\\xMax,\\yMax);\n';
+
+
+	    var CA1=((+C)+(+A));
+	    var CA2=((+C)+(-A));
+	    k+='\\draw[line width=0.5mm,-,domain=\\xMin:\\xMax,smooth,variable=\\x,blue,samples=300] plot (\\x, {' + A + '*sin(\\x r) + ' + C + ' }  );\n';
+	    k+='\\draw [dashed,line width=0.5mm,red] (-12,' + C + ') -- (12,' + C + ');\n';
+    	    k+='\\draw [dashed,line width=0.5mm,red] (-12,' + CA1 + ') -- (12,' + CA1 + ');\n';
+	    k+='\\draw [dashed,line width=0.5mm,red] (-12,' + CA2 + ') -- (12,' + CA2 + ');\n';
+
+
+	    k+='\\end{tikzpicture}\n'	    
+	    // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+	    
+	}
+	else if( y=='Cosine')
+	{
+	    B=0;
+	    x+='\\item Graph \\( f(x)= ';
+	    if( A == 1 )
+	    { /* */ }
+	    else if( A == -1 )
+	    { x+='-'; }
+	    else x+=''+ A;
+	    x+='\\cos(x) ';
+	    if( C<0 ) x+= ' - ';
+	    if( C>0 ) x+= ' + ';
+	    if( C!=0 ) x+=Math.abs(C);
+	    x+=' \\)\\\\\n';
+
+	    	    // THE TRIG COORDINATE PLANE
+	    x+='\\begin{tikzpicture}[xscale=\\myScale,yscale=\\myScale]\n';
+	    x+='\\foreach \\i in {\\yMin,...,\\yMax} {\\draw [-,very thin,gray] ({\\xMin},\\i) -- ({\\xMax},\\i);}\n';
+	    x+='\\foreach \\y in {\\yMin, \\yStep,...,\\yMax}  \\draw[shift={(-4*pi-0.5,\\y+0.875)},color=black] (0pt,0pt) -- (0pt,1pt) node[below]  {\\tiny \\y};\n';
+	    x+='\\draw[thick,<->] (\\xMin,0) -- (\\xMax,0);\n';
+	    x+='\\draw[thick,<->] (0,\\yMin) -- (0,\\yMax);\n';
+	    x+='\\node at (\\xMax + 0.25, 0) {\\small $x$};\n';
+	    x+='\\node at (0, \\yMax + 1) {\\small $y$};\n';
+	    x+='\\draw[-,very thin,gray] (-2*pi,\\yMin) -- (-2*pi,\\yMax);\n';
+	    x+='\\draw[-,very thin,gray] (\\xMin,\\yMin) -- (\\xMin,\\yMax);\n';
+	    x+='\\draw[-,very thin,gray] (2*pi,\\yMin) -- (2*pi,\\yMax);\n';
+	    x+='\\draw[-,very thin,gray] (\\xMax,\\yMin) -- (\\xMax,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (-pi,\\yMin) -- ( -pi,\\yMax);\\draw[-,thin,gray] (pi,\\yMin) -- ( pi,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (-3*pi/2,\\yMin) -- ( -3*pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (3*pi/2,\\yMin) -- ( 3*pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (-pi/2,\\yMin) -- ( -pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (pi/2,\\yMin) -- ( pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (-5*pi/2,\\yMin) -- ( -5*pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (5*pi/2,\\yMin) -- ( 5*pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (-6*pi/2,\\yMin) -- ( -6*pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (6*pi/2,\\yMin) -- ( 6*pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (-7*pi/2,\\yMin) -- ( -7*pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (7*pi/2,\\yMin) -- ( 7*pi/2,\\yMax);\n';
+	    x+='\\draw[shift={(0,-12)}] node at (0,0) [below] {\\scriptsize 0};\n';
+	    x+='\\draw node at ({pi},-12) [below] {\\scriptsize ${\\pi}$};\n';
+	    x+='\\draw node at ({2*pi},-12) [below] [xshift=1pt] {\\scriptsize ${2\\pi}$};\n';
+	    x+='\\draw node at ({-pi},-12) [below] [xshift=-2pt]  {\\scriptsize ${-\\pi}$};\n';
+	    x+='\\draw node at ({-2*pi},-12) [below] [xshift=-2pt] {\\scriptsize ${-2\\pi}$};\n';
+	    x+='\\draw node at ({-3*pi},-12) [below] [xshift=-2pt] {\\scriptsize ${-3\\pi}$};\n';
+	    x+='\\draw node at ({3*pi},-12) [below] [xshift=1pt] {\\scriptsize ${3\\pi}$};\n';
+	    x+='\\clip (\\xMin,\\yMin) rectangle (\\xMax,\\yMax);\n';
+	    x+='\\end{tikzpicture}\n';
+
+	    // ADD ANSWER TO ANSWER KEY HERE
+	    k+='\\item \\( \\ \\) \\\\ \n';
+
+	    // THE TRIG COORDINATE PLANE
+	    k+='\\begin{tikzpicture}[xscale=\\myScale,yscale=\\myScale]\n';
+	    k+='\\foreach \\i in {\\yMin,...,\\yMax} {\\draw [-,very thin,gray] ({\\xMin},\\i) -- ({\\xMax},\\i);}\n';
+	    k+='\\foreach \\y in {\\yMin, \\yStep,...,\\yMax}  \\draw[shift={(-4*pi-0.5,\\y+0.875)},color=black] (0pt,0pt) -- (0pt,1pt) node[below]  {\\tiny \\y};\n';
+	    k+='\\draw[thick,<->] (\\xMin,0) -- (\\xMax,0);\n';
+	    k+='\\draw[thick,<->] (0,\\yMin) -- (0,\\yMax);\n';
+	    k+='\\node at (\\xMax + 0.25, 0) {\\small $x$};\n';
+	    k+='\\node at (0, \\yMax + 1) {\\small $y$};\n';
+	    k+='\\draw[-,very thin,gray] (-2*pi,\\yMin) -- (-2*pi,\\yMax);\n';
+	    k+='\\draw[-,very thin,gray] (\\xMin,\\yMin) -- (\\xMin,\\yMax);\n';
+	    k+='\\draw[-,very thin,gray] (2*pi,\\yMin) -- (2*pi,\\yMax);\n';
+	    k+='\\draw[-,very thin,gray] (\\xMax,\\yMin) -- (\\xMax,\\yMax);\n';
+	    k+='\\draw[-,thin,gray] (-pi,\\yMin) -- ( -pi,\\yMax);\\draw[-,thin,gray] (pi,\\yMin) -- ( pi,\\yMax);\n';
+	    k+='\\draw[-,thin,gray] (-3*pi/2,\\yMin) -- ( -3*pi/2,\\yMax);\n';
+	    k+='\\draw[-,thin,gray] (3*pi/2,\\yMin) -- ( 3*pi/2,\\yMax);\n';
+	    k+='\\draw[-,thin,gray] (-pi/2,\\yMin) -- ( -pi/2,\\yMax);\n';
+	    k+='\\draw[-,thin,gray] (pi/2,\\yMin) -- ( pi/2,\\yMax);\n';
+	    k+='\\draw[-,thin,gray] (-5*pi/2,\\yMin) -- ( -5*pi/2,\\yMax);\n';
+	    k+='\\draw[-,thin,gray] (5*pi/2,\\yMin) -- ( 5*pi/2,\\yMax);\n';
+	    k+='\\draw[-,thin,gray] (-6*pi/2,\\yMin) -- ( -6*pi/2,\\yMax);\n';
+	    k+='\\draw[-,thin,gray] (6*pi/2,\\yMin) -- ( 6*pi/2,\\yMax);\n';
+	    k+='\\draw[-,thin,gray] (-7*pi/2,\\yMin) -- ( -7*pi/2,\\yMax);\n';
+	    k+='\\draw[-,thin,gray] (7*pi/2,\\yMin) -- ( 7*pi/2,\\yMax);\n';
+	    k+='\\draw[shift={(0,-12)}] node at (0,0) [below] {\\scriptsize 0};\n';
+	    k+='\\draw node at ({pi},-12) [below] {\\scriptsize ${\\pi}$};\n';
+	    k+='\\draw node at ({2*pi},-12) [below] [xshift=1pt] {\\scriptsize ${2\\pi}$};\n';
+	    k+='\\draw node at ({-pi},-12) [below] [xshift=-2pt]  {\\scriptsize ${-\\pi}$};\n';
+	    k+='\\draw node at ({-2*pi},-12) [below] [xshift=-2pt] {\\scriptsize ${-2\\pi}$};\n';
+	    k+='\\draw node at ({-3*pi},-12) [below] [xshift=-2pt] {\\scriptsize ${-3\\pi}$};\n';
+	    k+='\\draw node at ({3*pi},-12) [below] [xshift=1pt] {\\scriptsize ${3\\pi}$};\n';
+	    k+='\\clip (\\xMin,\\yMin) rectangle (\\xMax,\\yMax);\n';
+
+	    var CA1=((+C)+(+A));
+	    var CA2=((+C)+(-A));
+	    k+='\\draw[line width=0.5mm,-,domain=\\xMin:\\xMax,smooth,variable=\\x,blue,samples=300] plot (\\x, {' + A + '*cos(\\x r) + ' + C + ' }  );\n';
+	    k+='\\draw [dashed,line width=0.5mm,red] (-12,' + C + ') -- (12,' + C + ');\n';
+    	    k+='\\draw [dashed,line width=0.5mm,red] (-12,' + CA1 + ') -- (12,' + CA1 + ');\n';
+	    k+='\\draw [dashed,line width=0.5mm,red] (-12,' + CA2 + ') -- (12,' + CA2 + ');\n';
+
+
+	    k+='\\end{tikzpicture}\n'
+	    // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+	    
+	}
+	else alert( 'Unknown Function!\n'+y+'\n' );
+	k+='%% \\newline\n';
+	x+='%% \\newline\n';
+
+	form1.text_area.value=x;
+	form1.answer_key.value=k;
+    }
+
+    function add()
+    {
+	
+	
+	var A='';
+	var B='';
+	var C='';
+
+	var x='';
+	x=form1.text_area.value;
+	k=form1.answer_key.value;
+	
+	var title = form1.Title.value;
+	
+	if( form1.A.value=='' ) form1.A.value=1;
+	if( form1.B.value=='' ) form1.B.value=0;
+	if( form1.C.value=='' ) form1.C.value=0;
+	A=form1.A.value;
+	B=form1.B.value;
+	C=form1.C.value;
+
+
+
+	var y=form1.graph_type.value;
+	x+='%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n';
+	k+='%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n';
+	x+='%%% A=' + A + ' B=' + B + ' C=' + C + ' ( ' + y + ' )\n%%%\n%%%\n';
+	k+='%%% A=' + A + ' B=' + B + ' C=' + C + ' ( ' + y + ' )\n%%%\n%%%\n';
+
+	x+='\\item Write the function for the graph.\\\\ \\( f(x)= \\) \\underline{ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ }\\\\ \n';
+	if( y == 'Constant' )
+	{
+
+	    var LB=-12;
+	    var RB=12;
+	    
+	    x+='\\begin{tikzpicture}[xscale=\\myScale,yscale=\\myScale]\n\\draw[thin,color=gray,step=1cm] (\\xMin,\\yMin) grid (\\xMax,\\yMax);\n\\draw[thick,<->] (\\xMin-0.25,0) -- (\\xMax+0.25,0);\n\\draw[thick,<->] (0,\\yMin-0.25) -- (0,\\yMax+0.25);\n\\node at (\\xMax+0.75, 0) {\\scriptsize $x$};\n\\node at (0, \\yMax+0.75) {\\scriptsize $y$};\\foreach \\x in {\\xMin,\\xStep,...,\\xMax}\\draw[shift={(\\x,\\yMin)},color=black] node[below] {\\tiny \\x};\n\\foreach \\y in {\\yMin,\\yStep,...,\\yMax}  \\draw[shift={(\\xMin-0.8,\\y+0.9)},color=black] node[below]{\\tiny \\y};\n';
+	   
+	    if( title != '' ) x+='\\node [anchor=west] at (\\xMin+1,\\yMax+0.75) { \\scriptsize ' + title + ' };\n';
+
+	    x+='\\clip (\\xMin,\\yMin) rectangle (\\xMax,\\yMax);\n';
+
+	    
+	    x+='\\draw[line width=0.5mm,-,domain=' + LB + ':' + RB + ',smooth,variable=\\x,blue,samples=300] plot (\\x, { ' + C + ' } );\n';
+	    x+='\\fill[blue] (0,' + C + ') circle (2.75mm);\n'
+	    x+='\\fill[blue] (1,' + C + ') circle (2.75mm);\n'
+	    x+='\\fill[blue] (-1,' + C + ') circle (2.75mm);\n'
+
+	    x+='\\end{tikzpicture}\n';
+
+	    k+='\\item Constant Function: \\( f(x)= ' + C + ' \\)\\\\ \n';
+	}
+	else if( y == 'Cubic' )
+	{
+
+	    var LB=-B-3;
+	    if (-B-3 < -12) LB=-12;
+	    var RB=-B+3;
+	    if (-B+3 > 12 ) RB=12;
+
+	    x+='\\begin{tikzpicture}[xscale=\\myScale,yscale=\\myScale]\n\\draw[thin,color=gray,step=1cm] (\\xMin,\\yMin) grid (\\xMax,\\yMax);\n\\draw[thick,<->] (\\xMin-0.25,0) -- (\\xMax+0.25,0);\n\\draw[thick,<->] (0,\\yMin-0.25) -- (0,\\yMax+0.25);\n\\node at (\\xMax+0.75, 0) {\\scriptsize $x$};\n\\node at (0, \\yMax+0.75) {\\scriptsize $y$};\\foreach \\x in {\\xMin,\\xStep,...,\\xMax}\\draw[shift={(\\x,\\yMin)},color=black] node[below] {\\tiny \\x};\n\\foreach \\y in {\\yMin,\\yStep,...,\\yMax}  \\draw[shift={(\\xMin-0.8,\\y+0.9)},color=black] node[below]{\\tiny \\y};\n';
+	   
+	    if( title != '' ) x+='\\node [anchor=west] at (\\xMin+1,\\yMax+0.75) { \\scriptsize ' + title + ' };\n';
+
+	    x+='\\clip (\\xMin,\\yMin) rectangle (\\xMax,\\yMax);\n';
+
+	    
+	    x+='\\draw[line width=0.5mm,-,domain=' + LB + ':' + RB + ',smooth,variable=\\x,blue,samples=300] plot (\\x, { ' + A + '*(\\x + ' + B + ' )^3 + ' + C + ' } );\n';
+	    x+='\\fill[blue] (' + -B + ',' + C + ') circle (2.75mm);\n';
+	    x+='\\fill[blue] (' + ((-B)+(+1)) + ',' + ((+C)+(+A)) + ') circle (2.75mm);\n';
+	    x+='\\fill[blue] (' + ((-B)+(-1)) + ',' + ((+C)+(-A)) + ') circle (2.75mm);\n';
+	    x+='\\end{tikzpicture}\n';
+
+
+	    k+='\\item Cubic Function: \\( f(x)= ';
+	    if( A == 1 )
+	    { /* */ }
+	    else if( A == -1 )
+	    { k+='-'; }
+	    else k+=''+ A;
+	    k+='( x ';
+	    if( B<0 ) k+= '- ';
+	    if( B>0 ) k+= '+ ';
+	    if( B!=0 ){k+=Math.abs(B);}
+	    k+=' )^3';
+	    if( C<0 ) k+= ' - ';
+	    if( C>0 ) k+= ' + ';
+	    if( C!=0 ) k+=Math.abs(C);
+	    k+=' \\)\\\\\n';
+
+	}
+	else if( y == 'Quadratic' )
+	{
+	    var LB=-B-5;
+	    if (-B-5 < -12) LB=-12;
+	    var RB=-B+5;
+	    if (-B+5 > 12 ) RB=12;
+
+
+	    x+='\\begin{tikzpicture}[xscale=\\myScale,yscale=\\myScale]\n\\draw[thin,color=gray,step=1cm] (\\xMin,\\yMin) grid (\\xMax,\\yMax);\n\\draw[thick,<->] (\\xMin-0.25,0) -- (\\xMax+0.25,0);\n\\draw[thick,<->] (0,\\yMin-0.25) -- (0,\\yMax+0.25);\n\\node at (\\xMax+0.75, 0) {\\scriptsize $x$};\n\\node at (0, \\yMax+0.75) {\\scriptsize $y$};\\foreach \\x in {\\xMin,\\xStep,...,\\xMax}\\draw[shift={(\\x,\\yMin)},color=black] node[below] {\\tiny \\x};\n\\foreach \\y in {\\yMin,\\yStep,...,\\yMax}  \\draw[shift={(\\xMin-0.8,\\y+0.9)},color=black] node[below]{\\tiny \\y};\n';
+	    if( title != '' ) x+='\\node [anchor=west] at (\\xMin+1,\\yMax+0.75) { \\scriptsize ' + title + ' };\n';
+	    x+='\\clip (\\xMin,\\yMin) rectangle (\\xMax,\\yMax);\n';
+	    var point_1 = ((-B)+(+1));
+	    var point_2 = ((-B)+(-1));
+	    x+='\\draw[line width=0.5mm,-,domain=' + LB + ':' + RB + ',smooth,variable=\\x,blue,samples=300] plot (\\x, { ' + A + '*(\\x + ' + B + ' )^2 + ' + C + ' } );\n';
+	    x+='\\fill[blue] (' + -B + ',' + C + ') circle (2.75mm);\n'
+	    x+='\\fill[blue] (' + point_1 + ',' + ((+C)+(+A)) + ') circle (2.75mm);\n'
+	    x+='\\fill[blue] (' + point_2 + ',' + ((+C)+(+A)) + ') circle (2.75mm);\n'
+	    x+='\\end{tikzpicture}\n';
+
+	    k+='\\item Quadratic Function: \\( f(x)= ';
+	    if( A == 1 )
+	    { /* */ }
+	    else if( A == -1 )
+	    { k+='-'; }
+	    else k+=''+ A;
+	    k+='( x ';
+	    if( B<0 ) k+= '- ';
+	    if( B>0 ) k+= '+ ';
+	    if( B!=0 ){k+=Math.abs(B);}
+	    k+=' )^2';
+	    if( C<0 ) k+= ' - ';
+	    if( C>0 ) k+= ' + ';
+	    if( C!=0 ) k+=Math.abs(C);
+	    k+=' \\)\\\\\n';
+
+	    
+	}
+	else if( y== 'Linear' )
+	{
+
+
+	    x+='\\begin{tikzpicture}[xscale=\\myScale,yscale=\\myScale]\n\\draw[thin,color=gray,step=1cm] (\\xMin,\\yMin) grid (\\xMax,\\yMax);\n\\draw[thick,<->] (\\xMin-0.25,0) -- (\\xMax+0.25,0);\n\\draw[thick,<->] (0,\\yMin-0.25) -- (0,\\yMax+0.25);\n\\node at (\\xMax+0.75, 0) {\\scriptsize $x$};\n\\node at (0, \\yMax+0.75) {\\scriptsize $y$};\\foreach \\x in {\\xMin,\\xStep,...,\\xMax}\\draw[shift={(\\x,\\yMin)},color=black] node[below] {\\tiny \\x};\n\\foreach \\y in {\\yMin,\\yStep,...,\\yMax}  \\draw[shift={(\\xMin-0.8,\\y+0.9)},color=black] node[below]{\\tiny \\y};\n';
+	    if( title != '' ) x+='\\node [anchor=west] at (\\xMin+1,\\yMax+0.75) { \\scriptsize ' + title + ' };\n';
+	    x+='\\clip (\\xMin,\\yMin) rectangle (\\xMax,\\yMax);\n';
+
+	    x+='\\draw[line width=0.5mm,-,domain=-12:12,smooth,variable=\\x,blue,samples=300] plot (\\x, { ' + A + '*(\\x + ' + B + ' ) + ' + C + ' } );\n';
+	    x+='\\fill[blue] (' + -B + ',' + C + ') circle (2.75mm);\n';
+	    x+='\\fill[blue] (' + ((-B)+(+1)) + ',' + ((+C)+(+A)) + ') circle (2.75mm);\n';
+	    x+='\\fill[blue] (' + ((-B)+(-1)) + ',' + ((+C)+(-A)) + ') circle (2.75mm);\n';
+	    x+='\\end{tikzpicture}\n';
+
+	    k+='\\item Linear Function: \\( f(x)= ';
+	    if( A == 1 )
+	    { /* */ }
+	    else if( A == -1 )
+	    { k+='-'; }
+	    else k+=''+ A;
+	    k+='( x ';
+	    if( B<0 ) k+= '- ';
+	    if( B>0 ) k+= '+ ';
+	    if( B!=0 ){k+=Math.abs(B);}
+	    k+=' )';
+	    if( C<0 ) k+= ' - ';
+	    if( C>0 ) k+= ' + ';
+	    if( C!=0 ) k+=Math.abs(C);
+	    k+=' \\)\\\\\n';
+
+
+	}
+	else if( y== 'Absolute_Value' )
+	{
+
+
+	    x+='\\begin{tikzpicture}[xscale=\\myScale,yscale=\\myScale]\n\\draw[thin,color=gray,step=1cm] (\\xMin,\\yMin) grid (\\xMax,\\yMax);\n\\draw[thick,<->] (\\xMin-0.25,0) -- (\\xMax+0.25,0);\n\\draw[thick,<->] (0,\\yMin-0.25) -- (0,\\yMax+0.25);\n\\node at (\\xMax+0.75, 0) {\\scriptsize $x$};\n\\node at (0, \\yMax+0.75) {\\scriptsize $y$};\\foreach \\x in {\\xMin,\\xStep,...,\\xMax}\\draw[shift={(\\x,\\yMin)},color=black] node[below] {\\tiny \\x};\n\\foreach \\y in {\\yMin,\\yStep,...,\\yMax}  \\draw[shift={(\\xMin-0.8,\\y+0.9)},color=black] node[below]{\\tiny \\y};\n';
+	    if( title != '' ) x+='\\node [anchor=west] at (\\xMin+1,\\yMax+0.75) { \\scriptsize ' + title + ' };\n';
+	    x+='\\clip (\\xMin,\\yMin) rectangle (\\xMax,\\yMax);\n';
+	    x+='\\draw[line width=0.5mm,-,domain=-12:12,smooth,variable=\\x,blue,samples=300] plot (\\x, { ' + A + '*abs(\\x + ' + B + ' ) + ' + C + ' } );\n';
+	    x+='\\fill[blue] (' + -B + ',' + C + ') circle (2.75mm);\n'
+	    x+='\\fill[blue] (' + ((-B)+(+1)) + ',' + ((+C)+(+A)) + ') circle (2.75mm);\n'
+	    x+='\\fill[blue] (' + ((-B)+(-1)) + ',' + ((+C)+(+A)) + ') circle (2.75mm);\n'
+	    x+='\\end{tikzpicture}\n';
+
+
+	    k+='\\item Absolute Value Function: \\( f(x)= ';
+	    if( A == 1 )
+	    { /* */ }
+	    else if( A == -1 )
+	    { k+='-'; }
+	    else k+=''+ A;
+	    k+='| x ';
+	    if( B<0 ) k+= '- ';
+	    if( B>0 ) k+= '+ ';
+	    if( B!=0 ){k+=Math.abs(B);}
+	    k+=' |';
+	    if( C<0 ) k+= ' - ';
+	    if( C>0 ) k+= ' + ';
+	    if( C!=0 ) k+=Math.abs(C);
+	    k+=' \\)\\\\\n';
+
+	    
+	}
+	else if( y== 'Square_Root' )
+	{
+
+	    x+='\\begin{tikzpicture}[xscale=\\myScale,yscale=\\myScale]\n\\draw[thin,color=gray,step=1cm] (\\xMin,\\yMin) grid (\\xMax,\\yMax);\n\\draw[thick,<->] (\\xMin-0.25,0) -- (\\xMax+0.25,0);\n\\draw[thick,<->] (0,\\yMin-0.25) -- (0,\\yMax+0.25);\n\\node at (\\xMax+0.75, 0) {\\scriptsize $x$};\n\\node at (0, \\yMax+0.75) {\\scriptsize $y$};\\foreach \\x in {\\xMin,\\xStep,...,\\xMax}\\draw[shift={(\\x,\\yMin)},color=black] node[below] {\\tiny \\x};\n\\foreach \\y in {\\yMin,\\yStep,...,\\yMax}  \\draw[shift={(\\xMin-0.8,\\y+0.9)},color=black] node[below]{\\tiny \\y};\n';
+	    if( title != '' ) x+='\\node [anchor=west] at (\\xMin+1,\\yMax+0.75) { \\scriptsize ' + title + ' };\n';
+	    x+='\\clip (\\xMin,\\yMin) rectangle (\\xMax,\\yMax);\n';
+	    x+='\\draw[line width=0.5mm,-,domain=' + -B + ':12,smooth,variable=\\x,blue,samples=300] plot (\\x, { ' + A + '*sqrt(\\x + ' + B + ' ) + ' + C + ' } );\n';
+	    x+='\\fill[blue] (' + -B + ',' + C + ') circle (2.75mm);\n'
+	    x+='\\fill[blue] (' + (-B+1) + ',' + ((+C)+(+A)) + ') circle (2.75mm);\n'
+
+	    x+='\\end{tikzpicture}\n';
+
+	    k+='\\item Square Root Function: \\( f(x)= ';
+	    if( A == 1 )
+	    { /* */ }
+	    else if( A == -1 )
+	    { k+='-'; }
+	    else k+=''+ A;
+	    k+='\\sqrt{ x ';
+	    if( B<0 ) k+= '- ';
+	    if( B>0 ) k+= '+ ';
+	    if( B!=0 ){k+=Math.abs(B);}
+	    k+=' }';
+	    if( C<0 ) k+= ' - ';
+	    if( C>0 ) k+= ' + ';
+	    if( C!=0 ) k+=Math.abs(C);
+	    k+=' \\)\\\\\n';
+
+	    
+	}
+
+	else if( y== 'Logarithmic' )
+	{
+	    A=1;
+
+	    x+='\\begin{tikzpicture}[xscale=\\myScale,yscale=\\myScale]\n\\draw[thin,color=gray,step=1cm] (\\xMin,\\yMin) grid (\\xMax,\\yMax);\n\\draw[thick,<->] (\\xMin-0.25,0) -- (\\xMax+0.25,0);\n\\draw[thick,<->] (0,\\yMin-0.25) -- (0,\\yMax+0.25);\n\\node at (\\xMax+0.75, 0) {\\scriptsize $x$};\n\\node at (0, \\yMax+0.75) {\\scriptsize $y$};\\foreach \\x in {\\xMin,\\xStep,...,\\xMax}\\draw[shift={(\\x,\\yMin)},color=black] node[below] {\\tiny \\x};\n\\foreach \\y in {\\yMin,\\yStep,...,\\yMax}  \\draw[shift={(\\xMin-0.8,\\y+0.9)},color=black] node[below]{\\tiny \\y};\n';
+	    if( title != '' ) x+='\\node [anchor=west] at (\\xMin+1,\\yMax+0.75) { \\scriptsize ' + title + ' };\n';
+	    x+='\\clip (\\xMin,\\yMin) rectangle (\\xMax,\\yMax);\n';
+	    x+='\\draw[line width=0.5mm,-,domain=' + ((-B)+(+0.001)) + ':12,smooth,variable=\\x,blue,samples=300] plot (\\x, { ' + A + '*ln(\\x + ' + B + ' ) + ' + C + ' } );\n';
+	    x+='\\fill[blue] (' + ((-B)+(+1)) + ',' + C + ') circle (2.75mm);\n'
+	    x+='%%% LOG HERE\n\\fill[blue] (' + ((-B)+(+2.71828)) + ',' + (+1+C) + ') circle (2.75mm);\n'
+
+
+	    x+='\\draw [dashed,line width=0.5mm,red] (' + -B + ',-12) -- (' + -B + ',12);\n'
+	    x+='\\end{tikzpicture}\n';
+	    k+='\\item Logarithmic Function: \\( f(x)= ';
+	    if( A == 1 )
+	    { /* */ }
+	    else if( A == -1 )
+	    { k+='-'; }
+	    else k+=''+ A;
+	    k+='\\log ( x ';
+	    if( B<0 ) k+= '- ';
+	    if( B>0 ) k+= '+ ';
+	    if( B!=0 ){k+=Math.abs(B);}
+	    k+=' )';
+	    if( C<0 ) k+= ' - ';
+	    if( C>0 ) k+= ' + ';
+	    if( C!=0 ) k+=Math.abs(C);
+	    k+=' \\)\\\\\n';
+
+	    
+	}
+	else if( y== 'Exponential' )
+	{
+	    A=Math.abs(A);
+	    if( A == 1 ) A=2.71828;
+
+	    var boundary=Math.round( 100*(Math.log(12.1-C)/Math.log(A) - B) )/100 + 1;
+	    //
+	    
+
+	    x+='\\begin{tikzpicture}[xscale=\\myScale,yscale=\\myScale]\n\\draw[thin,color=gray,step=1cm] (\\xMin,\\yMin) grid (\\xMax,\\yMax);\n\\draw[thick,<->] (\\xMin-0.25,0) -- (\\xMax+0.25,0);\n\\draw[thick,<->] (0,\\yMin-0.25) -- (0,\\yMax+0.25);\n\\node at (\\xMax+0.75, 0) {\\scriptsize $x$};\n\\node at (0, \\yMax+0.75) {\\scriptsize $y$};\\foreach \\x in {\\xMin,\\xStep,...,\\xMax}\\draw[shift={(\\x,\\yMin)},color=black] node[below] {\\tiny \\x};\n\\foreach \\y in {\\yMin,\\yStep,...,\\yMax}  \\draw[shift={(\\xMin-0.8,\\y+0.9)},color=black] node[below]{\\tiny \\y};\n';
+	    if( title != '' ) x+='\\node [anchor=west] at (\\xMin+1,\\yMax+0.75) { \\scriptsize ' + title + ' };\n';
+	    x+='\\clip (\\xMin,\\yMin) rectangle (\\xMax,\\yMax);\n';
+	    var B1=(-B+5);
+	    //x+='\\draw[line width=0.5mm,-,domain=-12:'+B1+',smooth,variable=\\x,blue,samples=300] plot (\\x, { ' + A + '^(\\x + ' + B + ' ) + ' + C + ' } );\n';
+	    x+='\\draw[line width=0.5mm,-,domain=-12:'+boundary+',smooth,variable=\\x,blue,samples=300] plot (\\x, { ' + A + '^(\\x + ' + B + ' ) + ' + C + ' } );\n';
+	    var D = ((+C)+(+A));
+	    x+='\\fill[blue] (' + Number(-B+1) + ',' + D + ') circle (2.75mm);\n'
+	    x+='\\fill[blue] (' + -B + ',' + Number(1*C+1) + ') circle (2.75mm);\n'
+	    //x+='%%%%% EXPONENTIAL\n';
+	    //x+='\\fill[blue] (' + Number(-B+1) + ',' + Number(1*D+1*A-1) + ') circle (2.75mm);\n'
+
+	    x+='\\draw [dashed,line width=0.5mm,red] (-12,' + C + ') -- (12,' + C + ');\n'
+	    x+='\\end{tikzpicture}\n';
+
+
+	    k+='\\item Exponential Function: \\( f(x)= ';
+	    if( A == 1 )
+	    { /* */ }
+	    else if( A == -1 )
+	    { k+='-'; }
+	    else if( A == 2.71828 )
+	    { k+='e'; }
+	    else k+=''+ A;
+	    k+='^{ x ';
+	    if( B<0 ) k+= '- ';
+	    if( B>0 ) k+= '+ ';
+	    if( B!=0 ){k+=Math.abs(B);}
+	    k+=' }';
+	    if( C<0 ) k+= ' - ';
+	    if( C>0 ) k+= ' + ';
+	    if( C!=0 ) k+=Math.abs(C);
+	    k+=' \\)\\\\\n';
+
+	    
+	}
+	else if( y== 'Reciprocal' )
+	{
+
+
+	    x+='\\begin{tikzpicture}[xscale=\\myScale,yscale=\\myScale]\n\\draw[thin,color=gray,step=1cm] (\\xMin,\\yMin) grid (\\xMax,\\yMax);\n\\draw[thick,<->] (\\xMin-0.25,0) -- (\\xMax+0.25,0);\n\\draw[thick,<->] (0,\\yMin-0.25) -- (0,\\yMax+0.25);\n\\node at (\\xMax+0.75, 0) {\\scriptsize $x$};\n\\node at (0, \\yMax+0.75) {\\scriptsize $y$};\\foreach \\x in {\\xMin,\\xStep,...,\\xMax}\\draw[shift={(\\x,\\yMin)},color=black] node[below] {\\tiny \\x};\n\\foreach \\y in {\\yMin,\\yStep,...,\\yMax}  \\draw[shift={(\\xMin-0.8,\\y+0.9)},color=black] node[below]{\\tiny \\y};\n';
+	    if( title != '' ) x+='\\node [anchor=west] at (\\xMin+1,\\yMax+0.75) { \\scriptsize ' + title + ' };\n';
+	    x+='\\clip (\\xMin,\\yMin) rectangle (\\xMax,\\yMax);\n';
+
+	    var B1=((-B)+(-0.1));
+	    var B2=((-B)+(+0.1));
+	    x+='\\draw[line width=0.5mm,-,domain=-12:'+B1+',smooth,variable=\\x,blue,samples=300] plot (\\x, { ' + A + '/(\\x + ' + B + ' ) + ' + C + ' } );\n';
+	    x+='\\draw[line width=0.5mm,-,domain='+B2+':12,smooth,variable=\\x,blue,samples=300] plot (\\x, { ' + A + '/(\\x + ' + B + ' ) + ' + C + ' } );\n';
+	    x+='\\draw[blue] (' + -B + ',' + C + ') circle [radius=2.75mm];\n';
+	    x+='\\fill[blue] (' + ((-B)+(-1)) + ',' + ((+C)+(-A)) + ') circle (2.75mm);\n';
+	    x+='\\fill[blue] (' + ((-B)+(+1)) + ',' + ((+C)+(+A)) + ') circle (2.75mm);\n';
+
+	    x+='\\draw [dashed,line width=0.5mm,red] (-12,' + C + ') -- (12,' + C + ');\n';
+	    x+='\\draw [dashed,line width=0.5mm,red] ('+ -B + ',-12) -- (' + -B + ',12);\n';
+	    x+='\\end{tikzpicture}\n';
+
+	    k+='\\item Reciprocal/Inverse Function: \\( f(x)= ';
+	    if( A == 1 )
+	    { /* */ }
+	    else if( A == -1 )
+	    { k+='-'; }
+	    else k+=''+ A;
+	    k+='( x ';
+	    if( B<0 ) k+= '- ';
+	    if( B>0 ) k+= '+ ';
+	    if( B!=0 ){k+=Math.abs(B);}
+	    k+=' )^{-1}';
+	    if( C<0 ) k+= ' - ';
+	    if( C>0 ) k+= ' + ';
+	    if( C!=0 ) k+=Math.abs(C);
+	    k+=' \\)\\\\\n';
+
+	    
+	}
+	else if( y== 'Sine' )
+	{
+
+	    x+='\\begin{tikzpicture}[xscale=\\myScale,yscale=\\myScale]\n';
+	    if( title != '' ) x+='\\node [anchor=west] at (\\xMin+1,\\yMax+0.75) { \\scriptsize ' + title + ' };\n';
+	    x+='\\foreach \\i in {\\yMin,...,\\yMax} {\\draw [-,very thin,gray] ({\\xMin},\\i) -- ({\\xMax},\\i);}\n';
+	    x+='\\foreach \\y in {\\yMin, \\yStep,...,\\yMax}  \\draw[shift={(-4*pi-0.5,\\y+0.875)},color=black] (0pt,0pt) -- (0pt,1pt) node[below]  {\\tiny \\y};\n';
+	    x+='\\draw[thick,<->] (\\xMin,0) -- (\\xMax,0);\n';
+	    x+='\\draw[thick,<->] (0,\\yMin) -- (0,\\yMax);\n';
+	    x+='\\node at (\\xMax + 0.25, 0) {\\small $x$};\n';
+	    x+='\\node at (0, \\yMax + 1) {\\small $y$};\n';
+	    x+='\\draw[-,very thin,gray] (-2*pi,\\yMin) -- (-2*pi,\\yMax);\n';
+	    x+='\\draw[-,very thin,gray] (\\xMin,\\yMin) -- (\\xMin,\\yMax);\n';
+	    x+='\\draw[-,very thin,gray] (2*pi,\\yMin) -- (2*pi,\\yMax);\n';
+	    x+='\\draw[-,very thin,gray] (\\xMax,\\yMin) -- (\\xMax,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (-pi,\\yMin) -- ( -pi,\\yMax);\\draw[-,thin,gray] (pi,\\yMin) -- ( pi,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (-3*pi/2,\\yMin) -- ( -3*pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (3*pi/2,\\yMin) -- ( 3*pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (-pi/2,\\yMin) -- ( -pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (pi/2,\\yMin) -- ( pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (-5*pi/2,\\yMin) -- ( -5*pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (5*pi/2,\\yMin) -- ( 5*pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (-6*pi/2,\\yMin) -- ( -6*pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (6*pi/2,\\yMin) -- ( 6*pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (-7*pi/2,\\yMin) -- ( -7*pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (7*pi/2,\\yMin) -- ( 7*pi/2,\\yMax);\n';
+	    x+='\\draw[shift={(0,-12)}] node at (0,0) [below] {\\scriptsize 0};\n';
+	    x+='\\draw node at ({pi},-12) [below] {\\scriptsize ${\\pi}$};\n';
+	    x+='\\draw node at ({2*pi},-12) [below] [xshift=1pt] {\\scriptsize ${2\\pi}$};\n';
+	    x+='\\draw node at ({-pi},-12) [below] [xshift=-2pt]  {\\scriptsize ${-\\pi}$};\n';
+	    x+='\\draw node at ({-2*pi},-12) [below] [xshift=-2pt] {\\scriptsize ${-2\\pi}$};\n';
+	    x+='\\draw node at ({-3*pi},-12) [below] [xshift=-2pt] {\\scriptsize ${-3\\pi}$};\n';
+	    x+='\\draw node at ({3*pi},-12) [below] [xshift=1pt] {\\scriptsize ${3\\pi}$};\n';
+	    x+='\\clip (\\xMin,\\yMin) rectangle (\\xMax,\\yMax);\n';
+
+	    var CA1=((+C)+(+A));
+	    var CA2=((+C)+(-A));
+	    x+='\\draw[line width=0.5mm,-,domain=\\xMin:\\xMax,smooth,variable=\\x,blue,samples=300] plot (\\x, {' + A + '*sin(\\x r) + ' + C + ' }  );\n';
+	    x+='\\draw [dashed,line width=0.5mm,red] (-12,' + C + ') -- (12,' + C + ');\n';
+    	    x+='\\draw [dashed,line width=0.5mm,red] (-12,' + CA1 + ') -- (12,' + CA1 + ');\n';
+	    x+='\\draw [dashed,line width=0.5mm,red] (-12,' + CA2 + ') -- (12,' + CA2 + ');\n';
+
+	    x+='\\end{tikzpicture}\n';
+
+
+	    k+='\\item Sine Function: \\( f(x)= ';
+	    if( A == 1 )
+	    { /* */ }
+	    else if( A == -1 )
+	    { k+='-'; }
+	    else k+=''+ A;
+	    k+='\\sin( x ) ';
+	    if( C<0 ) k+= ' - ';
+	    if( C>0 ) k+= ' + ';
+	    if( C!=0 ) k+=Math.abs(C);
+	    k+=' \\)\\\\\n';
+
+	    
+	}
+	else if( y== 'Cosine' )
+	{
+
+	    // THE TRIG COORDINATE PLANE
+	    x+='\\begin{tikzpicture}[xscale=\\myScale,yscale=\\myScale]\n';
+	    if( title != '' ) x+='\\node [anchor=west] at (\\xMin+1,\\yMax+0.75) { \\scriptsize ' + title + ' };\n';
+	    x+='\\foreach \\i in {\\yMin,...,\\yMax} {\\draw [-,very thin,gray] ({\\xMin},\\i) -- ({\\xMax},\\i);}\n';
+	    x+='\\foreach \\y in {\\yMin, \\yStep,...,\\yMax}  \\draw[shift={(-4*pi-0.5,\\y+0.875)},color=black] (0pt,0pt) -- (0pt,1pt) node[below]  {\\tiny \\y};\n';
+	    x+='\\draw[thick,<->] (\\xMin,0) -- (\\xMax,0);\n';
+	    x+='\\draw[thick,<->] (0,\\yMin) -- (0,\\yMax);\n';
+	    x+='\\node at (\\xMax + 0.25, 0) {\\small $x$};\n';
+	    x+='\\node at (0, \\yMax + 1) {\\small $y$};\n';
+	    x+='\\draw[-,very thin,gray] (-2*pi,\\yMin) -- (-2*pi,\\yMax);\n';
+	    x+='\\draw[-,very thin,gray] (\\xMin,\\yMin) -- (\\xMin,\\yMax);\n';
+	    x+='\\draw[-,very thin,gray] (2*pi,\\yMin) -- (2*pi,\\yMax);\n';
+	    x+='\\draw[-,very thin,gray] (\\xMax,\\yMin) -- (\\xMax,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (-pi,\\yMin) -- ( -pi,\\yMax);\\draw[-,thin,gray] (pi,\\yMin) -- ( pi,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (-3*pi/2,\\yMin) -- ( -3*pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (3*pi/2,\\yMin) -- ( 3*pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (-pi/2,\\yMin) -- ( -pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (pi/2,\\yMin) -- ( pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (-5*pi/2,\\yMin) -- ( -5*pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (5*pi/2,\\yMin) -- ( 5*pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (-6*pi/2,\\yMin) -- ( -6*pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (6*pi/2,\\yMin) -- ( 6*pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (-7*pi/2,\\yMin) -- ( -7*pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (7*pi/2,\\yMin) -- ( 7*pi/2,\\yMax);\n';
+	    x+='\\draw[shift={(0,-12)}] node at (0,0) [below] {\\scriptsize 0};\n';
+	    x+='\\draw node at ({pi},-12) [below] {\\scriptsize ${\\pi}$};\n';
+	    x+='\\draw node at ({2*pi},-12) [below] [xshift=1pt] {\\scriptsize ${2\\pi}$};\n';
+	    x+='\\draw node at ({-pi},-12) [below] [xshift=-2pt]  {\\scriptsize ${-\\pi}$};\n';
+	    x+='\\draw node at ({-2*pi},-12) [below] [xshift=-2pt] {\\scriptsize ${-2\\pi}$};\n';
+	    x+='\\draw node at ({-3*pi},-12) [below] [xshift=-2pt] {\\scriptsize ${-3\\pi}$};\n';
+	    x+='\\draw node at ({3*pi},-12) [below] [xshift=1pt] {\\scriptsize ${3\\pi}$};\n';
+	    x+='\\clip (\\xMin,\\yMin) rectangle (\\xMax,\\yMax);\n';
+
+	    var CA1=((+C)+(+A));
+	    var CA2=((+C)+(-A));
+	    x+='\\draw[line width=0.5mm,-,domain=\\xMin:\\xMax,smooth,variable=\\x,blue,samples=300] plot (\\x, {' + A + '*cos(\\x r) + ' + C + ' }  );\n';
+	    x+='\\draw [dashed,line width=0.5mm,red] (-12,' + C + ') -- (12,' + C + ');\n';
+    	    x+='\\draw [dashed,line width=0.5mm,red] (-12,' + CA1 + ') -- (12,' + CA1 + ');\n';
+	    x+='\\draw [dashed,line width=0.5mm,red] (-12,' + CA2 + ') -- (12,' + CA2 + ');\n';
+
+
+	    x+='\\end{tikzpicture}\n'
+
+
+
+	    k+='\\item Cosine Function: \\( f(x)= ';
+	    if( A == 1 )
+	    { /* */ }
+	    else if( A == -1 )
+	    { k+='-'; }
+	    else k+=''+ A;
+	    k+='\\cos( x )';
+	    if( C<0 ) k+= ' - ';
+	    if( C>0 ) k+= ' + ';
+	    if( C!=0 ) k+=Math.abs(C);
+	    k+=' \\)\\\\\n';
+
+
+	    
+	}
+	else if( y== 'Tangent' )
+	{
+
+	    x+='\\begin{tikzpicture}[xscale=\\myScale,yscale=\\myScale]\n';
+	    if( title != '' ) x+='\\node [anchor=west] at (\\xMin+1,\\yMax+0.75) { \\scriptsize ' + title + ' };\n';
+	    x+='\\foreach \\i in {\\yMin,...,\\yMax} {\\draw [-,very thin,gray] ({\\xMin},\\i) -- ({\\xMax},\\i);}\n';
+	    x+='\\foreach \\y in {\\yMin, \\yStep,...,\\yMax}  \\draw[shift={(-4*pi-0.5,\\y+0.875)},color=black] (0pt,0pt) -- (0pt,1pt) node[below]  {\\tiny \\y};\n';
+	    x+='\\draw[thick,<->] (\\xMin,0) -- (\\xMax,0);\n';
+	    x+='\\draw[thick,<->] (0,\\yMin) -- (0,\\yMax);\n';
+	    x+='\\node at (\\xMax + 0.25, 0) {\\small $x$};\n';
+	    x+='\\node at (0, \\yMax + 1) {\\small $y$};\n';
+	    x+='\\draw[-,very thin,gray] (-2*pi,\\yMin) -- (-2*pi,\\yMax);\n';
+	    x+='\\draw[-,very thin,gray] (\\xMin,\\yMin) -- (\\xMin,\\yMax);\n';
+	    x+='\\draw[-,very thin,gray] (2*pi,\\yMin) -- (2*pi,\\yMax);\n';
+	    x+='\\draw[-,very thin,gray] (\\xMax,\\yMin) -- (\\xMax,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (-pi,\\yMin) -- ( -pi,\\yMax);\\draw[-,thin,gray] (pi,\\yMin) -- ( pi,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (-3*pi/2,\\yMin) -- ( -3*pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (3*pi/2,\\yMin) -- ( 3*pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (-pi/2,\\yMin) -- ( -pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (pi/2,\\yMin) -- ( pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (-5*pi/2,\\yMin) -- ( -5*pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (5*pi/2,\\yMin) -- ( 5*pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (-6*pi/2,\\yMin) -- ( -6*pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (6*pi/2,\\yMin) -- ( 6*pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (-7*pi/2,\\yMin) -- ( -7*pi/2,\\yMax);\n';
+	    x+='\\draw[-,thin,gray] (7*pi/2,\\yMin) -- ( 7*pi/2,\\yMax);\n';
+	    x+='\\draw[shift={(0,-12)}] node at (0,0) [below] {\\scriptsize 0};\n';
+	    x+='\\draw node at ({pi},-12) [below] {\\scriptsize ${\\pi}$};\n';
+	    x+='\\draw node at ({2*pi},-12) [below] [xshift=1pt] {\\scriptsize ${2\\pi}$};\n';
+	    x+='\\draw node at ({-pi},-12) [below] [xshift=-2pt]  {\\scriptsize ${-\\pi}$};\n';
+	    x+='\\draw node at ({-2*pi},-12) [below] [xshift=-2pt] {\\scriptsize ${-2\\pi}$};\n';
+	    x+='\\draw node at ({-3*pi},-12) [below] [xshift=-2pt] {\\scriptsize ${-3\\pi}$};\n';
+	    x+='\\draw node at ({3*pi},-12) [below] [xshift=1pt] {\\scriptsize ${3\\pi}$};\n';
+	    x+='\\clip (\\xMin,\\yMin) rectangle (\\xMax,\\yMax);\n';
+	    x+='\\draw[line width=0.5mm,-,domain=\\xMin+0.01:-7*pi/2-0.01,smooth,variable=\\x,blue,samples=300] plot (\\x, {tan(\\x r)+ ' + C + ' }  );\n';
+	    x+='\\draw[line width=0.5mm,-,domain=-7*pi/2+0.01:-5*pi/2,smooth,variable=\\x,blue,samples=300] plot (\\x, {tan(\\x r)+ ' + C + ' }  );\n';
+	    x+='\\draw[line width=0.5mm,-,domain=-5*pi/2+0.01:-3*pi/2,smooth,variable=\\x,blue,samples=300] plot (\\x, {tan(\\x r)+ ' + C + ' }  );\n';
+	    x+='\\draw[line width=0.5mm,-,domain=-3*pi/2+0.01:-pi/2,smooth,variable=\\x,blue,samples=300] plot (\\x, {tan(\\x r)+ ' + C + ' }  );\n';
+	    x+='\\draw[line width=0.5mm,-,domain=-pi/2+0.01:pi/2,smooth,variable=\\x,blue,samples=300] plot (\\x, {tan(\\x r)+ ' + C + ' }  );\n';
+	    x+='\\draw[line width=0.5mm,-,domain=pi/2+0.01:3*pi/2,smooth,variable=\\x,blue,samples=300] plot (\\x, {tan(\\x r)+ ' + C + ' }  );\n';
+	    x+='\\draw[line width=0.5mm,-,domain=3*pi/2+0.01:5*pi/2,smooth,variable=\\x,blue,samples=300] plot (\\x, {tan(\\x r)+ ' + C + ' }  );\n';
+	    x+='\\draw[line width=0.5mm,-,domain=5*pi/2+0.01:7*pi/2,smooth,variable=\\x,blue,samples=300] plot (\\x, {tan(\\x r)+ ' + C + ' }  );\n';
+	    x+='\\draw[line width=0.5mm,-,domain=7*pi/2+0.01:\\xMax-0.01,smooth,variable=\\x,blue,samples=300] plot (\\x, {tan(\\x r)+ ' + C + ' }  );\n';
+	    x+='\\draw [dashed,line width=0.5mm,red] (-7*pi/2,-12) -- (-7*pi/2,12);\n';
+	    x+='\\draw [dashed,line width=0.5mm,red] (-5*pi/2,-12) -- (-5*pi/2,12);\n';
+	    x+='\\draw [dashed,line width=0.5mm,red] (-3*pi/2,-12) -- (-3*pi/2,12);\n';
+	    x+='\\draw [dashed,line width=0.5mm,red] (-pi/2,-12) -- (-pi/2,12);\n';
+	    x+='\\draw [dashed,line width=0.5mm,red] (pi/2,-12) -- (pi/2,12);\n';
+	    x+='\\draw [dashed,line width=0.5mm,red] (3*pi/2,-12) -- (3*pi/2,12);\n';
+	    x+='\\draw [dashed,line width=0.5mm,red] (5*pi/2,-12) -- (5*pi/2,12);\n';
+	    x+='\\draw [dashed,line width=0.5mm,red] (7*pi/2,-12) -- (7*pi/2,12);\n';
+
+	    x+='\\end{tikzpicture}\n';
+
+	    
+
+	    
+	    k+='\\item Tangent Function: \\( f(x)= ';
+	    k+='\\tan( x )';
+	    if( C<0 ) k+= ' - ';
+	    if( C>0 ) k+= ' + ';
+	    if( C!=0 ) k+=Math.abs(C);
+	    k+=' \\)\\\\\n';
+
+	}
+	else if( y=='Floor' )
+	{
+
+	    x+='\\begin{tikzpicture}[xscale=\\myScale,yscale=\\myScale]\n\\draw[thin,color=gray,step=1cm] (\\xMin,\\yMin) grid (\\xMax,\\yMax);\n\\draw[thick,<->] (\\xMin-0.25,0) -- (\\xMax+0.25,0);\n\\draw[thick,<->] (0,\\yMin-0.25) -- (0,\\yMax+0.25);\n\\node at (\\xMax+0.75, 0) {\\scriptsize $x$};\n\\node at (0, \\yMax+0.75) {\\scriptsize $y$};\\foreach \\x in {\\xMin,\\xStep,...,\\xMax}\\draw[shift={(\\x,\\yMin)},color=black] node[below] {\\tiny \\x};\n\\foreach \\y in {\\yMin,\\yStep,...,\\yMax}  \\draw[shift={(\\xMin-0.8,\\y+0.9)},color=black] node[below]{\\tiny \\y};\n';
+	    if( title != '' ) x+='\\node [anchor=west] at (\\xMin+1,\\yMax+0.75) { \\scriptsize ' + title + ' };\n';
+	    x+='\\clip (\\xMin,\\yMin) rectangle (\\xMax,\\yMax);\n';
+
+	    for( var i=-11.99; i<=11.99; i++ )
+	    {
+		i=i*100;
+		
+		i=Math.floor(i);
+
+		i=i/100;
+		
+		x+='\\draw[line width=0.5mm,-,domain=' + i + ':' + ((+i)+(+0.98)) + ',smooth,variable=\\x,blue,samples=300] plot (\\x, { ' + A + '*floor(\\x + ' + B + ' ) + ' + C + ' } );\n';
+	    }
+	    for( var i=-12; i<=12; i++ )
+	    {
+		i=i*100;
+		
+		i=Math.floor(i);
+
+		i=i/100;
+		x+='\\fill[blue] (' + i + ',' + (Math.round(100*(A*Math.floor( ((+i)+(+B)) )))/100 + (+C)) + ') circle (2.75mm);\n';
+		x+='\\draw[blue] (' + ((+i)+(1)) + ',' + Math.round(100*(A*Math.floor( ((+i)+(+B)) ))/100 + (+C)) + ') circle [radius=2.75mm];\n';
+	    }
+	    
+	    x+='\\end{tikzpicture}\n';
+
+
+	    k+='\\item Floor (Step) Function: \\( f(x)= ';
+	    if( A == 1 )
+	    { /* */ }
+	    else if( A == -1 )
+	    { k+='-'; }
+	    else k+=''+ A;
+	    k+='\\lfloor { x ';
+	    if( B<0 ) k+= '- ';
+	    if( B>0 ) k+= '+ ';
+	    if( B!=0 ){k+=Math.abs(B);}
+	    k+=' } \\rfloor ';
+	    if( C<0 ) k+= ' - ';
+	    if( C>0 ) k+= ' + ';
+	    if( C!=0 ) k+=Math.abs(C);
+	    k+=' \\)\\\\\n';
+
+
+	}
+	else if( y=='Ceiling' )
+	{
+
+	    x+='\\begin{tikzpicture}[xscale=\\myScale,yscale=\\myScale]\n\\draw[thin,color=gray,step=1cm] (\\xMin,\\yMin) grid (\\xMax,\\yMax);\n\\draw[thick,<->] (\\xMin-0.25,0) -- (\\xMax+0.25,0);\n\\draw[thick,<->] (0,\\yMin-0.25) -- (0,\\yMax+0.25);\n\\node at (\\xMax+0.75, 0) {\\scriptsize $x$};\n\\node at (0, \\yMax+0.75) {\\scriptsize $y$};\\foreach \\x in {\\xMin,\\xStep,...,\\xMax}\\draw[shift={(\\x,\\yMin)},color=black] node[below] {\\tiny \\x};\n\\foreach \\y in {\\yMin,\\yStep,...,\\yMax}  \\draw[shift={(\\xMin-0.8,\\y+0.9)},color=black] node[below]{\\tiny \\y};\n';
+	    if( title != '' ) x+='\\node [anchor=west] at (\\xMin+1,\\yMax+0.75) { \\scriptsize ' + title + ' };\n';
+	    x+='\\clip (\\xMin,\\yMin) rectangle (\\xMax,\\yMax);\n';
+
+	    for( var i=-11.99; i<=11.99; i++ )
+	    {
+		x+='\\draw[line width=0.5mm,-,domain=' + i + ':' + ((+i)+(+0.98)) + ',smooth,variable=\\x,blue,samples=300] plot (\\x, { ' + A + '*ceil(\\x + ' + B + ' ) + ' + C + ' } );\n';
+	    }
+	    for( var i=-12; i<=12; i++ )
+	    {
+		x+='\\fill[blue] (' + i + ',' + (A*Math.ceil( ((+i)+(+B)) ) + (+C)) + ') circle (2.75mm);\n';
+		x+='\\draw[blue] (' + ((+i)-(1)) + ',' + (A*Math.ceil( ((+i)+(+B)) ) + (+C)) + ') circle [radius=2.75mm];\n';
+	    }
+	    
+	    x+='\\end{tikzpicture}\n';
+
+
+
+	    k+='\\item Ceiling (Step) Function: \\( f(x)= ';
+	    if( A == 1 )
+	    { /* */ }
+	    else if( A == -1 )
+	    { k+='-'; }
+	    else k+=''+ A;
+	    k+='\\lceil { x ';
+	    if( B<0 ) k+= '- ';
+	    if( B>0 ) k+= '+ ';
+	    if( B!=0 ){k+=Math.abs(B);}
+	    k+=' } \\rceil ';
+	    if( C<0 ) k+= ' - ';
+	    if( C>0 ) k+= ' + ';
+	    if( C!=0 ) k+=Math.abs(C);
+	    k+=' \\)\\\\\n';
+
+
+	}
+	else
+	{
+	    x+='\par{} \\textbf{ERROR NOT ALL FIELDS ARE FILLED OUT for function ' + y + '}\n';
+	}
+	k+='%% \\newline\n';
+	x+='%% \\newline\n';
+	form1.text_area.value=x;
+	form1.answer_key.value=k;
+
+	
+    }
+
+</script>
+</head>
+
+<body>
+  <form name='form1' action='' method='GET'>
+    <p>Graph Type:</p>
+    <select name="graph_type" id="graph_type">
+      <optgroup label="Polynomial">
+	<option value="Constant">Constant</option>
+	<option value="Linear">Linear</option>
+	<option value="Quadratic">Quadratic</option>
+	<option value="Cubic">Cubic</option>
+      </optgroup>
+      
+      <optgroup label="Other">
+	<option value="Absolute_Value">Absolute Value</option>
+	<option value="Square_Root">Square Root</option>
+	<option value="Logarithmic">Logarithmic</option>
+	<option value="Exponential">Exponential</option>
+	<option value="Reciprocal">Reciprocal</option>
+      </optgroup>
+      
+      <optgroup label="Trigonometric">
+	<option value="Sine">Sine</option>
+	<option value="Cosine">Cosine</option>
+	<option value="Tangent">Tangent</option>
+      </optgroup>
+      
+      <optgroup label="Step">
+	<option value="Floor">Floor</option>
+	<option value="Ceiling">Ceiling</option>
+      </optgroup>
+      
+    </select>
+    <p>Title: <input type='text' id='Title' name='Title' size=10></p>
+    <p>A: <input type='text' id='A' name='A' size=1></p>
+    <p>B: <input type='text' id='B' name='B' size=1> (Left/Right Shift)</p>
+    <p>C: <input type='text' id='C' name='C' size=1> (Constant)</p>
+    
+    
+    <p>This is the LaTeX:</p>
+    <p><textarea cols=80 rows=20 name='text_area'></textarea></p>
+    <input type='button' onClick="javascript:add();" value='Student Writes Eq.'>
+    <input type='button' onClick="javascript:addStudentGraph();" value='Student Graphs Eq.'>
+    <input type='button' onClick="javascript:rndgr();" value='Add Random Grapher'>
+    <input type='button' onClick="javascript:rndeq();" value='Add Random Writer'>
+    <input type='button' onClick="javascript:rndeqNOTRIG();" value='Random Writer (No Trig)'>
+    <input type='button' onClick="javascript:random_numbers();" value='Create Random Numbers'>
+    <input type='button' onClick="javascript:make_random_test();" value='Create Random Test'>
+
+   <input type='button' onClick="javascript:getd();" value='Date'>
+    
+    <!--<input type='button' onClick="javascript:clr();" value='Clear Textbox'>-->
+    <p>Answer Key</p>
+    <p><textarea cols=80 rows=20 name='answer_key'></textarea></p>
+    <p><textarea cols=80 rows=20 name='full_test'></textarea></p>
+  </form>
+  <hr>
+  <p><center><font size=-2><i>Coded By: Mr. Pellegrino - Last Updated on: 2020 10 09</i></font></center></p>
+  
+</body>
+</html>
+

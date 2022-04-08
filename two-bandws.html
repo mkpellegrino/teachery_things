@@ -1,0 +1,314 @@
+<html>
+  <head><title>Create a Box and Whisker Plot - By: Mr. Pellegrino</title>
+
+    <script>
+      var numberOfNumbers;
+      var arrayOfNumbers;
+      var median;
+      var low;
+      var high;
+      var lowest;
+      var highest;
+      var s=window;
+
+      function RealSpread()
+      {
+	  arrayOfNumbers1=form1.data.value.split(',');
+	  numberOfNumbers=1;
+	  
+	  for( var i=0; i<form1.data.value.length; i++ )
+	  {
+	      if( form1.data.value[i] == ',' )
+	      {
+		  numberOfNumbers++;
+	      }
+	  }
+	  for( var i=0; i<numberOfNumbers; i++ )
+	  {
+	      arrayOfNumbers1[i]=1*Number(arrayOfNumbers1[i]);
+	  }
+	  arrayOfNumbers1.sort(sortNumber);
+
+	  var low1=arrayOfNumbers1[0];
+	  var high1=arrayOfNumbers1[numberOfNumbers-1];
+
+	  // ****************
+
+	  arrayOfNumbers2=form1.data2.value.split(',');
+	  numberOfNumbers2=1;
+	  
+	  for( var i=0; i<form1.data2.value.length; i++ )
+	  {
+	      if( form1.data2.value[i] == ',' )
+	      {
+		  numberOfNumbers2++;
+	      }
+	  }
+	  for( var i=0; i<numberOfNumbers2; i++ )
+	  {
+	      arrayOfNumbers2[i]=1*Number(arrayOfNumbers2[i]);
+	  }
+	  arrayOfNumbers2.sort(sortNumber);
+
+	  var low2=arrayOfNumbers2[0];
+	  var high2=arrayOfNumbers2[numberOfNumbers2-1];
+
+	  if( low2 < low1 )
+	  {
+	      lowest=low2;
+	  }
+	  else
+	  {
+	      lowest=low1;
+	  }
+
+	  if( high2 > high1 )
+	  {
+	      highest=high2;
+	  }
+	  else
+	  {
+	      highest=high1;
+	  }
+	  
+
+      }
+
+      function parse()
+      {
+	  arrayOfNumbers=form1.data.value.split(',');
+	  numberOfNumbers=1;
+	  
+	  for( var i=0; i<form1.data.value.length; i++ )
+	  {
+	      if( form1.data.value[i] == ',' )
+	      {
+		  numberOfNumbers++;
+	      }
+	  }
+	  for( var i=0; i<numberOfNumbers; i++ )
+	  {
+	      arrayOfNumbers[i]=1*Number(arrayOfNumbers[i]);
+	  }
+
+	  
+
+	  
+      }
+
+      function dump()
+      {
+	  for( var i=0; i<numberOfNumbers; i++ )
+	  {
+	      form1.svgoutput.value += arrayOfNumbers[i];
+	      form1.svgoutput.value += '\n';
+	  }
+
+	  form1.svgoutput.value += '\n';
+	  form1.svgoutput.value += '\n';
+	  
+
+      }
+      function sortNumber(a,b)
+      {
+	  return Number(a) - Number(b);
+      }      
+
+      function med(numbers)
+      {
+	  var m = 0;
+	  var numsLen = 1*numbers.length;
+	  arrayOfNumbers.sort(sortNumber);
+	  if ( (numsLen % 2) == 0 ) 
+	  {
+	      m = (1*numbers[numsLen / 2 - 1] + 1*numbers[numsLen / 2]) / 2;
+	  }
+	  else
+	  {     
+	      m = 1*numbers[(numsLen - 1) / 2];
+	  }
+	  
+	  return 1*m;
+      }
+
+      function createBoxAndWhiskerPlot()
+      {
+	 form1.svgoutput.value="";
+	  var QL=0;
+	  var QR=0;
+	  RealSpread();
+	  
+	  parse();
+
+	  arrayOfNumbers.sort(sortNumber);
+	  
+	  //low=arrayOfNumbers[0];
+	  //high=arrayOfNumbers[1*numberOfNumbers-1];
+
+	  low=lowest;
+	  high=highest;
+
+	  var spread=high-low;
+	  //alert( "Spread: " + spread );
+
+	  var m = (numberOfNumbers-1)/2;
+	  median=med(arrayOfNumbers);
+
+
+	  var lowerArray;
+	  var lengthOfSubs;
+
+
+	  // if the length is even then just split it in half, otherwise subtract one and split it
+	  if( (arrayOfNumbers.length % 2) == 0 )
+	  {
+	      lengthOfSubs=arrayOfNumbers.length/2;
+	  }
+	  else
+	  {
+	      lengthOfSubs=(arrayOfNumbers.length-1)/2;
+	  }
+
+
+
+	  
+	  var ArL=arrayOfNumbers.slice(0,lengthOfSubs);
+	  var ArU=arrayOfNumbers.slice(numberOfNumbers-lengthOfSubs,numberOfNumbers+1); // + to -
+
+	  
+	  QL=med(ArL);
+	  QR=med(ArU);
+	  
+	  QLs=Math.round(100+1000*(QL-low)/spread);
+	  QRs=Math.round(100+1000*(QR-low)/spread);
+
+
+	  var QLt=QL+' ';
+	  var QRt=QR+' ';
+	  var Mt=Math.round(median*1000)/1000+' ';
+
+	  var IQR=(QR-QL);
+	  var lIQR=QL-(1.5*IQR);
+	  var rIQR=QR+(1.5*IQR);
+
+	  var newArray=[0];
+	  var newArrayPtr=0;
+
+
+	  form1.svgoutput.value+='<svg width="1200px" height="75px" version="1.1"><defs></defs>\n';
+
+	  // now go through the values and determine outliers
+
+	  for( var i=0; i<numberOfNumbers; i++ )
+	  {
+	      if( (arrayOfNumbers[i] >= lIQR) && (arrayOfNumbers[i] <= rIQR) )
+	      {
+		  newArray[newArrayPtr++] = arrayOfNumbers[i];
+	      }
+	      else
+	      {
+		  // it must be an outlier
+		  form1.svgoutput.value+='<text x="'+ Math.round( 100+1000*(arrayOfNumbers[i]-low)/spread ) +'" y="30" fill="red">*</text>\n';
+		  form1.svgoutput.value+='<text x="'+ Math.round( 100+1000*(arrayOfNumbers[i]-low)/spread ) +'" y="53" fill="red">' + arrayOfNumbers[i] + '</text>\n';
+	      }
+	  }
+
+	  if( newArrayPtr < 4 )
+	  {
+	      alert( "Not enough data." );
+	      return;
+	  }
+	  
+	  Ms=Math.round(100+1000*(median-low)/spread);
+
+	  var newLow=newArray[0];
+	  var newHigh=newArray[newArrayPtr-1];
+
+	  
+	  Lows=Math.round(100+1000*(newLow-low)/spread);
+	  Highs=Math.round(100+1000*(newHigh-low)/spread);
+
+	  
+	  form1.svgoutput.value+='<line x1="' + Lows + '" y1="25" x2="' + Highs + '" y2="25" stroke="black" stroke-width="1"/>\n';
+	  form1.svgoutput.value+='<rect x="' + QLs + '" y="10" width="' + (QRs-QLs) + '" height="30" fill="#EEEEEE" stroke="black"/>';
+
+	  form1.svgoutput.value+='<line x1="' + QLs + '" y1="10" x2="' + QLs + '" y2="40" stroke="black" stroke-width="1"/>\n';
+	  form1.svgoutput.value+='<line x1="' + QRs + '" y1="10" x2="' + QRs + '" y2="40" stroke="black" stroke-width="1"/>\n';
+	  form1.svgoutput.value+='<line x1="' + QLs + '" y1="40" x2="' + QRs + '" y2="40" stroke="black" stroke-width="1"/>\n';
+	  form1.svgoutput.value+='<line x1="' + QLs + '" y1="10" x2="' + QRs + '" y2="10" stroke="black" stroke-width="1"/>\n';
+	  form1.svgoutput.value+='<line x1="' + Ms + '" y1="10" x2="' + Ms + '" y2="40" stroke="black" stroke-width="1"/>\n';
+
+	  
+	  form1.svgoutput.value+='<text x="' + (QLs-10) + '" y="53" fill="black">' + QLt + '</text>\n';
+	  form1.svgoutput.value+='<text x="' + (QRs-10) + '" y="53" fill="black">' + QRt + '</text>\n';
+	  form1.svgoutput.value+='<text x="' + (Ms-10) + '" y="53" fill="black">' + Mt + '</text>\n';
+
+	  form1.svgoutput.value+='<line x1="' + Lows +'" y1="15" x2="' + Math.round( Lows*100)/100 + '" y2="35" stroke="black" stroke-width="1"/>\n';
+	  form1.svgoutput.value+='<line x1="' + Highs + '" y1="15" x2="' + Math.round( Highs*100)/100  + '" y2="35" stroke="black" stroke-width="1"/>\n';
+	  
+	  form1.svgoutput.value+='<text x="' + (Lows - 10) + '" y="53" fill="black">' + Math.round( newLow*100)/100 + '</text>\n';
+	  form1.svgoutput.value+='<text x="' + (Highs - 10) + '" y="53" fill="black">' + Math.round( newHigh*100)/100 + '</text>\n';
+	  form1.svgoutput.value+='</svg>';
+      }
+      
+
+      function Clear()
+      {
+	  if( confirm( "Are you sure that you want to clear the data?" ) )
+	  {
+	      form1.data.value="";
+	      form1.svgoutput.value="";
+	  }
+      }
+
+      function DoTwo()
+      {
+	  s=window.open("","","width=1200,height=300");
+	  s.document.write("<html><head><title>My Box and Whisker Plot</title></head><body><center>\n");
+
+	  // Clear the SVG Window here
+	  createBoxAndWhiskerPlot();
+	  
+	  s.document.write(form1.svgoutput.value);
+	  // Swap the two data sets here
+	  var temp=form1.data.value;
+	  form1.data.value=form1.data2.value;
+	  form1.data2.value=temp;
+	  
+	  createBoxAndWhiskerPlot();
+	  // Then swap them back.
+	  temp=form1.data.value;
+	  form1.data.value=form1.data2.value;
+	  form1.data2.value=temp;
+	  
+
+
+	  s.document.write(form1.svgoutput.value);
+	  s.document.write("<hr><font size=-2><i>Coded By Mr. Pellegrino - 2018 11 29 - Join BHS Robotics Team - Learn to Code!!!</i></font>");
+	  
+	  s.document.write("<form name='forma' id='forma'><input type='button' onClick='jacascript:window.close();' value='Close this Window'></form>\n");
+	  s.document.write("</center></body></html>");
+
+      }
+    </script>
+    
+
+</head>
+  <body>
+    <center>
+      <form name='form1' action='' method='GET'>
+	<p>Enter dataset #1 here (comma delimited): (Ex: 1, 6, 2, 1, 5, 8.3, 6, 5,5,5,34)</p>
+	<p><textarea id='data' name='data' rows=1 cols=100></textarea></p>
+	<!--<p>SVG Code:</p>-->
+	<p>Enter dataset #2 here (comma delimited):</p>
+	<p><textarea id='data2' name='data2' rows=1 cols=100></textarea></p>
+	<p><textarea id='svgoutput' name='svgoutput' rows=1 cols=1></textarea></p>
+	<p><input type='button' onclick='javascript:DoTwo();' value='Create B & W Plot'/>&nbsp;&nbsp;&nbsp;<input type='button' onclick='javascript:Clear();' value='CLR'/>
+      </form>
+    </center>
+    <hr>
+    <p><center><font size=-2><i>Coded By: Mr. Pellegrino - Last Updated on: 2018 11 29</i></font></center></p>
+    
+  </body>
+</html>
+

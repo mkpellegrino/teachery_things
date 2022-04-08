@@ -1,0 +1,131 @@
+<html>
+  <head>
+    <script language="javascript">
+      function s( x )
+      {
+	  return( Math.sin( x*Math.PI/180 ));
+      }
+
+      function c( x )
+      {
+	  return( Math.cos( x*Math.PI/180 ));
+      }
+	  
+      /* returns a random integer between x and y */
+      function rnd_between( x, y )
+      {
+	  return Math.floor(Math.random()*(y-x)+x);
+      }
+
+      /* round a number (x) to the (10^y)th place */
+      function rn( x, y )
+      {
+	  return Math.round(x*(10**y))/(10**y);	  
+      }
+
+      function get_date_as_string()
+      {
+	  var month_text = "";
+	  var day_text = "";
+	  var year_text = "";
+	  var d = new Date();
+	 
+	  
+	  var m = d.getMonth();
+	  switch( m )
+	  {
+	      case 0:
+	      month_text="January ";
+	      break;
+	      case 1:
+	      month_text="February ";
+	      break;
+	      case 2:
+	      month_text="March ";
+	      break;
+	      case 3:
+	      month_text="April ";
+	      break;
+	      case 4:
+	      month_text="May ";
+	      break;
+	      case 5:
+	      month_text="June ";
+	      break;
+	      case 6:
+	      month_text="July ";
+	      break;
+	      case 7:
+	      month_text="August ";
+	      break;
+	      case 8:
+	      month_text="September ";
+	      break;
+	      case 9:
+	      month_text="October ";
+	      break;
+	      case 10:
+	      month_text="November ";
+	      break;
+	      case 11:
+	      month_text="December ";
+	      break;
+	      default:
+	      month_text=" ";
+	  }
+	  day_text = d.getDate() + ", ";
+	  year_text = Number( d.getYear() + 1900);
+	  
+	  return( month_text + day_text + year_text);
+	  
+      }
+      function generate_new_triangle()
+      {
+	  
+	 
+
+	  var A = rn(rnd_between( 5, 43 ),0);
+	  var B = rn(rnd_between( 5, 43 ),0);
+	  while( B == A )
+	  {
+	      B = rn(rnd_between( 5, 43 ),0);
+	  }
+	  var C = 180 - (A + B);
+	  //alert( "A: " + A + " B: " + B + " C: " + C );
+	  var a = rn(rnd_between( 10, 100 ), 0);
+
+	  var b = rn(a*s(B)/s(A),3);
+	  var c = rn(a*s(C)/s(A),4);
+
+	  if( a + b <= c || b + c <= a || a + c <= b )
+	  {
+	      alert( "Invalid Triangle!" );
+	  }
+
+	  document.getElementById("anglea").textContent = A + "°";
+	  document.getElementById("lengtha").textContent = a;
+	  document.getElementById("lengthb").textContent = b ;
+	  document.getElementById("todays_date").innerHTML="<b>DATE: " + get_date_as_string() + "</b>";
+	  
+	  
+      }
+    </script>
+
+
+  </head>
+  <body>
+    <p><b>NAME:</b></p>
+    <p id="todays_date"><b>DATE:</b></p>
+    <p><b>The Law of Sines - Find the length of the missing side and the measure of the two missing angles.</b></p>
+    <svg width="500" height="500">
+      <title>Click on the triangle for a different problem</title>
+      <polygon points="250,5 495,495 5,495 250,5" fill="white" stroke="black" stroke-width="3" onclick="javascript:generate_new_triangle();"/>
+      <text id="anglea" x="20" y="490" font-size="2em">A</text>
+      <text id="lengthb" x="25" y="250" font-size="2em">b</text>
+      <text id="unitsb" x="50" y="270" font-size="1em">feet</text>
+      <text id="lengtha" x="400" y="250" font-size="2em">c</text>
+      <text id="unitsa" x="410" y="270" font-size="1em">feet</text>
+    </svg>
+
+  </body>
+</html>

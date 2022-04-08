@@ -1,0 +1,209 @@
+<html>
+<head><title>Create a Moodle Cloze Question - By: Mr. Pellegrino</title>
+
+  <script>
+
+    function clr()
+    {
+    if (confirm('Are you sure you want to CLEAR EVERYTHING?'))
+    {
+
+
+    form1.entirefile.value='';
+    form1.clozetext.value='';
+    form1.bankname.value='';
+    form1.a.value='';
+    form1.b.value='';
+    form1.c.value='';
+    form1.d.value='';
+
+
+    form1.ba.value='';
+    form1.ca.value='';
+    form1.da.value='';
+    form1.pa.value='';
+    form1.q.value='';
+    form1.name.value='';
+      }
+    }
+    
+    function xml()
+    {
+    var t=form1.entirefile.value;
+    var t2;
+    
+    s=window.open();
+	s.document.write(t);
+    s.stop();
+    }
+
+    
+    function init()
+    {
+      var y='';
+      if( form1.entirefile.value=='' )
+      {
+        if( form1.bankname.value == '' )
+        {
+          form1.bankname.value='Uncategorized Questions';
+         }
+         form1.entirefile.value='<?xml version="1.0"?><quiz><question type="category"><category><text>$course$/';
+	 form1.entirefile.value+=form1.bankname.value;
+	 form1.entirefile.value+='</text></category></question>';
+      }
+    
+     var ba='';
+     var ca='';
+     var da='';
+     if( form1.ba.value=='')
+     {
+       form1.ba.value='0';
+     }
+    ba=form1.ba.value;
+    if( form1.ca.value=='')
+     {
+       form1.ca.value='0';
+     }
+    ca=form1.ca.value;
+    if( form1.da.value=='')
+     {
+       form1.da.value='0';
+     }
+    da=form1.da.value;
+
+    }
+    
+    function EOF()
+    {
+        var y='';
+        y=form1.entirefile.value;
+    y+='</quiz>';
+        form1.entirefile.value=y;
+    }
+    
+function generate()
+    {
+    var ba='';
+    var ca='';
+    var da='';
+    init();
+    ba=form1.ba.value;
+    ca=form1.ca.value;
+    da=form1.da.value;
+    
+    var x='';
+    if( form1.type.value=="MC2" )
+    {
+          x+='<question type="multichoice"><name><text>';
+	  x+=form1.name.value;
+	  x+='</text></name><questiontext format="html"><text><![CDATA[';
+          x+=form1.q.value;
+          x+=']]></text></questiontext><defaultgrade>1.0000000</defaultgrade><penalty>0.3333333</penalty><hidden>0</hidden><single>true</single><shuffleanswers>true</shuffleanswers><answernumbering>none</answernumbering><correctfeedback format="html"><text>Good Show!</text></correctfeedback><partiallycorrectfeedback format="html"><text></text></partiallycorrectfeedback><incorrectfeedback format="html"><text>Sorry.  That is incorrect.</text></incorrectfeedback>';
+          x+='<answer fraction="100" format="html"><text>';
+	  x+=form1.a.value;
+	  x+='</text><feedback format="html"><text></text></feedback></answer><answer fraction="';
+          x+=ba;
+          x+='" format="html"><text>';
+	  x+=form1.b.value;
+	  x+='</text><feedback format="html"><text></text></feedback></answer><answer fraction="';
+          x+=ca;
+          x+='" format="html"><text>';
+	  x+=form1.c.value;
+	  x+='</text><feedback format="html"><text></text></feedback></answer><answer fraction="';
+          x+=da;
+          x+='" format="html"><text>';
+	  x+=form1.d.value;
+
+	  x+='</text><feedback format="html"><text></text></feedback></answer></question>\n\n';
+    }
+    else
+    {
+x+='<question type="cloze"><name><text>';
+	  x+=form1.name.value;
+	  x+='</text></name><questiontext format="html"><text><![CDATA[<p>';
+          x+=form1.q.value;
+        
+          x+='{1:';
+          x+=form1.type.value;
+          x+=':=';
+  
+          x+=form1.a.value;
+
+          if( form1.b.value =='' )
+          {
+          }
+          else
+          {
+             x+='~%';
+             x+=ba;
+             x+='%';
+             x+=form1.b.value;
+          }
+          if( form1.c.value =='' )
+          {
+          }
+          else
+          {
+             X+='~%';
+             x+=ca;
+             x+='%';
+             x+=form1.c.value;
+          }
+          if( form1.d.value =='' )
+          {
+          }
+          else
+          {
+             x+='~%';
+             x+=da;
+             x+='%';
+             x+=form1.d.value;
+          }
+
+	  x+='}';
+          x+=form1.pa.value;
+          x+='</p>]]></text></questiontext><generalfeedback format="html"><text></text></generalfeedback><penalty>0.3333333</penalty><hidden>0</hidden><correctfeedback format="html"><text><![CDATA[<p>Good Show!</p>]]></text></correctfeedback><partiallycorrectfeedback format="html"><text><![CDATA[<p>Your answer is partially correct.</p>]]></text></partiallycorrectfeedback><incorrectfeedback format="html"><text><![CDATA[<p>Your answer is incorrect.</p>]]></text></incorrectfeedback><shownumcorrect/></question>\n\n';
+        }
+        form1.clozetext.value=x;
+        var y='';
+        y=form1.entirefile.value;
+
+        y+=x;
+        y+='\n';
+        form1.entirefile.value=y;
+
+        return;
+}
+</script>
+</head>
+
+<body>
+  <form name='form1' action='' method='GET'>
+    <p>Question Bank Name:</p>
+    <input type='text' id='bankname' name='bankname' size=10></p>
+    <p>Question Name:</p> <input type='text' id='name' name='name' size=10></p>
+  <p>Question text:</p>
+<p><input type='text' id='q' name='q' size=30></p>
+
+<p>Question Type:</p>
+<p><input type="radio" name="type" value="MC2" checked="checked">True Multichoice&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="type" value="NM">Numeric&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="type" value="SA">Short Answer&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="type" value="MC">Dropdown Multichoice</p>
+
+<hr>
+<p>Correct Answer: <input type='text' id='a' name='a' size=20><input type='text' id='pa' name='pa' size=10></p>
+<p>Incorrect Answer: <input type='text' id='b' name='b' size=20> (partial correct %) <input type='text' id='ba' name='ba' size=10></p>
+  <p>Incorrect Answer: <input type='text' id='c' name='c' size=20> (partial correct %) <input type='text' id='ca' name='ca' size=10></p>
+  <p>Incorrect Answer: <input type='text' id='d' name='d' size=20> (partial correct %) <input type='text' id='da' name='da' size=10></p>  
+<p><textarea cols=80 rows=2 name='clozetext'></textarea></p>
+
+<p>This is the text you want to store in an xml file.</p>
+<p><textarea cols=80 rows=2 name='entirefile'></textarea></p>
+<input type='button' onClick="javascript:generate();" value='ADD'>
+<input type='button' onClick="javascript:EOF();" value='EOF'>
+<input type='button' onClick="javascript:clr();" value='CLR'>
+<input type='button' onClick="javascript:xml();" value='XML'>
+</form>
+<hr>
+<p><center><font size=-2>Coded By: Mr. Pellegrino</font></center></p>
+</body>
+</html>
+

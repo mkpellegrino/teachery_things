@@ -1,0 +1,35 @@
+<html>
+<head><title>Two Numbera - Mr. Pellegrino</title>
+
+<script>
+function calculate()
+{
+   var a=Math.round( form1.a.value );
+   var b=Math.round( form1.b.value );
+   var x='';
+   var y=Math.round((a + Math.sqrt( a * a - 4 * b))/2);
+   var z=Math.round(a - y);
+   x+='The two numbers are: ' + y + ' and ' + z + '.\n';
+
+   if( (z * y) == 0 )
+   {
+      x='There is an error.';
+   }
+   form1.answer.value=x;
+
+   return;
+}
+</script>
+</head>
+
+<body>
+<form name='form1' action='' method='GET'>
+  <p>The two numbers add up to <input type='text' id='a' name='a' size=4> and multiply to <input type='text' id='b' name='b' size=4>.</p>
+  
+<p><textarea cols=80 rows=2 name='answer'></textarea></p>
+<input type='button' onClick="javascript:calculate();" value='Calculate'>
+</form>
+<hr>
+<p><center><font size=-2>Coded By: Mr. Pellegrino</font></center></p>
+</body>
+</html>

@@ -1,0 +1,234 @@
+<html>
+  <head><title>Create a SVG Diagram - By: Mr. Pellegrino</title>
+    <script>
+      function addLine()
+      {
+	  var x1=form1.x1.value;
+	  var y1=form1.y1.value;
+	  var x2=form1.x2.value;
+	  var y2=form1.y2.value;
+
+	  if( (x1=='') | (x2=='') || (y1=='') || (y2=='') )
+	  {
+	      alert( "Both points must exist." );
+	      return;
+	  }
+	  var c=form1.linecolour.value;
+	  
+	  
+	  if( c=='' )
+	  {
+	      c='black';
+	  }
+	      
+	  form1.svgoutput.value+='\n<!-- LINE: (';
+	  form1.svgoutput.value+=x1;
+	  form1.svgoutput.value+=',';
+	  form1.svgoutput.value+=y1;
+	  form1.svgoutput.value+=') to (';
+	  form1.svgoutput.value+=x2;
+	  form1.svgoutput.value+=',';
+	  form1.svgoutput.value+=y2;
+	  form1.svgoutput.value+=')-->';
+	  form1.svgoutput.value+='<line x1="';
+	  form1.svgoutput.value+=x1;
+	  form1.svgoutput.value+='" y1="';
+	  form1.svgoutput.value+=y1;
+	  form1.svgoutput.value+='" x2="';
+	  form1.svgoutput.value+=x2;
+	  form1.svgoutput.value+='" y2="';
+	  form1.svgoutput.value+=y2;
+	  form1.svgoutput.value+='" stroke="';
+	  form1.svgoutput.value+=c;
+	  form1.svgoutput.value+='" stroke-width="1"/>';
+      }
+      function addText()
+      {
+
+	  var x=form1.tx.value;
+	  var y=form1.ty.value;
+	  var c=form1.textcolour.value;
+	  if( (x=='') | (y=='') || (form1.thetext.value=='') )
+	  {
+	      alert( "Both points must exist." );
+	      return;
+	  }
+
+	  if( c=='' )
+	  {
+	      c='black';
+	  }
+	  form1.svgoutput.value+='\n<!-- TEXT: (';
+	  form1.svgoutput.value+=x;
+	  form1.svgoutput.value+=',';
+	  form1.svgoutput.value+=y;
+	  form1.svgoutput.value+=') "';
+	  form1.svgoutput.value+= form1.thetext.value
+	  form1.svgoutput.value+='" -->';
+	  form1.svgoutput.value+='<text x="';
+	  form1.svgoutput.value+=x;
+	  form1.svgoutput.value+='" y="';
+	  form1.svgoutput.value+=y;
+	  form1.svgoutput.value+='" fill="';
+	  form1.svgoutput.value+=c;
+	  form1.svgoutput.value+='">';
+	  form1.svgoutput.value+=form1.thetext.value;
+	  form1.svgoutput.value+='</text>';
+      }
+
+      function addPoint()
+      {
+	  var x=form1.px.value;
+	  var y=form1.py.value;
+	  var c=form1.pointcolour.value;
+
+	  if( (x=='') | (y=='') )
+	  {
+	      alert( "The x and y must exist." );
+	      return;
+	  }
+ 
+	  if( c=='' )
+	  {
+	      c='red';
+	  }
+	      
+	  form1.svgoutput.value+='\n<!-- POINT: (';
+	  form1.svgoutput.value+=x;
+	  form1.svgoutput.value+=',';
+	  form1.svgoutput.value+=y;
+	  form1.svgoutput.value+=') -->';
+	  form1.svgoutput.value+='<circle cx="';
+	  form1.svgoutput.value+=x;
+	  form1.svgoutput.value+='" cy="';
+	  form1.svgoutput.value+=y;
+	  form1.svgoutput.value+='" r="1" stroke="';
+	  form1.svgoutput.value+=c;
+	  form1.svgoutput.value+='" fill="';
+	  form1.svgoutput.value+=c;
+	  form1.svgoutput.value+='" stroke-width="3"/>';
+      }
+
+      function addCircle()
+      {
+	  var x=form1.cx.value;
+	  var y=form1.cy.value;
+	  var f=form1.fill.value;
+	  var c=form1.circlecolour.value;
+	  var r=form1.radius.value;
+	  
+	  if( (x=='') | (y=='') )
+	  {
+	      alert( "The x and y must exist." );
+	      return;
+	  }
+ 
+	  if( c=='' )
+	  {
+	      c='red';
+	  }
+	      
+	  form1.svgoutput.value+='\n<!-- CIRCLE: (';
+	  form1.svgoutput.value+=x;
+	  form1.svgoutput.value+=',';
+	  form1.svgoutput.value+=y;
+	  form1.svgoutput.value+=') r:';
+	  form1.svgoutput.value+=r;
+	  form1.svgoutput.value+=' -->';
+	  form1.svgoutput.value+='<circle cx="';
+	  form1.svgoutput.value+=x;
+	  form1.svgoutput.value+='" cy="';
+	  form1.svgoutput.value+=y;
+	  form1.svgoutput.value+='" r="';
+	  form1.svgoutput.value+=r;
+	  form1.svgoutput.value+='" stroke="';
+	  form1.svgoutput.value+=c;
+	  form1.svgoutput.value+='" fill="';
+	  form1.svgoutput.value+=f;
+	  form1.svgoutput.value+='" stroke-width="1"/>';
+      }
+
+
+      function preview()
+      {
+	  s=window.open("","SvgOutput.html","width=385,height=395");
+	  s.document.write("<html><head><title>My Diagram</title></head><body><center>");
+	  s.document.write(form1.svgoutput.value);
+	  s.document.write("<br><input type='button' onClick='jacascript:window.close();' value='Close'>");
+	  s.document.write("</center></body></html>");
+	  s.stop();
+	  
+      }
+      function clr()
+      {
+	  if (window.confirm("Do you really want to CLEAR ALL?"))
+	  { 
+	      form1.px.value='';
+	      form1.py.value='';
+	      form1.pointcolour.value='';
+	      form1.tx.value='';
+	      form1.ty.value='';
+	      form1.x1.value='';
+	      form1.x2.value='';
+	      form1.y2.value='';
+	      form1.y1.value='';
+	      form1.linecolour.value='';
+	      form1.textcolour.value='';
+	      form1.thetext.value='';
+	      form1.svgoutput.value='<!-- SVG IMAGE --><svg width="361px" height="361px" version="1.1"><defs></defs>';
+	  }
+      }
+
+      function undo()
+      {
+	  var txt=form1.svgoutput.value;
+	  var spot=txt.lastIndexOf('\n');
+	  if( spot==-1 )
+	  {
+	      return;
+	  }
+	  txt=txt.substr(0,spot);
+	  form1.svgoutput.value=txt;
+      }
+      
+      function EOF()
+      {
+	  form1.svgoutput.value+='\n</svg>';
+      }
+    
+    </script>
+    
+
+</head>
+<body>    
+  <form name='form1' action='' method='GET'>
+    <p>
+      <input type='button' onClick='javascript:addLine()' value='Add Line'>&nbsp;x<sub>1</sub><input type='text' id='x1' size=5>&nbsp;y<sub>1</sub><input type='text' id='y1' size=5>&nbsp;x<sub>2</sub><input type='text' id='x2' size=5>&nbsp;y<sub>2</sub><input type='text' id='y2' size=5>&nbsp;Line Colour:<input type='text' id='linecolour' size=5>
+    </p>
+    <p>
+       <input type='button' onClick='javascript:addPoint()' value='Add Point'>&nbsp;x<input type='text' id='px' size=5>&nbsp;y<input type='text' id='py' size=5>&nbsp;Point Colour:<input type='text' id='pointcolour' size=5>
+    </p>
+    <p>
+       <input type='button' onClick='javascript:addText()' value='Add Text'>&nbsp;x<input type='text' id='tx' size=5>&nbsp;y<input type='text' id='ty' size=5>&nbsp;Text Colour:<input type='text' id='textcolour' size=5>&nbsp;The Text<input type='text' id='thetext' size=10>
+    </p>
+    <p>
+       <input type='button' onClick='javascript:addCircle()' value='Add Circle'>&nbsp;x<input type='text' id='cx' size=5>&nbsp;y<input type='text' id='cy' size=5>&nbsp;Circle Colour:<input type='text' id='fill' size=5 value='none'>&nbsp;Radius:<input type='text' id='radius' size=3>&nbsp;Outline Color:<input type='text' id='circlecolour' value='black' size=10>
+  </div>
+    </p>
+           
+      <input type='button' onClick="javascript:EOF()" value='EOF'>&nbsp;&nbsp;&nbsp;
+      <input type='button' onClick="javascript:clr();" value='CLR'>&nbsp;&nbsp;&nbsp;
+      <input type='button' onClick="javascript:undo();" value='Undo'>&nbsp;&nbsp;&nbsp;
+      <input type='button' onClick="javascript:preview();" value='Preview'>
+    <p><textarea id='svgoutput' name='svgoutput' rows=50 cols=100><!-- SVG IMAGE --><svg width="361px" height="361px" version="1.1"><defs></defs></textarea></p>
+
+    
+    
+  </form>
+  
+  <hr>
+  <p><center><font size=-2><i>Coded By: Mr. Pellegrino - Last Updated on: 2017 10 12</i></font></center></p>
+    
+</body>
+</html>
+
