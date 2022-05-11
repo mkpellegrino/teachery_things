@@ -1,0 +1,136 @@
+<html>
+  <head><title>Create a Moodle Law of Cosines Question Bank - By: Mr. Pellegrino</title>
+    
+    <script>
+      var QN = 1; /* starting question number */
+
+      // Create our number formatter.  (Not needed for this problem)
+      var formatter = new Intl.NumberFormat('en-US', {style: 'currency',currency: 'USD'} );
+
+      /* returns a random integer between x and y */
+      function rnd_between( x, y )
+      {
+	  return Math.floor(Math.random()*(y-x)+x);
+      }
+
+      function rn( x, y )
+      {
+	  return Math.round(x*(10**y))/(10**y);	  
+      }
+      
+      function create_problem()
+      {
+
+	  /* -------------------------------- */
+	  /* Question Number                  */
+	  /* -------------------------------- */
+	  var leader = "";
+	  if( QN<10 )
+	  {
+	      leader="000";
+	  }
+	  else if( QN<100 )
+	  {
+	      leader="00";
+	  }
+	  else if( QN<1000)
+	  {
+	      leader="0";
+	  }
+	  name = "Q" + leader + QN;
+	  /* -------------------------------- */
+	  
+
+	  var dist1=rnd_between(10,200)/10;
+	  var dist2=rnd_between(10,200)/10;	  
+	  var angle1=rnd_between(50,500)/10;
+
+	  
+	  var dist3= rn( Math.sqrt( dist1*dist1+dist2*dist2-2*dist1*dist2*Math.cos(angle1*Math.PI/180)), 4 )
+	  
+	  var question_text = "";
+	  var how_to = "";
+	  var xml_text1 = "";
+	  var xml_text2 = "";
+
+	  how_to+="<![CDATA[";
+
+	  
+	  how_to+="<ul>";
+ 
+	  how_to+="<li>\\( c = \\sqrt{ (" + dist1 + ")^2 + (" + dist2 + ")^2 - 2 \\cdot " + dist1 + " \\cdot " + dist2 + " \\cdot \\cos( " + angle1 + ") }\\)</li>"; 
+	  how_to+="<li>\\( c = \\sqrt{ " + rn(dist1*dist1,2) + " + " + rn(dist2*dist2,2) + " - 2 \\cdot " + dist1 + " \\cdot " + dist2 + " \\cdot \\cos( " + angle1 + ") }\\)</li>"; 
+	  how_to+="<li>\\( c = \\sqrt{ " + rn(Number(Number(dist1*dist1) + Number(dist2*dist2)),4) + " - 2 \\cdot " + dist1 + " \\cdot " + dist2 + " \\cdot \\cos( " + angle1 + ") }\\)</li>"; 
+	  how_to+="<li>\\( c = \\sqrt{ " + rn(Number(Number(dist1*dist1) + Number(dist2*dist2)),4) + " - " + rn(Number(2*dist1 * dist2),4) + " \\cdot \\cos( " + angle1 + ") }\\)</li>"; 
+	  how_to+="<li>\\( c = \\sqrt{ " + rn(Number(Number(dist1*dist1) + Number(dist2*dist2)),4) + " - " + rn(Number(2*dist1 * dist2 *Math.cos(angle1*Math.PI/180)),4) + " }\\)</li>"; 
+
+	  how_to+="<li>\\( c = " + rn(Math.sqrt( Number(Number(dist1*dist1) + Number(dist2*dist2)) - Number(2*dist1*dist2*Math.cos(angle1*Math.PI/180))),4) + " \\) miles</li>"; 
+	  how_to+="</ul>";
+
+
+	  
+	  how_to+="]]>";
+	  
+	  xml_text1+="<question type=\"cloze\"><name><text>" + name + "</text></name><questiontext format=\"html\"><text><![CDATA[";
+	  /* =========================================================================== */
+
+
+	  question_text+="<p>A sea captain sees a ship using her telescope and determines that the ship is " + dist1 + " miles away.  She then turns " + angle1 + "&deg; to the right and sees another ship and determines that it is " + dist2 + " miles away.</p>";
+	  question_text+="<p>How far away from <i>each other</i> are the two ships she saw? {1:NM:=" + dist3 + ":0.5~%0%999999999} miles.</p>";
+	  
+	  
+	  /* =========================================================================== */
+	  xml_text2+="]]></text></questiontext><generalfeedback format=\"html\"><text>" + how_to + "</text></generalfeedback><penalty>0.3333333</penalty><hidden>0</hidden><correctfeedback format=\"html\"><text><![CDATA[<p>Good Show!</p>]]></text></correctfeedback><partiallycorrectfeedback format=\"html\"><text><![CDATA[<p>Your answer is partially correct.</p>]]></text></partiallycorrectfeedback><incorrectfeedback format=\"html\"><text><![CDATA[<p>Your answer is incorrect.</p>]]></text></incorrectfeedback><shownumcorrect/></question>";
+
+
+	  form1.clozetext.value+=xml_text1;
+	  form1.clozetext.value+=question_text;
+	  form1.clozetext.value+=xml_text2;
+	  QN++;
+	  return question_text;
+
+      }
+      function generate()
+      {
+	  var number_to_create = form1.number_to_create.value;
+
+	  /* Start at Question #1 */
+	  QN=1;
+
+	  /* reset the output */
+	  form1.clozetext.value="";
+
+	  /* add the xml header */
+	  form1.clozetext.value+="<?xml version=\"1.0\"?><quiz><question type=\"category\"><category><text>$course$/Law of Sines Word Problems</text></category></question>"
+
+	  /* create the desired number of questions */
+	  for( var i = 0; i< number_to_create; i++ )
+	  {
+	      /* generates 1 problem */
+	      create_problem();
+	  }
+
+	  /* add the xml footer */
+	  form1.clozetext.value+="</quiz>";
+	  
+      }
+      
+      </script>
+  </head>
+
+  <body>
+
+    <p>A sea captain sees a ship using her telescope and determines that the ship is 18.2 miles away.  She then turns 7.5&deg; to the right and sees another ship and determines that it is 2 miles away.</p><p>How far away from <i>each other</i> are the two ships she saw? {1:NM:=16.2192:0.5~%0%999999999} miles.</p>
+
+    <form name='form1' action='' method='GET'>
+      
+      <p><textarea cols=80 rows=30 name='clozetext'></textarea></p>
+
+      <input type='button' onClick="javascript:generate();" value='Generate'>
+      <input type='text' id='number_to_create' name='number_to_create' size=10 value='1'></p>
+</form>
+<hr>
+<p><center><i><font size=-2>By: Mr. Pellegrino - 2022 05 10</font></i></center></p>
+</body>
+</html>
+

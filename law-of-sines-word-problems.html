@@ -1,0 +1,171 @@
+<html>
+  <head><title>Create a Moodle Law of Sines Question Bank - By: Mr. Pellegrino</title>
+    
+    <script>
+      var QN = 1; /* starting question number */
+
+      // Create our number formatter. (Not needed for this problem)
+      var formatter = new Intl.NumberFormat('en-US', {style: 'currency',currency: 'USD'} );
+
+      /* returns a random integer between x and y */
+      function rnd_between( x, y )
+      {
+	  return Math.floor(Math.random()*(y-x)+x);
+      }
+
+      function rn( x, y )
+      {
+	  return Math.round(x*(10**y))/(10**y);	  
+      }
+      
+      function create_problem()
+      {
+
+	  /* -------------------------------- */
+	  /* Question Number                  */
+	  /* -------------------------------- */
+	  var leader = "";
+	  if( QN<10 )
+	  {
+	      leader="000";
+	  }
+	  else if( QN<100 )
+	  {
+	      leader="00";
+	  }
+	  else if( QN<1000)
+	  {
+	      leader="0";
+	  }
+	  name = "Q" + leader + QN;
+	  /* -------------------------------- */
+	  
+	  var name1="Sandy";
+	  var name2="Rowan";
+
+	  var dist1=rnd_between(100,500)/10;
+	  var angle1=rnd_between(50,500)/10;
+	  var angle2=angle1+rnd_between(50,200)/10;
+	  
+	  var angle3=180-(angle1+angle2);
+
+
+
+	  var dist2=Math.sin(angle2*Math.PI/180)*dist1/Math.sin(angle3*Math.PI/180);
+	  var dist3=Math.sin(angle1*Math.PI/180)*dist1/Math.sin(angle3*Math.PI/180);
+	  
+	  
+	  var question_text = "";
+	  var how_to = "";
+	  var xml_text1 = "";
+	  var xml_text2 = "";
+
+	  how_to+="<![CDATA[";
+
+	  
+	  how_to+="<ul>";
+	  how_to+="<li>\\( \\frac{ " + dist1 + "}{ \\sin( " + rn(angle3,2) + ") } = \\frac{x_1}{ \\sin(" + angle2 + ")} \\)</li>";
+	  how_to+="<li>\\( \\frac{ " + dist1 + " \\times \\sin( " + angle2 + ")}{ \\sin( " + rn(angle3,2) + ")} = x_1 \\)</li>";
+	  how_to+="<li>\\( \\frac{ " + dist1 + " \\times  " + rn(Math.sin(angle2*Math.PI/180),4) + "}{ " +rn( Math.sin(angle3*Math.PI/180),4) + "} = x_1 \\)</li>";
+
+	  how_to+="<li>\\( \\frac{ " + rn(dist1*rn(Math.sin(angle2*Math.PI/180),4),4) + "}{ " +rn( Math.sin(angle3*Math.PI/180),4) + "} = x_1 \\)</li>";
+	  how_to+="<li>\\( " + rn( (dist1*rn(Math.sin(angle2*Math.PI/180),4)) / rn( Math.sin(angle3*Math.PI/180),4), 4 ) + " = x_1 \\)</li>";
+	  how_to+="</ul>";
+
+	  
+	  how_to+="<ul>";
+	  how_to+="<li>\\( \\frac{ " + dist1 + "}{ \\sin( " + rn(angle3,2) + ") } = \\frac{x_2}{ \\sin(" + angle1 + ")} \\)</li>";
+	  how_to+="<li>\\( \\frac{ " + dist1 + " \\times \\sin( " + angle1 + ")}{ \\sin( " + rn(angle3,2) + ")} = x_2 \\)</li>";
+	  how_to+="<li>\\( \\frac{ " + dist1 + " \\times  " + rn(Math.sin(angle1*Math.PI/180),4) + "}{ " +rn( Math.sin(angle3*Math.PI/180),4) + "} = x_2 \\)</li>";
+
+	  how_to+="<li>\\( \\frac{ " + rn( dist1*rn(Math.sin(angle1*Math.PI/180),4), 4 ) + "}{ " +rn( Math.sin(angle3*Math.PI/180),4) + "} = x_2 \\)</li>";
+	  how_to+="<li>\\( " + rn( (dist1*rn(Math.sin(angle1*Math.PI/180),4))/ rn( Math.sin(angle3*Math.PI/180),4), 4 ) + " = x_2 \\)</li>";
+	  how_to+="</ul>";
+
+
+	  
+	  how_to+="]]>";
+	  
+	  xml_text1+="<question type=\"cloze\"><name><text>" + name + "</text></name><questiontext format=\"html\"><text><![CDATA[";
+	  /* =========================================================================== */
+
+
+	  
+
+	  question_text+="<p>" + name1 + " and " + name2 + " are standing at the seashore " + dist1 + " miles apart.  The coastline is a straight line between them.  Both can see the same ship in the water.  The angle between the coastline and the line between the ship and " + name1 + " is " + rn(angle1,2) + "&deg;.  The angle between the coastline and the line between the ship and " + name2 + " is " + rn(angle2,2) + "&deg;.</p>";
+
+
+	  question_text+='<svg width=256 height=100><line x1="0" y1="15" x2="256" y2="15" stroke="black" stroke-width="2"/><line x1="0" y1="15" x2="127" y2="100" stroke="#CCCCCC" stroke-width="2"/><line x1="256" y1="15" x2="127" y2="100" stroke="#CCCCCC" stroke-width="2"/><text x="0" y="12" class="small">' + name1 + '</text><text x="205" y="12" class="small">' + name2 + '</text><text x="90" y="12" class="small">&larr; ' + rn(dist1,2) + 'mi &rarr;</text><text x="110" y="90" class="small">ship</text><text x="15" y="33" class="small">' + rn(angle1,2) + '&deg;</text><text x="210" y="33" class="small">' + rn(angle2,2) + '&deg;</text></svg>'
+	  ;
+	  question_text+="<p>How far is the ship from " + name1 + "? {1:NM:="+rn(dist2,2)+":0.5~%0%9999999999} miles</p>";
+	  question_text+="<p>How far is the ship from " + name2 + "? {1:NM:="+rn(dist3,2)+":0.5~%0%9999999999} miles</p>";
+	  
+	  /* =========================================================================== */
+	  xml_text2+="]]></text></questiontext><generalfeedback format=\"html\"><text>" + how_to + "</text></generalfeedback><penalty>0.3333333</penalty><hidden>0</hidden><correctfeedback format=\"html\"><text><![CDATA[<p>Good Show!</p>]]></text></correctfeedback><partiallycorrectfeedback format=\"html\"><text><![CDATA[<p>Your answer is partially correct.</p>]]></text></partiallycorrectfeedback><incorrectfeedback format=\"html\"><text><![CDATA[<p>Your answer is incorrect.</p>]]></text></incorrectfeedback><shownumcorrect/></question>";
+
+
+	  form1.clozetext.value+=xml_text1;
+	  form1.clozetext.value+=question_text;
+	  form1.clozetext.value+=xml_text2;
+	  QN++;
+	  return question_text;
+
+      }
+      function generate()
+      {
+	  var number_to_create = form1.number_to_create.value;
+
+	  /* Start at Question #1 */
+	  QN=1;
+
+	  /* reset the output */
+	  form1.clozetext.value="";
+
+	  /* add the xml header */
+	  form1.clozetext.value+="<?xml version=\"1.0\"?><quiz><question type=\"category\"><category><text>$course$/Law of Sines Word Problems</text></category></question>"
+
+	  /* create the desired number of questions */
+	  for( var i = 0; i< number_to_create; i++ )
+	  {
+	      /* generates 1 problem */
+	      create_problem();
+	  }
+
+	  /* add the xml footer */
+	  form1.clozetext.value+="</quiz>";
+	  
+      }
+      
+      </script>
+  </head>
+
+  <body>
+    <p>Sandy and Rowan are standing at the seashore 46.9 miles apart.  The coastline is a straight line between them.  Both can see the same ship in the water.  The angle between the coastline and the line between the ship and Sandy is 38.1&deg;.  The angle between the coastline and the line between the ship and Rowan is 53.6&deg;.</p><p>How far is the ship from Sandy? {1:NM:=37.766141480995145:0.5~%0%9999999999} miles</p><p>How far is the ship from Rowan? {1:NM:=28.951725353041628:0.5~%0%9999999999} miles</p>
+
+    <svg width=256 height=100>
+      <line x1="0" y1="15" x2="256" y2="15" stroke="black" stroke-width="2"/>
+      <line x1="0" y1="15" x2="127" y2="100" stroke="#CCCCCC" stroke-width="2"/>
+      <line x1="256" y1="15" x2="127" y2="100" stroke="#CCCCCC" stroke-width="2"/>
+      
+      <text x="0" y="12" class="small">Sandy</text>
+      <text x="205" y="12" class="small">Rowan</text>
+      <text x="90" y="12" class="small">&larr; 46.9mi &rarr;</text>
+      <text x="110" y="90" class="small">ship</text>
+
+      <text x="15" y="33" class="small">38.1&deg;</text>
+      <text x="210" y="33" class="small">53.6&deg;</text>
+	
+    </svg>
+
+    <form name='form1' action='' method='GET'>
+      
+      <p><textarea cols=80 rows=30 name='clozetext'></textarea></p>
+
+      <input type='button' onClick="javascript:generate();" value='Generate'>
+      <input type='text' id='number_to_create' name='number_to_create' size=10 value='1'></p>
+</form>
+<hr>
+<p><center><i><font size=-2>By: Mr. Pellegrino - 2022 05 10</font></i></center></p>
+</body>
+</html>
+
