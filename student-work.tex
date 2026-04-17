@@ -1,0 +1,112 @@
+\documentclass[12pt]{article}
+\usepackage[letterpaper,total={7.5in,10.5in},top=0.5in]{geometry}
+\usepackage{colortbl}
+\usepackage{forloop}
+\newcounter{ct}
+\newcounter{cta}
+\newcounter{numberofstudents}
+\newcounter{numberofproblems}
+\newcounter{pagestoskip}
+\setcounter{pagestoskip}{0}
+
+% vvvvv CHANGE THESE VALUES!!!! vvvvv
+%
+%                                               vv
+\setcounter{numberofstudents}{24}
+%                                               ^^
+%
+%                                                 vv
+\setcounter{numberofproblems}{12}
+%                                                 ^^
+%
+%             vv
+\def\block{D}
+%             ^^
+%
+%                        vvvvvvvvvvvv
+\def\assessment{Growth \& Decay Assessment}
+%                        ^^^^^^^^^^^^^
+%
+% ^^^^^ CHANGE THESE VALUES!!!! ^^^^^
+
+
+\ifthenelse{\thenumberofproblems =  1}{\setcounter{pagestoskip}{1} }{}
+\ifthenelse{\thenumberofproblems =  2}{\setcounter{pagestoskip}{1} }{}
+\ifthenelse{\thenumberofproblems =  5}{\setcounter{pagestoskip}{1} }{}
+\ifthenelse{\thenumberofproblems =  6}{\setcounter{pagestoskip}{1} }{}
+\ifthenelse{\thenumberofproblems =  9}{\setcounter{pagestoskip}{1} }{}
+\ifthenelse{\thenumberofproblems =  10}{\setcounter{pagestoskip}{1} }{}
+\ifthenelse{\thenumberofproblems =  13}{\setcounter{pagestoskip}{1} }{}
+\ifthenelse{\thenumberofproblems =  14}{\setcounter{pagestoskip}{1} }{}
+\ifthenelse{\thenumberofproblems =  17}{\setcounter{pagestoskip}{1} }{}
+\ifthenelse{\thenumberofproblems =  18}{\setcounter{pagestoskip}{1} }{}
+\ifthenelse{\thenumberofproblems =  21}{\setcounter{pagestoskip}{1} }{}
+\ifthenelse{\thenumberofproblems =  22}{\setcounter{pagestoskip}{1} }{}
+\ifthenelse{\thenumberofproblems =  25}{\setcounter{pagestoskip}{1} }{}
+\ifthenelse{\thenumberofproblems =  26}{\setcounter{pagestoskip}{1} }{}
+\ifthenelse{\thenumberofproblems =  29}{\setcounter{pagestoskip}{1} }{}
+\ifthenelse{\thenumberofproblems =  30}{\setcounter{pagestoskip}{1} }{}
+\ifthenelse{\thenumberofproblems =  33}{\setcounter{pagestoskip}{1} }{}
+\ifthenelse{\thenumberofproblems =  34}{\setcounter{pagestoskip}{1} }{}
+\ifthenelse{\thenumberofproblems =  37}{\setcounter{pagestoskip}{1} }{}
+\ifthenelse{\thenumberofproblems =  38}{\setcounter{pagestoskip}{1} }{}
+\ifthenelse{\thenumberofproblems =  41}{\setcounter{pagestoskip}{1} }{}
+\ifthenelse{\thenumberofproblems =  42}{\setcounter{pagestoskip}{1} }{}
+\ifthenelse{\thenumberofproblems =  45}{\setcounter{pagestoskip}{1} }{}
+\ifthenelse{\thenumberofproblems =  46}{\setcounter{pagestoskip}{1} }{}
+\ifthenelse{\thenumberofproblems =  49}{\setcounter{pagestoskip}{1} }{}
+\ifthenelse{\thenumberofproblems =  50}{\setcounter{pagestoskip}{1} }{}
+
+\ifthenelse{\thenumberofproblems >  50}{ ERROR:  TOO MANY QUESTIONS }{}
+
+
+\addtocounter{numberofstudents}{1}
+\addtocounter{numberofproblems}{1}
+
+\newcolumntype{K}[1]{>{\centering\arraybackslash}p{#1}}
+
+\newcommand\workspace[3]
+{
+
+\section*{STUDENT NAME: \underline{ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }  \\ \\
+TOPIC: \underline{ \assessment \ }  \\ \\ 
+DATE: \underline{ \ \ \ \ \ \ \ \ \ \ }  \\ \\
+BLOCK: \underline{ \ \ #2 \ \ } \\ \\
+Student: #1}
+\newpage
+\par{} \( \ \)
+\newpage
+
+\forloop{ct}{1}{\value{ct} < #3}{
+
+\begin{tabular}{|| K{7in}  || }
+\hline
+Student: #2#1 \ \ \ \ \ \ \ Work for problem \thect \\ \hline 
+\\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ 
+\hline
+\end{tabular} 
+}
+
+\ifthenelse{\thepagestoskip = 1}{\( \ \) \newpage}{}
+\( \ \)
+ \newpage
+}
+
+\setlength{\parskip}{0em}
+
+\begin{document}
+\title{\assessment \\ Student Work \\ BLOCK: \block}
+\date{April 7, 2026}
+\pagenumbering{gobble}
+\maketitle
+\newpage
+\par{} \( \ \)
+\newpage
+
+\pagenumbering{gobble}
+
+\forloop{cta}{1}{\value{cta} < \thenumberofstudents }{
+\par{}\noindent\workspace{\thecta}{\block}{\thenumberofproblems} 
+}
+
+\end{document}
